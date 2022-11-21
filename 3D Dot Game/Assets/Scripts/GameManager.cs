@@ -72,14 +72,14 @@ public class GameManager : MonoBehaviour
         }
 
         float doorSpace = 2f;
+        doorSpace = 2f;
         if (left) Instantiate(wallEnd, new Vector3(q * x - 2f, 0.0f, q * z), Quaternion.Euler(0f, 180f, 0f));
         else if (right) Instantiate(wallEnd, new Vector3(q * x + 2f, 0.0f, q * z), Quaternion.identity);
 
         return door;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void startUpMap()
     {
         //floor        
         for (float x = 0; x <= 40; x++)
@@ -107,7 +107,12 @@ public class GameManager : MonoBehaviour
                 if (floorInScope(x, z)) Instantiate(floor, new Vector3(q * x + 1.4f, 0.0f, q * z + 1.4f), Quaternion.identity); // floor
             }
         }
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        startUpMap();
     }
 
     // Update is called once per frame

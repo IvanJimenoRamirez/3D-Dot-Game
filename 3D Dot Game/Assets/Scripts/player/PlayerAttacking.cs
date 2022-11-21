@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerAttacking : MonoBehaviour
 {
-    public float attackSpeed = 1.5f;
+    public float attackSpeed = 1.3f;
     float timeToAttack;
-
-
     
     // Start is called before the first frame update
     void Start()
@@ -19,7 +17,8 @@ public class PlayerAttacking : MonoBehaviour
     void Update()
     {
         timeToAttack -= Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && timeToAttack <= 0)
+        bool isDead = GetComponent<Animator>().GetBool("dead");
+        if (Input.GetMouseButtonDown(0) && timeToAttack <= 0 && !isDead)
         {
             timeToAttack = 1f / attackSpeed;
             // modify the animator to set the "attacking" parameter to true
