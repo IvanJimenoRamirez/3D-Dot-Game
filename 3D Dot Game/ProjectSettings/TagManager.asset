@@ -8,7 +8,8 @@ TagManager:
   - HealthPickup
   - Enemy
   - PlayerP
-  - swordP
+  - LittleSwordP
+  - BigSwordP
   layers:
   - Default
   - TransparentFX

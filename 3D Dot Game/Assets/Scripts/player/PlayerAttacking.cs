@@ -2,15 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttacking : MonoBehaviour
+public class PlayerAttacking: MonoBehaviour
 {
+
+    public Transform rightHandPlayer;
+
     public float attackSpeed = 1.3f;
     float timeToAttack;
-    
+
     // Start is called before the first frame update
     void Start()
     {
+        // Define the time to attack speed
         timeToAttack = 1f / attackSpeed;
+    }
+
+    // Function called when the attack animation starts
+    void AttackStart()
+    {
+        if (rightHandPlayer.GetChild(0) != null)
+        {
+            // Set the collider to enabled
+            rightHandPlayer.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
+        }
+    }
+    // Function called when the attack animation ends
+    void AttackEnd()
+    {
+        if (rightHandPlayer.GetChild(0) != null)
+        {
+            // Set the collider to disabled
+            rightHandPlayer.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
+        }
     }
 
     // Update is called once per frame

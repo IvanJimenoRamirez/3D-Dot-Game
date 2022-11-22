@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject floor, wall, corner, split, wallEnd;
+    public GameObject floor, wall, corner, split, wallEnd, player;
     float q = 4.0f;
 
     bool wallInScopeX(float x, float z)
@@ -109,10 +109,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void spawnPlayer()
+    {
+        Instantiate(player, new Vector3(80f, 1.0f, 5f), Quaternion.identity);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         startUpMap();
+        spawnPlayer();
     }
 
     // Update is called once per frame
