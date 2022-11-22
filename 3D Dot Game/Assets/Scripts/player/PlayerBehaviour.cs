@@ -8,8 +8,9 @@ public class PlayerBehaviour : MonoBehaviour
     public int maxHealth = 10;
 
     //public GameObject[] healthIcons, healthIconsEmpty;
-    public GameObject rightHand, littleSword, bigSword, healthText;
-
+    public GameObject rightHand, littleSword, bigSword;
+    public Canvas heartIcons;
+    public GameObject emptyHeart, filledHeart;
     // TODO: ticks per second ==> Determines how often the player takes damage
     public float ticksPerSecond;
 
@@ -17,12 +18,33 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    
+    void playerUI()
+    {
+        // Update the canva to show the player's health
+        heartIcons.GetComponent<Canvas>().enabled = true;
+        for (int i = 0; i < maxHealth; i++)
+        {
+            if (i < health)
+            {
+                filledHeart.GetComponent<RectTransform>().anchoredPosition = new Vector2(28 * (i + 1), -28);
+                Instantiate(filledHeart, heartIcons.transform);
+            }
+            else
+            {
+                emptyHeart.GetComponent<RectTransform>().anchoredPosition = new Vector2(28 * (i + 1), -28);
+                Instantiate(emptyHeart, heartIcons.transform);
+            }
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         // Add the bigSword to the rightHand as the first child
         Instantiate(bigSword, rightHand.transform);
+        // Instantiate the heart icons
+        playerUI();
     }
 
     // Update is called once per frame
@@ -53,8 +75,10 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Enemy" && health > 0)
         {
             health--;
-            // Update the health TextMeshPro - Text
-            healthText.GetComponent<TMPro.TextMeshPro>().text = "HEALTH: " + health.ToString();
+            // Change the heart icon in the "health" position to the empty heart
+            heartIcons.transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = emptyHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+
+
 
             if (health == 0)
             {
@@ -65,7 +89,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "HealthPickup")
         {
             health++;
-            healthText.GetComponent<TMPro.TextMeshPro>().text = "HEALTH: " + health.ToString();
+            // Change the heart icon in the "health" position to the filled heart
+            heartIcons.transform.GetChild(health - 1).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
             Destroy(collision.gameObject);
         }
         // If the player collides with a wall, then stop moving
