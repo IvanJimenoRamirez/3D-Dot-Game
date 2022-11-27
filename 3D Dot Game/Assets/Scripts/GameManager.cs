@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject floor, wall, corner, split, wallEnd, wallDoor, button;
+    public GameObject floor, wall, corner, split, wallEnd, wallDoor, button, player;
     private int roomX = 8;
     private int roomZ = 5;
     float q = 4.0f;
@@ -171,12 +171,18 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
+    private void spawnPlayer()
+    {
+        Instantiate(player, new Vector3(80f, 1.0f, 5f), Quaternion.identity);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         floorAndWalls();
         initScene1();
+        spawnPlayer();
 
     }
 
