@@ -10,6 +10,8 @@ TagManager:
   - PlayerP
   - LittleSwordP
   - BigSwordP
+  - EnemyBullet
+  - Floor
   layers:
   - Default
   - TransparentFX
