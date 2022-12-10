@@ -47,6 +47,11 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Invoke("destroyPlayer", 1.5f);
         }
+
+        if (transform.position.y > 1f || transform.position.y < .99f)
+        {
+            transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
+        }
         /*
         // Change the sword to the little one
         if (health < maxHealth && rightHand.transform.GetChild(0).gameObject.name != "littleSword(Clone)")
@@ -109,8 +114,10 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 GetComponent<Animator>().SetBool("dead", true);
             }
-
-            Destroy(collision.gameObject);
+            if (collision.gameObject.tag == "EnemyBullet")
+            {
+                Destroy(collision.gameObject);
+            }
         }
         // If the player collides with a health pickup, then heal
         if (collision.gameObject.tag == "HealthPickup")

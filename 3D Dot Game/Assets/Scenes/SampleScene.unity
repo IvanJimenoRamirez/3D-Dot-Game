@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -236,7 +236,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &231776808
 MonoBehaviour:
@@ -727,16 +727,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2029609485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5dfbfa8bc4773b43a962310ffdd5481, type: 3}
+  m_Script: {fileID: 11500000, guid: 00433307ba8c49c409f8a639ff24cbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubeSize: 0.2
-  cubesInRow: 5
-  explosionForce: 50
-  explsionRadius: 4
-  explosionUpward: 0.4
-  cubesPivotDistance: 0
-  cubesPivot: {x: 0, y: 0, z: 0}
+  health: 5
+  player: {fileID: 0}
+  speed: 2
+  shootingFreq: 0.7
+  bullet: {fileID: 7516190231457120420, guid: fca2ab6225bdc8b46910e8b466b94130, type: 3}
+  shotSpeed: 15
 --- !u!1 &2081957815
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,7 +818,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &637703247441607113
 PrefabInstance:
