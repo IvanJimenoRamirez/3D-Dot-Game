@@ -674,7 +674,7 @@ public class GameManager : MonoBehaviour
 
     private void spawnPlayer()
     {
-        Instantiate(player, new Vector3(142f, 1.0f, 50f), Quaternion.identity);
+        Instantiate(player, new Vector3(80f, 1.0f, 10f), Quaternion.identity);
     }
 
     // Start is called before the first frame update

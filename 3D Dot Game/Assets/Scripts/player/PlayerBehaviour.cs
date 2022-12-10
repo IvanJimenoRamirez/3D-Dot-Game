@@ -134,8 +134,8 @@ public class PlayerBehaviour : MonoBehaviour
     public void changeHeartSprite(bool takeDmg)
     {
         // Change the heart icon in the "health" position to the empty heart
-        if (takeDmg) heartIcons.transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = emptyHeart.GetComponent<UnityEngine.UI.Image>().sprite;
-        else heartIcons.transform.GetChild(health - 1).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+        if (takeDmg) heartIcons.transform.GetChild(health + 1).GetComponent<UnityEngine.UI.Image>().sprite = emptyHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+        else heartIcons.transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
