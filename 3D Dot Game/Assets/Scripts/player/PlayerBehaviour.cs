@@ -6,6 +6,7 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public int health = 9;
     public int maxHealth = 10;
+    public bool hasKey = false;
 
     public GameObject rightHand, littleSword, bigSword;
 
@@ -135,5 +136,18 @@ public class PlayerBehaviour : MonoBehaviour
         // Change the heart icon in the "health" position to the empty heart
         if (takeDmg) heartIcons.transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = emptyHeart.GetComponent<UnityEngine.UI.Image>().sprite;
         else heartIcons.transform.GetChild(health - 1).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody rigidBody = hit.collider.attachedRigidbody;
+
+        if (rigidBody != null)
+        {
+            Vector3 forceDir = hit.gameObject.transform.position - transform.position;
+            forceDir.y = 0;
+            forceDir.Normalize();
+            rigidBody.AddForceAtPosition(forceDir * 1, transform.position, ForceMode.Impulse);
+        }
     }
 }

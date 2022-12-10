@@ -10,6 +10,9 @@ TagManager:
   - PlayerP
   - LittleSwordP
   - BigSwordP
+  - btn_12
+  - btn
+  - bossKeyDoor
   - EnemyBullet
   - Floor
   layers:
