@@ -13,6 +13,8 @@ TagManager:
   - btn_12
   - btn
   - bossKeyDoor
+  - EnemyBullet
+  - Floor
   layers:
   - Default
   - TransparentFX

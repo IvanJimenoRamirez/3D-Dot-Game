@@ -365,12 +365,12 @@ MonoBehaviour:
   health: 9
   maxHealth: 10
   rightHand: {fileID: 1524607743083593179}
-  littleSword: {fileID: 5847393142169674714, guid: a20a95bdd7fa083408bdd54056ffeede, type: 3}
+  littleSword: {fileID: 3561461824865272357, guid: a20a95bdd7fa083408bdd54056ffeede, type: 3}
   bigSword: {fileID: 5152302599240967009, guid: e5a7ceb9bfc15a54a9e1475fc4759da4, type: 3}
   heartIcons: {fileID: 0}
   emptyHeart: {fileID: 5879485674947409569, guid: b3191d6b123ed75429b42ba1fded64c3, type: 3}
   filledHeart: {fileID: 2836477026477313752, guid: e59d3c6f7fe23774cb84dfc2b43e4649, type: 3}
-  ticksPerSecond: 1
+  ticksPerSecond: 1.2
 --- !u!82 &1524607743530915368
 AudioSource:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!1 &1524607743548934500
 GameObject:
