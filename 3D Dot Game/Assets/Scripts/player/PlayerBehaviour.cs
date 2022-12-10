@@ -6,6 +6,7 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public int health = 9;
     public int maxHealth = 10;
+    public bool hasKey = false;
 
     public GameObject rightHand, littleSword, bigSword;
 
@@ -121,6 +122,19 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.Log("Collided with a wall");
             //Refactor
             GetComponent<PlayerMovement>().stopMoving();
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody rigidBody = hit.collider.attachedRigidbody;
+
+        if (rigidBody != null)
+        {
+            Vector3 forceDir = hit.gameObject.transform.position - transform.position;
+            forceDir.y = 0;
+            forceDir.Normalize();
+            rigidBody.AddForceAtPosition(forceDir * 1, transform.position, ForceMode.Impulse);
         }
     }
 }

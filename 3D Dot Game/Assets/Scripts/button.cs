@@ -1,25 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class button : MonoBehaviour
 {
-    public bool pressed = false;
     public GameObject chest;
-    
+
+    private enum s { NOPRESSED, TRANSITION, PRESSED }
+    private s state;
+    public bool pressed;
+
+    //position
+    public int room;
+    public string roomTag;
     //chest manage
-    private Vector3 chestPosition = new Vector3(84f, 1f, 8f);
-    private Quaternion chestRotation = Quaternion.identity;
-    private bool chestShown = false;
-
-
+    public bool hasChest;
+    public bool hasKey;
+    public Vector3 chestPosition;
+    private Quaternion chestRotation;
+    private bool chestShown;
 
     //Detect collisions between the GameObjects with Colliders attached
     void OnCollisionEnter(Collision collision)
     {
-              //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if (!pressed && collision.gameObject.tag == "Player")
+        //Check for a match with the specific tag on any GameObject that collides with your GameObject
+        if (state == s.NOPRESSED && collision.gameObject.tag == "PlayerP")
         {
+            state = s.TRANSITION;
             pressed = true;
         }
     }
@@ -28,19 +36,84 @@ public class button : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        state = s.NOPRESSED;
+        pressed = false;
+        chestShown = false;
+        chestRotation = Quaternion.identity;
+        switch (room)
+        {
+            case 1:
+                hasChest = true;
+                hasKey = true;
+                chestPosition = new Vector3(84f, 1f, 8f);
+                break;
+            case 7:
+                hasChest = true;
+                hasKey = true;
+                chestPosition = new Vector3(0f + 5f * 4f, 1f, 40f + 3f * 4f); 
+                break;
+            case 8:
+                hasChest = false;
+                hasKey = false;
+                break;
+            case 11:
+                hasChest = false;
+                hasKey = false;
+                break;
+            case 12:
+                hasChest = false;
+                hasKey = false;
+                chestPosition = new Vector3(128f + 16f, 1f, 40f + 10f);
+                break;
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (pressed == true)
+        if (pressed && state == s.NOPRESSED) state = s.TRANSITION;
+        
+        if (state == s.TRANSITION)
         {
-            if (!chestShown)
+            if (hasChest && !chestShown) //room 1 and 7
             {
                 chestShown = true;
-                Instantiate(chest, chestPosition, chestRotation);
+                GameObject newChest = Instantiate(chest, chestPosition, chestRotation);
+                newChest.GetComponent<chest>().hasKey = hasKey;
+                state = s.PRESSED;
+            }
+            else if (room == 8)
+            {
+                GameObject doorGate = GameObject.Find("door_gate_open(Clone)");
+                doorGate.GetComponent<doorScript>().opened = true;
+                state = s.PRESSED;
+            }
+            else if (room == 11)
+            {
+                GameObject bossKeyDoor = GameObject.FindWithTag("bossKeyDoor");
+                bossKeyDoor.GetComponent<bossKeyDoor>().open = true;
+                state = s.PRESSED;
+            }
+            else if (room == 12)
+            {
+                bool allPressed = true;
+                GameObject[] btns = { };
+                btns = GameObject.FindGameObjectsWithTag("btn");
+                for (int i = 0; i < btns.Length; i++)
+                {
+                    GameObject btn = btns[i];
+                    if (!btn.GetComponent<button>().pressed) allPressed = false;
+                }
+                
+                if (allPressed)
+                {
+                    GameObject newChest = Instantiate(chest, chestPosition, chestRotation);
+                    newChest.GetComponent<chest>().hasBossKey = true;
+                }
+                state = s.PRESSED;
+
             }
         }
     }
