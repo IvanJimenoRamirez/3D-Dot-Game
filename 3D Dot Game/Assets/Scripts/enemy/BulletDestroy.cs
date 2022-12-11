@@ -6,9 +6,11 @@ public class BulletDestroy : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "PlayerP")
+        //if (collision.gameObject.tag != "PlayerP" && collision.gameObject.tag != "Enemy")
+        if (collision.gameObject.tag == "Wall")
         {
-            Destroy(gameObject);
+            GetComponent<Explosion>().exploded = true;
+            //Destroy(gameObject);
         }
     }
 }

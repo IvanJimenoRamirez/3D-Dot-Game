@@ -6,13 +6,18 @@ using System;
 public class EnemyManager : MonoBehaviour
 {
     public int health = 5;
+    public bool died;
+
+    //control
+    private int type;
+    private bool moveShot;
+    public Material mat;
 
     // AI variables
     public Transform player;
     PathFinding pathFinding;
     List<Node> path;
     
-
     // Movement speed
     public float speed = 2f;
 
@@ -29,12 +34,27 @@ public class EnemyManager : MonoBehaviour
     {
         pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
         timeToShoot = 1.0f / shootingFreq;
+        died = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timeToShoot -= Time.deltaTime;        
+        if (died)
+        {
+            GetComponent<Explosion>().explosionMat = mat;
+            GetComponent<Explosion>().exploded = true;
+        }
+        else
+        {
+            if (moveShot) moveAndShoot();
+        }
+    }
+
+
+    private void moveAndShoot ()
+    {
+        timeToShoot -= Time.deltaTime;
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("PlayerP");
@@ -69,11 +89,11 @@ public class EnemyManager : MonoBehaviour
         {
             // Rotate the enemy to face the player
             transform.rotation = Quaternion.LookRotation(player.position - transform.position);
-            
+
             // If the path is null or the path is greater than 5, then shot the player a bullet
             if (timeToShoot < 0.0f)
             {
-                
+
                 timeToShoot = 1.0f / shootingFreq;
                 // Instantiate the new bullet in front of the enemy
                 GameObject newBullet = Instantiate(bullet, transform.position + transform.forward, Quaternion.identity);
@@ -84,9 +104,7 @@ public class EnemyManager : MonoBehaviour
                 newBullet.GetComponent<Rigidbody>().velocity = direction;
             }
         }
-
     }
-
 
     /**
      * Given two positions in the world, returns a vector2 with the position in the room
@@ -114,7 +132,7 @@ public class EnemyManager : MonoBehaviour
             }
             if (health <= 0)
             {
-                Destroy(gameObject);
+                died = true;
             }
         }
     }

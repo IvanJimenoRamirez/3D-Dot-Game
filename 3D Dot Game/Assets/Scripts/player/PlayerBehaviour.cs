@@ -109,8 +109,10 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 GetComponent<Animator>().SetBool("dead", true);
             }
-
-            Destroy(collision.gameObject);
+            if (collision.gameObject.tag == "EnemyBullet")
+            {
+                collision.gameObject.GetComponent<Explosion>().exploded = true;
+            }
         }
         // If the player collides with a health pickup, then heal
         if (collision.gameObject.tag == "HealthPickup")
