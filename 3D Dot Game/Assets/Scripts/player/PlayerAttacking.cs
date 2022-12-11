@@ -6,7 +6,8 @@ public class PlayerAttacking: MonoBehaviour
 {
 
     public Transform rightHandPlayer;
-    public GameObject bigSword, activeBigSword;
+    public GameObject bigSword, littleSword;
+    GameObject activeBigSword, activeLittleSword;
 
     Transform player;
 
@@ -36,7 +37,7 @@ public class PlayerAttacking: MonoBehaviour
             // Start the audio
             GetComponent<AudioSource>().Play();
             // Instantiate the big sword in front of the player
-            activeBigSword = Instantiate(bigSword, rightHandPlayer.position, Quaternion.identity);
+            activeBigSword = Instantiate(whichSword(), rightHandPlayer.position + new Vector3(0, 0.3f, 0), Quaternion.identity);
             activeBigSword.transform.rotation = Quaternion.Euler(90, player.rotation.eulerAngles.y, 0);
             // invoke the "StopAttacking" function after 0.3 seconds            
             Invoke("StopAttacking", 0.3f);
@@ -54,5 +55,18 @@ public class PlayerAttacking: MonoBehaviour
 
     public float getTimeToAttack() {
         return timeToAttack;
+    }
+
+    /*
+     * Determines which sword to instantiate taking into account the player's health
+     */
+    private GameObject whichSword()
+    {
+        int health = player.GetComponent<PlayerBehaviour>().health;
+        if (health == 10)
+        {
+            return bigSword;
+        }
+        return littleSword;
     }
 }

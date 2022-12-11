@@ -4,45 +4,148 @@ using UnityEngine;
 
 public class SwordManager : MonoBehaviour
 {
-    public float growingSize = 0.01f;
-    public float maxScale = 0.1f;
-    float grow;
-    bool growing;
-    
+    // Properties form the sword animation
+    float timeReamining;
+    GameObject edge;
+    // Enumerator to know the state of the sword (the size, initially it's XXL)
+    enum swordState { S, L, XXL  };
+    swordState state;
+
+    Transform player;
+
+    //Special attack
+    bool madeSpecial;
+    enum specialDirection { LEFT, RIGHT };
+    specialDirection comboDirection;
+
     // Start is called before the first frame update
     void Start()
     {
-        growing = true;
-        grow = 0;
+        // Startup the properties for the sword animation
+        timeReamining = 0.0f;
+        edge = transform.GetChild(0).gameObject;
+        state = swordState.XXL;
+
+        madeSpecial = false;
+
+        // Get the transform of the player
+        player = GameObject.Find("player(Clone)").transform;
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() { 
+        if (!madeSpecial) swordAnimation();
+        comboAttack();
+        moveSword();
+    }
+
+
+    /*
+     * Checks if the animation can start
+     */
+    private void swordAnimation()
     {
-        if (growing && grow < maxScale)
+        timeReamining += Time.deltaTime;
+        if (timeReamining >= 0.09f)
         {
-            grow += growingSize;
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + growingSize, transform.localScale.z);
+            timeReamining = 0f;
+            // Get the first child of the object
+            changeState();
         }
-        else
+        if (state == swordState.XXL)
         {
-            growing = false;
-            grow -= growingSize;
-            if (grow > 0f)
+            transform.position = transform.parent.position + new Vector3(0.3f, 0, 0);
+        }
+        else if (state == swordState.S)
+        {
+            transform.position = transform.parent.position - new Vector3(0.3f, 0, 0);
+        }
+    }
+
+    /*
+     * In case the user press the key 'W', 'S', 'D' or 'A' the sword will perform a slash to the left or to the right
+     */
+    private void comboAttack()
+    {
+        // In case the special attack is running, rotate the sword to the desired direction
+        if (madeSpecial)
+        {
+            switch (comboDirection)
             {
-                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y - growingSize, transform.localScale.z);
+                case specialDirection.LEFT:
+                    transform.Rotate(0, 0, 3);
+                    player.Rotate(0, -3, 0);
+                    break;
+                case specialDirection.RIGHT:
+                    transform.Rotate(0, 0, -3);
+                    player.Rotate(0, 3, 0);
+                    break;
+            }
+        }
+        // In case the special have not been made, 
+        else if (state > swordState.S)
+        {
+            // check if the user pressed a key
+            if (Input.GetKey(KeyCode.A))
+            {
+                // Rotate the sword to the left
+                comboDirection = specialDirection.LEFT;
+                madeSpecial = true;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                // Rotate the sword to the right
+                comboDirection = specialDirection.RIGHT;
+                madeSpecial = true;
             }
         }
     }
 
-    // On collision
-    void OnTriggerEnter(Collider other)
+    private void moveSword()
     {
-        growing = false;
+        float x, z, playerRotation = player.rotation.eulerAngles.y;
+        if (playerRotation < 60f || playerRotation > 300f) z = 0.1f;
+        else z = -0.1f;
+
+        if (playerRotation < 150) x = 0.1f;
+        else x = -0.1f;
+        
+        if ((playerRotation >= 0 && playerRotation <= 1) || (playerRotation >= 179f && playerRotation <= 181f))
+        {
+            x = 0f;
+        }
+        else if ((playerRotation >= 89f && playerRotation <= 91f) || (playerRotation >= 269 && playerRotation <= 271))
+        {
+            z = 0f;
+        }
+        else
+        {
+            x /= 2f;
+            z /= 2f;
+        }
+        transform.position = transform.position + new Vector3(x, 0, z);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*
+     * Change the state of the sword (and the scale && position properties for the animation)
+     */
+    private void changeState ()
     {
-        growing = false;
+        switch (state)
+        {
+            case swordState.XXL:
+                state = swordState.L;
+                edge.transform.localScale = new Vector3(1f, 2.5f, 1f);
+                edge.transform.localPosition = new Vector3(0f, -1.35f, 0f);
+                break;
+            case swordState.L:
+                state = swordState.S;
+                edge.transform.localScale = new Vector3(1f, 1.5f, 1f);
+                edge.transform.localPosition = new Vector3(0f, -0.5f, 0f);
+                break;
+            default:
+                Destroy(gameObject);
+                break;
+        }
     }
 }
