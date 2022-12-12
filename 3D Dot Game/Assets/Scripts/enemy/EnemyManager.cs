@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
     public int health = 5;
 
     // AI variables
-    public Transform player;
+    Transform player;
     PathFinding pathFinding;
     List<Node> path;
     
@@ -16,9 +16,14 @@ public class EnemyManager : MonoBehaviour
     // Movement speed
     public float speed = 2f;
 
+    //Attack properties
+    public enum AttackType { MELEE, RANGED };
+    public AttackType enemyType;
+    bool attacking;
+    
     // Attack with bullets
-    public float shootingFreq = 0.7f;
-    float timeToShoot;
+    public float attackingFreq = 0.7f;
+    float timeToAttack;
     public GameObject bullet;
     public float shotSpeed = 15.0f;
 
@@ -27,14 +32,18 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Startup the pathfinding to find the path to the player in the room
         pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
-        timeToShoot = 1.0f / shootingFreq;
+        // Set the time to attack
+        timeToAttack = 1.0f / attackingFreq;
+        // At the start, the enemy is not attacking
+        attacking = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timeToShoot -= Time.deltaTime;        
+        timeToAttack -= Time.deltaTime;        
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("PlayerP");
@@ -42,51 +51,106 @@ public class EnemyManager : MonoBehaviour
             else return;
         }
 
-        // Get my position in the room
-        Vector2 enemyPos = getRoomPosition(transform.position);
-        // Get the player position in the room
-        Vector2 playerPos = getRoomPosition(player.position);
+        if (!attacking)
+        {
+            // Get my position in the room
+            Vector2 enemyPos = getRoomPosition(transform.position);
+            // Get the player position in the room
+            Vector2 playerPos = getRoomPosition(player.position);
+            
+            // Find path to the player
+            Node nextNode;
+            if (!inRangeToAttack(enemyPos, playerPos, out nextNode))
+            {
+                // Get the position of the next node
+                Vector3 nextNodePos = new Vector3(nextNode.getX(), 0, nextNode.getY());
+                // get the direction to the next node
+                Vector3 direction = nextNodePos - new Vector3(enemyPos.x, 0, enemyPos.y);
+                // Move to the direction represented by the direction vector
+                transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
+                // Rotate the enemy to face the direction of the next node
+                transform.rotation = Quaternion.LookRotation(direction);
+                // Change the animator to start the animation in case it has not started yet
+                bool enemyAlreadyMoving = GetComponent<Animator>().GetBool("moving");
+                if (!enemyAlreadyMoving) GetComponent<Animator>().SetBool("moving", true);
+            } else
+            {
+                // Rotate the enemy to face the player
+                transform.rotation = Quaternion.LookRotation(player.position - transform.position);
+                // Attack the player
+                attackPlayer();
+            }
+        }
+    }
 
-        // Get the path to the player
+    /**
+     * Returns true if the enemy is in range to attack the player, otherwise false (including null path)
+     */
+    private bool inRangeToAttack(Vector2 enemyPos, Vector2 playerPos, out Node nextNode)
+    {
+        // Get the path
         path = pathFinding.getPath(enemyPos, playerPos);
         pathFinding.restartRoom();
-
-        // Move towards the next node in the path (taking into account the node 0 is the current position)
-        if (path != null && path.Count > 5)
+        // In case the enemy is at the same position as the player return
+        if (path == null)
         {
-            // Get the next node in the path
-            Node nextNode = path[1];
-            // Get the position of the next node
-            Vector3 nextNodePos = new Vector3(nextNode.getX(), 0, nextNode.getY());
-            // get the direction to the next node
-            Vector3 direction = nextNodePos - new Vector3(enemyPos.x, 0, enemyPos.y);
-            // Move to the direction represented by the direction vector
-            transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
-            // Rotate the enemy to face the direction of the next node
-            transform.rotation = Quaternion.LookRotation(direction);
+            nextNode = default;
+            return false;
+        }
+        //Set the next node were the enemy will move to in case it is not in range
+        nextNode = path[1];
+        int pathLength = path.Count;
+        // Check if the enemy is in range to attack the player
+        if (enemyType == AttackType.MELEE)
+        {
+            return pathLength <= 2;
         }
         else
         {
-            // Rotate the enemy to face the player
-            transform.rotation = Quaternion.LookRotation(player.position - transform.position);
-            
-            // If the path is null or the path is greater than 5, then shot the player a bullet
-            if (timeToShoot < 0.0f)
-            {
-                
-                timeToShoot = 1.0f / shootingFreq;
-                // Instantiate the new bullet in front of the enemy
-                GameObject newBullet = Instantiate(bullet, transform.position + transform.forward, Quaternion.identity);
-                // Set the velocity of the bullet
-                Vector3 direction = player.position - transform.position;
-                direction.y = 0;
-                direction = Vector3.Normalize(direction) * shotSpeed;
-                newBullet.GetComponent<Rigidbody>().velocity = direction;
-            }
-        }
-
+            return pathLength <= 5;
+        }   
     }
 
+    /**
+     * Attacks the player taking into account the type of enemy (range, melee)
+     */
+    void attackPlayer()
+    {
+        if (timeToAttack < 0.0f)
+        {
+
+            bool enemyAlreadyMoving = GetComponent<Animator>().GetBool("moving");
+            if (enemyAlreadyMoving) GetComponent<Animator>().SetBool("moving", false);
+
+            // Set the time to attack
+            timeToAttack = 1.0f / attackingFreq;
+            switch (enemyType)
+            {
+                case AttackType.MELEE:
+                    // Melee attack
+                    transform.GetComponent<Animator>().SetBool("attacking", true);
+                    // Invoke the "StopAttacking" function after 0.3 seconds
+                    Invoke("StopAttacking", 0.3f);
+                    break;
+                case AttackType.RANGED:
+                    // Instantiate the new bullet in front of the enemy
+                    GameObject newBullet = Instantiate(bullet, transform.position + transform.forward, Quaternion.identity);
+                    // Set the velocity of the bullet
+                    Vector3 direction = player.position - transform.position;
+                    direction.y = 0;
+                    direction = Vector3.Normalize(direction) * shotSpeed;
+                    newBullet.GetComponent<Rigidbody>().velocity = direction;
+                    break;
+            }
+            
+        }
+        
+    }
+
+    private void StopAttacking()
+    {
+        transform.GetComponent<Animator>().SetBool("attacking", false);
+    }
 
     /**
      * Given two positions in the world, returns a vector2 with the position in the room
