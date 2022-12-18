@@ -7,12 +7,14 @@ public class EnemyManager : MonoBehaviour
 {
     public int health = 5;
 
+    //Animator required
+    public bool animatorRequired;
+
     // AI variables
     Transform player;
     PathFinding pathFinding;
     List<Node> path;
     
-
     // Movement speed
     public float speed = 2f;
 
@@ -48,7 +50,12 @@ public class EnemyManager : MonoBehaviour
         {
             GameObject p = GameObject.FindGameObjectWithTag("PlayerP");
             if (p != null) player = p.transform;
-            else return;
+            
+            else
+            {
+                // Player is dead
+                GetComponent<Animator>().SetBool("dancing", true);
+            }
         }
 
         if (!attacking)
@@ -115,20 +122,32 @@ public class EnemyManager : MonoBehaviour
      * Attacks the player taking into account the type of enemy (range, melee)
      */
     void attackPlayer()
-    {
-        if (timeToAttack < 0.0f)
+    {        
+        // distance to player
+        float distance = Vector3.Distance(transform.position, player.position);
+        // If the enemy is a melee enemy
+        if (enemyType == AttackType.MELEE && distance > 2.5f)
         {
+            //Move to the player
+            transform.Translate((player.position - transform.position).normalized * speed * Time.deltaTime, Space.World);
+            if (animatorRequired && !GetComponent<Animator>().GetBool("moving")) GetComponent<Animator>().SetBool("moving", true);
+        }
 
-            bool enemyAlreadyMoving = GetComponent<Animator>().GetBool("moving");
-            if (enemyAlreadyMoving) GetComponent<Animator>().SetBool("moving", false);
-
+        else if (timeToAttack < 0.0f)
+        {
             // Set the time to attack
             timeToAttack = 1.0f / attackingFreq;
+            if (animatorRequired)
+            {
+                bool enemyAlreadyMoving = GetComponent<Animator>().GetBool("moving");
+                if (enemyAlreadyMoving) GetComponent<Animator>().SetBool("moving", false);
+            }
+
             switch (enemyType)
             {
                 case AttackType.MELEE:
                     // Melee attack
-                    transform.GetComponent<Animator>().SetBool("attacking", true);
+                    if (animatorRequired) transform.GetComponent<Animator>().SetBool("attacking", true);
                     // Invoke the "StopAttacking" function after 0.3 seconds
                     Invoke("StopAttacking", 0.3f);
                     break;
@@ -142,14 +161,17 @@ public class EnemyManager : MonoBehaviour
                     newBullet.GetComponent<Rigidbody>().velocity = direction;
                     break;
             }
-            
+        }
+        else
+        {
+            if (animatorRequired && GetComponent<Animator>().GetBool("moving")) GetComponent<Animator>().SetBool("moving", false);
         }
         
     }
 
     private void StopAttacking()
     {
-        transform.GetComponent<Animator>().SetBool("attacking", false);
+        if (animatorRequired) transform.GetComponent<Animator>().SetBool("attacking", false);
     }
 
     /**

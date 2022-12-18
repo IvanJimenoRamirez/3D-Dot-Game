@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 4117585574847190529}
   - component: {fileID: 4117585574847190530}
   m_Layer: 0
-  m_Name: Enemy2
+  m_Name: Enemy3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -814,6 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
+  animatorRequired: 1
   speed: 2
   enemyType: 0
   attackingFreq: 0.7
