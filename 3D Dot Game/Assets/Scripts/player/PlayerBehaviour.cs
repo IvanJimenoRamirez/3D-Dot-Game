@@ -7,8 +7,10 @@ public class PlayerBehaviour : MonoBehaviour
     public int health = 9;
     public int maxHealth = 10;
     public bool hasKey = false;
+    public bool hasBoomerang = true;
+    private GameObject activeBoomerang;
 
-    public GameObject rightHand, littleSword, bigSword;
+    public GameObject rightHand, littleSword, bigSword, boomerang;
 
     // Public attributes for the player's UI
     public Canvas heartIcons;
@@ -41,6 +43,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
 
         if (timeToTick > 0) timeToTick -= Time.deltaTime;
+
+        boomerangManage();
 
         // If the player is dead then destroy the player
         if (health <= 0)
@@ -109,8 +113,10 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 GetComponent<Animator>().SetBool("dead", true);
             }
-
-            Destroy(collision.gameObject);
+            if (collision.gameObject.tag == "EnemyBullet")
+            {
+                collision.gameObject.GetComponent<Explosion>().exploded = true;
+            }
         }
         // If the player collides with a health pickup, then heal
         if (collision.gameObject.tag == "HealthPickup")
@@ -136,6 +142,31 @@ public class PlayerBehaviour : MonoBehaviour
         // Change the heart icon in the "health" position to the empty heart
         if (takeDmg) heartIcons.transform.GetChild(health + 1).GetComponent<UnityEngine.UI.Image>().sprite = emptyHeart.GetComponent<UnityEngine.UI.Image>().sprite;
         else heartIcons.transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+    }
+
+    private void boomerangManage()
+    {
+        if ((Input.GetKeyDown("space")) && hasBoomerang && activeBoomerang==null)
+        {
+
+            float rotY = transform.rotation.eulerAngles.y;
+            Vector3 velocityMask = new Vector3(0f, 0f, 0f);
+
+            if ((337.5 <= rotY && rotY < 360)|| (0 <= rotY && rotY < 22.5)) velocityMask = new Vector3(0f, 0f, 1f);
+            else if (22.5 <= rotY && rotY < 67.5) velocityMask = new Vector3(1f, 0f, 1f);
+            else if (67.5 <= rotY && rotY < 112.5) velocityMask = new Vector3(1f, 0f, 0f);
+            else if (112.5 <= rotY && rotY < 157.5) velocityMask = new Vector3(1f, 0f, -1f);
+            else if (157.5 <= rotY && rotY < 202.5) velocityMask = new Vector3(0f, 0f, -1f);
+            else if (202.5 <= rotY && rotY < 247.5) velocityMask = new Vector3(-1f, 0f, -1f);
+            else if (247.5 <= rotY && rotY < 292.5) velocityMask = new Vector3(-1f, 0f, 0f);
+            else if (292.5 <= rotY && rotY < 337.5) velocityMask = new Vector3(-1f, 0f, 1f);
+            
+            Quaternion rot = transform.rotation;
+            Vector3 pos = transform.position;
+            pos.y -= 1.5f;
+            activeBoomerang = Instantiate(boomerang, pos, Quaternion.identity);
+            activeBoomerang.GetComponent<Boomerang>().velocityMask = velocityMask;
+        }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)

@@ -5,8 +5,12 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public bool exploded = false;
+    public Material explosionMat;
+    public GameObject coin, potion;
+    public bool getReward = true;
+    public float time = 3;
     
-    public float cubeSize = 0.2f;
+    public float cubeSize = 0.15f;
     public int cubesInRow = 5;
     public float explosionForce = 50f;
     public float explsionRadius = 4f;
@@ -44,6 +48,8 @@ public class Explosion : MonoBehaviour
         // Disappear box
         gameObject.SetActive(false);
 
+        if (getReward) reward();
+
         //loop 3 times to create 5x5x5 pieces in x,y,z coordinates
         for (int x = 0; x < cubesInRow; x++)
             for (int y = 0; y < cubesInRow; y++)
@@ -61,8 +67,10 @@ public class Explosion : MonoBehaviour
                 rb.AddExplosionForce(explosionForce, transform.position, explsionRadius, explosionUpward);
 
             }
-            Destroy(piece.gameObject, 3);
+            Destroy(piece.gameObject, time);
         }
+
+        Destroy(gameObject);
     }
 
     void createPiece(int x, int y, int z)
@@ -79,6 +87,28 @@ public class Explosion : MonoBehaviour
         piece.AddComponent<Rigidbody>();
         piece.GetComponent<Rigidbody>().mass = cubeSize;
 
+        //set material
+        piece.GetComponent<MeshRenderer>().material = explosionMat;
+
         pieces.Add(piece);
+    }
+
+    void reward()
+    {
+        // 40% of probability to get a reward
+        bool reward = Random.Range(0.0f, 100.0f) <= 40f ? true: false;
+
+        if (reward)
+        {
+            // 50% of propability to get a coin or a potion
+            bool coinReward = Random.Range(0.0f, 100.0f) <= 50;
+
+            // get object position
+            Vector3 pos = transform.position;
+
+            //Instantiate reward
+            if (coinReward) Instantiate(coin, new Vector3(pos.x, 2.5f, pos.z), Quaternion.identity);
+            else Instantiate(potion, new Vector3(pos.x, 1.5f, pos.z), Quaternion.identity);
+        }
     }
 }
