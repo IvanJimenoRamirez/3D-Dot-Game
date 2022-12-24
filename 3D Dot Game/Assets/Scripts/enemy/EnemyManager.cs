@@ -6,6 +6,12 @@ using System;
 public class EnemyManager : MonoBehaviour
 {
     public int health = 5;
+    public bool died;
+
+    //control
+    private int type;
+    private bool moveShot;
+    public Material mat;
 
     //Animator required
     public bool animatorRequired;
@@ -56,12 +62,28 @@ public class EnemyManager : MonoBehaviour
             }
             myPosition = getRoomPosition(transform.position);
         }
+        died = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         timeToAttack -= Time.deltaTime;        
+        if (died)
+        {
+            GetComponent<Explosion>().explosionMat = mat;
+            GetComponent<Explosion>().exploded = true;
+        }
+        else
+        {
+            if (moveShot) moveAndShoot();
+        }
+    }
+
+
+    private void moveAndShoot ()
+    {
+        timeToShoot -= Time.deltaTime;
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("PlayerP");
@@ -205,7 +227,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (animatorRequired) transform.GetComponent<Animator>().SetBool("attacking", false);
     }
-
+    
     /**
      * Given two positions in the world, returns a vector2 with the position in the room
      */
@@ -232,7 +254,7 @@ public class EnemyManager : MonoBehaviour
             }
             if (health <= 0)
             {
-                Destroy(gameObject);
+                died = true;
             }
         }
     }

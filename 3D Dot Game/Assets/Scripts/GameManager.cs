@@ -52,9 +52,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject floor, wall, corner, split, wallEnd, wallDoor, button, player, column, crate, crateDark, chest, table, tableMedium, tableSmall, chair, barrel, mug, bookcase, bookcaseBroken, book, bookOpen;
     public GameObject wallGate, wallGateDoor, doorGate, scaffold, scaffoldLeft, scaffoldRight, scaffoldLowLeft, scaffoldLowRight, columnBroken, bossKeyDoor;
-    public GameObject crab;
-    private int roomX = 8;
-    private int roomZ = 5;
+    public GameObject crab, bolb, archer, snake, potion, coin;
     float q = 4.0f;
 
 
@@ -422,81 +420,99 @@ public class GameManager : MonoBehaviour
         x = 16f * q; z = 0f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        //crab
+        //bolb
         infos = new ArrayList();
-        infos.Add(new Info(new Vector3(x + 16f, 1f, z + 10f), Quaternion.Euler(0f, 90f, 0f))); //left
-        room.Add(table, infos);
+        infos.Add(new Info(new Vector3(x + 14f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //left
+        infos.Add(new Info(new Vector3(x + 18f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //right
+        room.Add(bolb, infos);
 
-        objects.Add(1, room);
+        enemies.Add(1, room);
 
 
         //SALA 2
         x = 16f * q; z = 5f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(2, room);
+        enemies.Add(2, room);
 
 
         //SALA 3
         x = 8f * q; z = 5f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(3, room);
+        enemies.Add(3, room);
 
 
         //SALA 4
         x = 16f * q; z = 10f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(4, room);
+        enemies.Add(4, room);
 
 
         //SALA 5
         x = 8f * q; z = 10f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(5, room);
+        enemies.Add(5, room);
 
 
         //SALA 6
         x = 8f * q; z = 15f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(6, room);
+        enemies.Add(6, room);
 
 
         //SALA 7
         x = 0f * q; z = 10f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(7, room);
+        enemies.Add(7, room);
 
         //SALA 8
         x = 24f * q; z = 5f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(8, room);
+        enemies.Add(8, room);
 
 
         //SALA 9
         x = 24f * q; z = 10f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(9, room);
+        //archer
+        GameObject arch;
+
+        arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 2f), Quaternion.identity); //down-left
+        arch.GetComponent<archer>().position = 0;
+
+        arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 2f), Quaternion.identity); //down-right
+        arch.GetComponent<archer>().position = 1;
+
+        arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 18f), Quaternion.identity); //up-left
+        arch.GetComponent<archer>().position = 2;
+
+        arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 18f), Quaternion.identity); //up-right
+        arch.GetComponent<archer>().position = 3;
+
+
+
+        enemies.Add(9, room);
 
 
         //SALA 10
         x = 24f * q; z = 15f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(10, room);
+        enemies.Add(10, room);
 
 
         //SALA 11
         x = 16f * q; z = 15f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        objects.Add(11, room);
+        enemies.Add(11, room);
 
 
         //SALA 12
@@ -504,7 +520,7 @@ public class GameManager : MonoBehaviour
         room = new Dictionary<GameObject, ArrayList>();
 
 
-        objects.Add(12, room);
+        enemies.Add(12, room);
     }
 
     bool wallInScopeX(float x, float z)
@@ -514,15 +530,15 @@ public class GameManager : MonoBehaviour
             case 0f:
             case 40f:
                 return z >= 10f && z <= 15f;
-                break;
             case 8f:
             case 32f:
                 return z >= 5f && z <= 20f;
-                break;
             case 16f:
             case 24f:
                 return z >= 0f && z < 20f;
-                break;
+            case 12f:
+            case 27f:
+                return z >= 20f && z <= 30f;
         }
         return false;
     }
@@ -533,15 +549,14 @@ public class GameManager : MonoBehaviour
         {
             case 0.0f:
                 return x >= 16f && x <= 24f;
-                break;
             case 5.0f:
             case 20.0f:
                 return x >= 8f && x <= 32f;
-                break;
             case 10.0f:
             case 15.0f:
                 return x >= 0f && x <= 40f;
-                break;
+            case 30.0f:
+                return x >= 12f && x <= 27f; 
         }
         return false;
     }
@@ -551,6 +566,7 @@ public class GameManager : MonoBehaviour
         if ((x >= 8f && x < 32f) && (z >= 5f && z < 20f)) return true;
         if ((x >= 0f && x < 40f) && (z >= 10f && z < 15f)) return true;
         if ((x >= 16f && x < 24f) && (z >= 0f && z <= 5f)) return true;
+        if ((x >= 12f && x < 27f) && (z >= 20f && z <30f)) return true;
         return false;
     }
 
@@ -632,7 +648,7 @@ public class GameManager : MonoBehaviour
     {
         for (float x = 0; x <= 40; x++)
         {
-            for (float z = 0; z <= 20; z++)
+            for (float z = 0; z <= 30; z++)
             {
                 //Corner
                 if ((x == 0 && z == 10) || (x == 8 && z == 5) || (x == 16 && z == 0)) Instantiate(corner, new Vector3(q * x, 1.0f, q * z), Quaternion.identity);//left-bottom
@@ -645,9 +661,10 @@ public class GameManager : MonoBehaviour
                     if (!addDoors(x, z))
                     {
                         //Walls
-                        if (z % 5 == 0 && wallInScopeZ(x, z)) Instantiate(wall, new Vector3(q * x, 1.0f, q * z), Quaternion.identity); //horizontal                                                                                                                               
-                        if (x % 8 == 0 && wallInScopeX(x, z)) Instantiate(wall, new Vector3(q * x, 1.0f, q * z), Quaternion.Euler(0f, 90f, 0f)); //vertical
-                        if (z == 20 && (x == 16 || x == 24)) Instantiate(split, new Vector3(q * x, 1.0f, q * z), Quaternion.Euler(0f, 180f, 0f)); //split                                                                                                                               
+                        if (z % 5 == 0 && wallInScopeZ(x, z)) Instantiate(wall, new Vector3(q * x, 1.0f, q * z), Quaternion.identity); //horizontal
+                        if (((x % 8 == 0) || x == 12f || x == 27f) && wallInScopeX(x, z)) Instantiate(wall, new Vector3(q * x, 1.0f, q * z), Quaternion.Euler(0f, 90f, 0f)); //vertical
+                        if (z == 20 && (x == 16 || x == 24)) Instantiate(split, new Vector3(q * x, 1.0f, q * z), Quaternion.Euler(0f, 180f, 0f)); //split
+                         
                     }
                 }
 
@@ -679,6 +696,7 @@ public class GameManager : MonoBehaviour
         //SALA 1
         x = 16f * q; z = 0f * q;
         btn = Instantiate(button, new Vector3(x + q * 2f, 1f, z + q * 2f), Quaternion.identity);
+        btn.GetComponent<button>().room = 1;
 
         //SALA 7
         x = 0f * q; z = 10f * q;
@@ -713,6 +731,23 @@ public class GameManager : MonoBehaviour
         btn.GetComponent<button>().room = 12;
         btn.tag = "btn";
     }
+    
+    void initEnemies()
+    {
+        foreach (Dictionary<GameObject, ArrayList> room in enemies.Values)
+        {
+            foreach (KeyValuePair<GameObject, ArrayList> obj in room)
+            {
+                foreach (Info info in obj.Value)
+                {
+                    Instantiate(obj.Key, info.position, info.rotation);
+                }
+            }
+        }
+
+        //Boss
+        Instantiate(snake, new Vector3(20f, 1f, 25f), Quaternion.identity);
+    }
 
     private void spawnPlayer()
     {
@@ -722,12 +757,18 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //set object and enemies position
         objectPositions();
+        enemiesPosition();
+
+        //instantiate floor, walls and doors
         floorAndWalls();
+
+        //Instantiate objects, buttons, enemies and player
         initObjects();
         initButtons();
+        initEnemies();
         spawnPlayer();
-
     }
 
     // Update is called once per frame
