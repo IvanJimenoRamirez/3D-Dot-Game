@@ -10,9 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject floor, wall, corner, split, wallEnd, wallDoor, button, player, column, crate, crateDark, chest, table, tableMedium, tableSmall, chair, barrel, mug, bookcase, bookcaseBroken, book, bookOpen;
     public GameObject wallGate, wallGateDoor, doorGate, scaffold, scaffoldLeft, scaffoldRight, scaffoldLowLeft, scaffoldLowRight, columnBroken, bossKeyDoor;
-    public GameObject crab, bolb, archer, potion, coin;
-    private int roomX = 8;
-    private int roomZ = 5;
+    public GameObject crab, bolb, archer, snake, potion, coin;
     float q = 4.0f;
 
 
@@ -496,6 +494,9 @@ public class GameManager : MonoBehaviour
             case 16f:
             case 24f:
                 return z >= 0f && z < 20f;
+            case 12f:
+            case 27f:
+                return z >= 20f && z <= 30f;
         }
         return false;
     }
@@ -506,15 +507,14 @@ public class GameManager : MonoBehaviour
         {
             case 0.0f:
                 return x >= 16f && x <= 24f;
-                break;
             case 5.0f:
             case 20.0f:
                 return x >= 8f && x <= 32f;
-                break;
             case 10.0f:
             case 15.0f:
                 return x >= 0f && x <= 40f;
-                break;
+            case 30.0f:
+                return x >= 12f && x <= 27f; 
         }
         return false;
     }
@@ -524,6 +524,7 @@ public class GameManager : MonoBehaviour
         if ((x >= 8f && x < 32f) && (z >= 5f && z < 20f)) return true;
         if ((x >= 0f && x < 40f) && (z >= 10f && z < 15f)) return true;
         if ((x >= 16f && x < 24f) && (z >= 0f && z <= 5f)) return true;
+        if ((x >= 12f && x < 27f) && (z >= 20f && z <30f)) return true;
         return false;
     }
 
@@ -605,7 +606,7 @@ public class GameManager : MonoBehaviour
     {
         for (float x = 0; x <= 40; x++)
         {
-            for (float z = 0; z <= 20; z++)
+            for (float z = 0; z <= 30; z++)
             {
                 //Corner
                 if ((x == 0 && z == 10) || (x == 8 && z == 5) || (x == 16 && z == 0)) Instantiate(corner, new Vector3(q * x, 1.0f, q * z), Quaternion.identity);//left-bottom
@@ -618,9 +619,10 @@ public class GameManager : MonoBehaviour
                     if (!addDoors(x, z))
                     {
                         //Walls
-                        if (z % 5 == 0 && wallInScopeZ(x, z)) Instantiate(wall, new Vector3(q * x, 1.0f, q * z), Quaternion.identity); //horizontal                                                                                                                               
-                        if (x % 8 == 0 && wallInScopeX(x, z)) Instantiate(wall, new Vector3(q * x, 1.0f, q * z), Quaternion.Euler(0f, 90f, 0f)); //vertical
-                        if (z == 20 && (x == 16 || x == 24)) Instantiate(split, new Vector3(q * x, 1.0f, q * z), Quaternion.Euler(0f, 180f, 0f)); //split                                                                                                                               
+                        if (z % 5 == 0 && wallInScopeZ(x, z)) Instantiate(wall, new Vector3(q * x, 1.0f, q * z), Quaternion.identity); //horizontal
+                        if (((x % 8 == 0) || x == 12f || x == 27f) && wallInScopeX(x, z)) Instantiate(wall, new Vector3(q * x, 1.0f, q * z), Quaternion.Euler(0f, 90f, 0f)); //vertical
+                        if (z == 20 && (x == 16 || x == 24)) Instantiate(split, new Vector3(q * x, 1.0f, q * z), Quaternion.Euler(0f, 180f, 0f)); //split
+                         
                     }
                 }
 
@@ -652,6 +654,7 @@ public class GameManager : MonoBehaviour
         //SALA 1
         x = 16f * q; z = 0f * q;
         btn = Instantiate(button, new Vector3(x + q * 2f, 1f, z + q * 2f), Quaternion.identity);
+        btn.GetComponent<button>().room = 1;
 
         //SALA 7
         x = 0f * q; z = 10f * q;
@@ -699,6 +702,9 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        //Boss
+        Instantiate(snake, new Vector3(20f, 1f, 25f), Quaternion.identity);
     }
 
     private void spawnPlayer()

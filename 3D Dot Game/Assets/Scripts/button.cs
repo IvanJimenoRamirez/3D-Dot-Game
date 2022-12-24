@@ -15,9 +15,9 @@ public class button : MonoBehaviour
     public int room;
     public string roomTag;
     //chest manage
-    public bool hasChest;
-    public bool hasKey;
-    public Vector3 chestPosition;
+    private bool hasChest;
+    private bool hasKey;
+    private Vector3 chestPosition;
     private Quaternion chestRotation;
     private bool chestShown;
 
