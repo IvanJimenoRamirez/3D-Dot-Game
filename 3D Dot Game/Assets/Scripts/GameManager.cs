@@ -8,6 +8,48 @@ using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviour
 {
+
+    public List<List<Vector2>> collisions = new List<List<Vector2>>()
+    {
+        new List<Vector2>(){},  // 0 - No collisions at the moment
+        new List<Vector2>(){    // 1 - Room 1 collisions
+            new Vector2(3, 3),
+            new Vector2(4, 3),
+            new Vector2(5, 3),
+            new Vector2(6, 3),
+            new Vector2(7, 3),
+            new Vector2(8, 3),
+            new Vector2(9, 3),
+            new Vector2(10, 3),
+            new Vector2(11, 3),
+            new Vector2(12, 3),
+
+            new Vector2(3, 4),
+            new Vector2(4, 4),
+            new Vector2(5, 4),
+            new Vector2(6, 4),
+            new Vector2(7, 4),
+            new Vector2(8, 4),
+            new Vector2(9, 4),
+            new Vector2(10, 4),
+            new Vector2(11, 4),
+            new Vector2(12, 4),
+
+            new Vector2(5, 5),
+        },
+        new List<Vector2>(){},  // 2 - No collisions at the moment
+        new List<Vector2>(){},  // 3 - No collisions at the moment
+        new List<Vector2>(){},  // 4 - No collisions at the moment
+        new List<Vector2>(){},  // 5 - No collisions at the moment
+        new List<Vector2>(){},  // 6 - No collisions at the moment
+        new List<Vector2>(){},  // 7 - No collisions at the moment
+        new List<Vector2>(){},  // 8 - No collisions at the moment
+        new List<Vector2>(){},  // 9 - No collisions at the moment
+        new List<Vector2>(){},  // 10 - No collisions at the moment
+        new List<Vector2>(){},  // 11 - No collisions at the moment
+        new List<Vector2>(){},  // 12 - No collisions at the moment
+    };
+
     public GameObject floor, wall, corner, split, wallEnd, wallDoor, button, player, column, crate, crateDark, chest, table, tableMedium, tableSmall, chair, barrel, mug, bookcase, bookcaseBroken, book, bookOpen;
     public GameObject wallGate, wallGateDoor, doorGate, scaffold, scaffoldLeft, scaffoldRight, scaffoldLowLeft, scaffoldLowRight, columnBroken, bossKeyDoor;
     public GameObject crab;
@@ -694,4 +736,19 @@ public class GameManager : MonoBehaviour
 
     }
 
+    /**
+     * Sets a new collision for the given room and coords (x, z)
+     */
+    public void setCollision(int room, Vector2 coords)
+    {
+        collisions[room].Add(coords);
+    }
+
+    /**
+     * Removes a collision for a given room and coords (x, z)
+     */
+     public void removeCollision(int room, Vector2 coords)
+    {
+        collisions[room].Remove(coords);
+    }
 }

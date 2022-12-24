@@ -19,16 +19,21 @@ public class EnemyManager : MonoBehaviour
     public float speed = 2f;
 
     //Attack properties
-    public enum AttackType { MELEE, RANGED };
+    public enum AttackType { MELEE, RANGED, BOSS };
     public AttackType enemyType;
+    float timeToAttack;
     bool attacking;
     
     // Attack with bullets
     public float attackingFreq = 0.7f;
-    float timeToAttack;
     public GameObject bullet;
     public float shotSpeed = 15.0f;
 
+    //Boss properties
+    bool isBoss = false;
+    BossBody[] body;
+    public Vector2 myPosition;
+    public bool moving = true;
     
 
     // Start is called before the first frame update
@@ -40,6 +45,17 @@ public class EnemyManager : MonoBehaviour
         timeToAttack = 1.0f / attackingFreq;
         // At the start, the enemy is not attacking
         attacking = false;
+        // Boss properties
+        if (enemyType == AttackType.BOSS) isBoss = true; 
+        if (isBoss)
+        {
+            body = (BossBody[]) GameObject.FindObjectsOfType(typeof(BossBody));
+            for (int i = 0; i < body.Length-1; i++)
+            {
+                body[i].parent = body[i+1];
+            }
+            myPosition = getRoomPosition(transform.position);
+        }
     }
 
     // Update is called once per frame
@@ -54,7 +70,7 @@ public class EnemyManager : MonoBehaviour
             else
             {
                 // Player is dead
-                GetComponent<Animator>().SetBool("dancing", true);
+                if (animatorRequired) GetComponent<Animator>().SetBool("dancing", true);
             }
         }
 
@@ -77,9 +93,16 @@ public class EnemyManager : MonoBehaviour
                 transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
                 // Rotate the enemy to face the direction of the next node
                 transform.rotation = Quaternion.LookRotation(direction);
+
+                // If the enemy is a boss, update the moving value to make the childs move
+                if (isBoss) moving = true;
+                
                 // Change the animator to start the animation in case it has not started yet
-                bool enemyAlreadyMoving = GetComponent<Animator>().GetBool("moving");
-                if (!enemyAlreadyMoving) GetComponent<Animator>().SetBool("moving", true);
+                if (animatorRequired)
+                {
+                    bool enemyAlreadyMoving = GetComponent<Animator>().GetBool("moving");
+                    if (!enemyAlreadyMoving) GetComponent<Animator>().SetBool("moving", true);
+                }
             } else
             {
                 // Rotate the enemy to face the player
@@ -112,10 +135,16 @@ public class EnemyManager : MonoBehaviour
         {
             return pathLength <= 2;
         }
-        else
+        else if (enemyType == AttackType.RANGED)
         {
             return pathLength <= 5;
-        }   
+        }
+        else
+        {
+            // BOSS
+            moving = false;
+            return pathLength <= 2;
+        }
     }
 
     /**
@@ -160,6 +189,9 @@ public class EnemyManager : MonoBehaviour
                     direction = Vector3.Normalize(direction) * shotSpeed;
                     newBullet.GetComponent<Rigidbody>().velocity = direction;
                     break;
+                case AttackType.BOSS:
+                    // TODO: Boss attack
+                    return;
             }
         }
         else

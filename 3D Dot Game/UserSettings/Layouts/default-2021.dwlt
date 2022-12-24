@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1349
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 98
+  controlID: 20
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 462
     height: 1299
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 99
+  controlID: 21
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 100
+  controlID: 22
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -428,13 +428,13 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/models/Enemies/Enemy4
+    - Assets/models/Enemies/Enemy3
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 53
   m_LastFolders:
-  - Assets/models/Enemies/Enemy4
+  - Assets/models/Enemies/Enemy3
   m_LastFoldersGridSize: 53
   m_LastProjectPath: "C:\\Users\\ivanj\\OneDrive - Universitat Polit\xE8cnica de
     Catalunya\\GEI\\4t\\VJ\\3D Dot Game\\3D-Dot-Game\\3D Dot Game"
@@ -442,9 +442,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 20}
-    m_SelectedIDs: 74650000
-    m_LastClickedID: 25972
-    m_ExpandedIDs: 00000000d8610000da610000dc610000de6100005462000058620000826200004a64000000ca9a3bffffff7f
+    m_SelectedIDs: b2620000
+    m_LastClickedID: 25266
+    m_ExpandedIDs: 00000000ec610000ee610000f0610000f2610000f4610000f66100007a6200007e62000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -472,7 +472,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d8610000da610000dc610000de610000
+    m_ExpandedIDs: 00000000ec610000ee610000f0610000f2610000f4610000f6610000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -602,7 +602,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 627afdffe27cfffff2bdffff36fbffff
+      m_ExpandedIDs: 2ae7f6ff4ee7f6ff52e7f6ff64e7f6ff3401f7ff8402f7ffa6b9fcffac8cfeff40f4ffff96f8ffff36fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: Enemy4
@@ -613,7 +613,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        m_UserData: -33566
+        m_UserData: -1340
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -884,9 +884,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 79.44575, y: 0.040703773, z: 11.69712}
+    m_Target: {x: 84.115776, y: -11.706177, z: 28.43411}
     speed: 2
-    m_Value: {x: 79.44575, y: 0.040703773, z: 11.69712}
+    m_Value: {x: 84.115776, y: -11.706177, z: 28.43411}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -933,13 +933,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.28137988, y: 0.02896108, z: -0.008225742, w: -0.9592915}
+    m_Target: {x: -0.34409273, y: -0.020942863, z: 0.00794161, w: -0.93884236}
     speed: 2
-    m_Value: {x: -0.2813347, y: 0.02895643, z: -0.008224421, w: -0.9591375}
+    m_Value: {x: -0.3426159, y: -0.022360124, z: 0.008422807, w: -0.9391717}
   m_Size:
-    m_Target: 8.008273
+    m_Target: 20.128305
     speed: 2
-    m_Value: 8.385626
+    m_Value: 19.261536
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1036,18 +1036,18 @@ MonoBehaviour:
       y: 21
       width: 1793
       height: 888
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 896.5, y: 444}
+    m_Scale: {x: 1.3639592, y: 1.3639592}
+    m_Translation: {x: 896.50006, y: 444.00037}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -896.5
-      y: -444
-      width: 1793
-      height: 888
+      x: -657.2778
+      y: -325.5232
+      width: 1314.5554
+      height: 651.0459
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1793, y: 909}

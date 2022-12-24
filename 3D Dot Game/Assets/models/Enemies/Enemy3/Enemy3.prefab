@@ -820,6 +820,8 @@ MonoBehaviour:
   attackingFreq: 0.7
   bullet: {fileID: 0}
   shotSpeed: 15
+  myPosition: {x: 0, y: 0}
+  moving: 1
 --- !u!54 &4117585574847190530
 Rigidbody:
   m_ObjectHideFlags: 0
