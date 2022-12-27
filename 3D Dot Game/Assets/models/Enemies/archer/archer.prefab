@@ -108,9 +108,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6648184380235330310}
   - component: {fileID: 4135302876602128458}
-  - component: {fileID: -4410969095607016708}
   - component: {fileID: 491211339722392153}
   - component: {fileID: 4602347544641335515}
+  - component: {fileID: -8645581429188477587}
   m_Layer: 0
   m_Name: archer
   m_TagString: Enemy
@@ -156,26 +156,6 @@ MonoBehaviour:
   position: -1
   velocity: 0.3
   _time: 2
---- !u!114 &-4410969095607016708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587744758483052438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00433307ba8c49c409f8a639ff24cbc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 5
-  died: 0
-  mat: {fileID: 0}
-  player: {fileID: 0}
-  speed: 2
-  shootingFreq: 0.7
-  bullet: {fileID: 0}
-  shotSpeed: 15
 --- !u!65 &491211339722392153
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -212,6 +192,29 @@ MonoBehaviour:
   explosionForce: 50
   explsionRadius: 4
   explosionUpward: 0.4
+--- !u!114 &-8645581429188477587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587744758483052438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00433307ba8c49c409f8a639ff24cbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 5
+  died: 0
+  mat: {fileID: 2100000, guid: 8e800b1a17d0a1849b86380c07228cbe, type: 2}
+  animatorRequired: 0
+  speed: 2
+  enemyType: 3
+  attackingFreq: 0.7
+  bullet: {fileID: 0}
+  shotSpeed: 15
+  myPosition: {x: 0, y: 0}
+  moving: 1
 --- !u!1 &614126546051990221
 GameObject:
   m_ObjectHideFlags: 0

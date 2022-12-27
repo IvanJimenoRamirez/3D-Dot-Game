@@ -6,6 +6,10 @@ public class PlayerAttacking: MonoBehaviour
 {
 
     public Transform rightHandPlayer;
+    public GameObject bigSword, littleSword;
+    GameObject activeBigSword, activeLittleSword;
+
+    Transform player;
 
     public float attackSpeed = 1.3f;
     float timeToAttack;
@@ -15,25 +19,9 @@ public class PlayerAttacking: MonoBehaviour
     {
         // Define the time to attack speed
         timeToAttack = 1f / attackSpeed;
-    }
 
-    // Function called when the attack animation starts
-    void AttackStart()
-    {
-        if (rightHandPlayer.GetChild(0) != null)
-        {
-            // Set the collider to enabled
-            rightHandPlayer.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = true;
-        }
-    }
-    // Function called when the attack animation ends
-    void AttackEnd()
-    {
-        if (rightHandPlayer.GetChild(0) != null)
-        {
-            // Set the collider to disabled
-            rightHandPlayer.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
-        }
+        // Find the player
+        player = GameObject.Find("player(Clone)").transform;
     }
 
     // Update is called once per frame
@@ -46,11 +34,13 @@ public class PlayerAttacking: MonoBehaviour
             timeToAttack = 1f / attackSpeed;
             // modify the animator to set the "attacking" parameter to true
             GetComponent<Animator>().SetBool("attacking", true);
-            // invoke the "StopAttacking" function after 0.5 seconds
-            
+            // Start the audio
             GetComponent<AudioSource>().Play();
+            // Instantiate the big sword in front of the player
+            activeBigSword = Instantiate(whichSword(), rightHandPlayer.position + new Vector3(0, 0.3f, 0), Quaternion.identity);
+            activeBigSword.transform.rotation = Quaternion.Euler(90, player.rotation.eulerAngles.y, 0);
+            // invoke the "StopAttacking" function after 0.3 seconds            
             Invoke("StopAttacking", 0.3f);
-
         }
     }
 
@@ -58,9 +48,25 @@ public class PlayerAttacking: MonoBehaviour
     {
         // modify the animator to set the "attacking" parameter to false
         GetComponent<Animator>().SetBool("attacking", false);
+        // Destroy the big sword
+        Destroy(activeBigSword);
+        activeBigSword = null;
     }
 
     public float getTimeToAttack() {
         return timeToAttack;
+    }
+
+    /*
+     * Determines which sword to instantiate taking into account the player's health
+     */
+    private GameObject whichSword()
+    {
+        int health = player.GetComponent<PlayerBehaviour>().health;
+        if (health == 10)
+        {
+            return bigSword;
+        }
+        return littleSword;
     }
 }

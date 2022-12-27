@@ -6,76 +6,97 @@ using System;
 public class EnemyManager : MonoBehaviour
 {
     public int health = 5;
+    
+    // Die properties
     public bool died;
-
-    //control
-    private int type;
-    private bool moveShot;
     public Material mat;
 
+    //Animator required
+    public bool animatorRequired;
+
     // AI variables
-    public Transform player;
+    Transform player;
     PathFinding pathFinding;
     List<Node> path;
-    
+
     // Movement speed
     public float speed = 2f;
 
+    //Attack properties
+    public enum AttackType { MELEE, RANGED, BOSS, NONE };
+    public AttackType enemyType;
+    float timeToAttack;
+    bool attacking;
+
     // Attack with bullets
-    public float shootingFreq = 0.7f;
-    float timeToShoot;
+    public float attackingFreq = 0.7f;
     public GameObject bullet;
     public float shotSpeed = 15.0f;
 
-    
+    //Boss properties
+    bool isBoss = false;
+    BossBody[] body;
+    public Vector2 myPosition;
+    public bool moving = true;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        // Startup the pathfinding to find the path to the player in the room
         pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
-        timeToShoot = 1.0f / shootingFreq;
-        died = false;
+        // Set the time to attack
+        timeToAttack = 1.0f / attackingFreq;
+        // At the start, the enemy is not attacking
+        attacking = false;
+        // Boss properties
+        if (enemyType == AttackType.BOSS) {
+            isBoss = true;
+            myPosition = getRoomPosition(transform.position);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        timeToAttack -= Time.deltaTime;
         if (died)
         {
             GetComponent<Explosion>().explosionMat = mat;
             GetComponent<Explosion>().exploded = true;
         }
-        else
-        {
-            if (moveShot) moveAndShoot();
-        }
-    }
-
-
-    private void moveAndShoot ()
-    {
-        timeToShoot -= Time.deltaTime;
         if (player == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("PlayerP");
             if (p != null) player = p.transform;
-            else return;
+            else
+            {
+                // Player is dead
+                if (animatorRequired) GetComponent<Animator>().SetBool("dancing", true);
+            }
         }
 
+        if (!attacking && enemyType != AttackType.NONE)
+        {
+            // If the enemy is not attacking, it will move or attack
+            moveAndAttack();
+        }
+    }
+
+    /**
+     * Move || attack to the player
+     */
+    private void moveAndAttack()
+    {
         // Get my position in the room
         Vector2 enemyPos = getRoomPosition(transform.position);
         // Get the player position in the room
         Vector2 playerPos = getRoomPosition(player.position);
 
-        // Get the path to the player
-        path = pathFinding.getPath(enemyPos, playerPos);
-        pathFinding.restartRoom();
-
-        // Move towards the next node in the path (taking into account the node 0 is the current position)
-        if (path != null && path.Count > 5)
+        // Find path to the player
+        Node nextNode;
+        if (!inRangeToAttack(enemyPos, playerPos, out nextNode))
         {
-            // Get the next node in the path
-            Node nextNode = path[1];
             // Get the position of the next node
             Vector3 nextNodePos = new Vector3(nextNode.getX(), 0, nextNode.getY());
             // get the direction to the next node
@@ -84,34 +105,127 @@ public class EnemyManager : MonoBehaviour
             transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
             // Rotate the enemy to face the direction of the next node
             transform.rotation = Quaternion.LookRotation(direction);
+
+            // If the enemy is a boss, update the moving value to make the childs move
+            if (isBoss) moving = true;
+
+            // Change the animator to start the animation in case it has not started yet
+            if (animatorRequired)
+            {
+                bool enemyAlreadyMoving = GetComponent<Animator>().GetBool("moving");
+                if (!enemyAlreadyMoving) GetComponent<Animator>().SetBool("moving", true);
+            }
         }
         else
         {
             // Rotate the enemy to face the player
             transform.rotation = Quaternion.LookRotation(player.position - transform.position);
-
-            // If the path is null or the path is greater than 5, then shot the player a bullet
-            if (timeToShoot < 0.0f)
+            if (enemyType != AttackType.NONE)
             {
-
-                timeToShoot = 1.0f / shootingFreq;
-                // Instantiate the new bullet in front of the enemy
-                GameObject newBullet = Instantiate(bullet, transform.position + transform.forward, Quaternion.identity);
-                // Set the velocity of the bullet
-                Vector3 direction = player.position - transform.position;
-                direction.y = 0;
-                direction = Vector3.Normalize(direction) * shotSpeed;
-                newBullet.GetComponent<Rigidbody>().velocity = direction;
+                // Attack the player
+                attackPlayer();
             }
         }
+    }
+
+    /**
+     * Returns true if the enemy is in range to attack the player, otherwise false (including null path)
+     */
+    private bool inRangeToAttack(Vector2 enemyPos, Vector2 playerPos, out Node nextNode)
+    {
+        // Get the path
+        path = pathFinding.getPath(enemyPos, playerPos);
+        pathFinding.restartRoom();
+        // In case the enemy is at the same position as the player return
+        if (path == null)
+        {
+            nextNode = default;
+            return false;
+        }
+        //Set the next node were the enemy will move to in case it is not in range
+        nextNode = path[1];
+        int pathLength = path.Count;
+        // Check if the enemy is in range to attack the player
+        if (enemyType == AttackType.MELEE)
+        {
+            return pathLength <= 2;
+        }
+        else if (enemyType == AttackType.RANGED)
+        {
+            return pathLength <= 5;
+        }
+        else
+        {
+            // BOSS
+            moving = false;
+            return pathLength <= 2;
+        }
+    }
+
+    /**
+     * Attacks the player taking into account the type of enemy (range, melee)
+     */
+    void attackPlayer()
+    {
+        // distance to player
+        float distance = Vector3.Distance(transform.position, player.position);
+        // If the enemy is a melee enemy
+        if (enemyType == AttackType.MELEE && distance > 2.5f)
+        {
+            //Move to the player
+            transform.Translate((player.position - transform.position).normalized * speed * Time.deltaTime, Space.World);
+            if (animatorRequired && !GetComponent<Animator>().GetBool("moving")) GetComponent<Animator>().SetBool("moving", true);
+        }
+
+        else if (timeToAttack < 0.0f)
+        {
+            // Set the time to attack
+            timeToAttack = 1.0f / attackingFreq;
+            if (animatorRequired)
+            {
+                bool enemyAlreadyMoving = GetComponent<Animator>().GetBool("moving");
+                if (enemyAlreadyMoving) GetComponent<Animator>().SetBool("moving", false);
+            }
+
+            switch (enemyType)
+            {
+                case AttackType.MELEE:
+                    // Melee attack
+                    if (animatorRequired) transform.GetComponent<Animator>().SetBool("attacking", true);
+                    // Invoke the "StopAttacking" function after 0.3 seconds
+                    Invoke("StopAttacking", 0.3f);
+                    break;
+                case AttackType.RANGED:
+                    // Instantiate the new bullet in front of the enemy
+                    GameObject newBullet = Instantiate(bullet, transform.position + transform.forward, Quaternion.identity);
+                    // Set the velocity of the bullet
+                    Vector3 direction = player.position - transform.position;
+                    direction.y = 0;
+                    direction = Vector3.Normalize(direction) * shotSpeed;
+                    newBullet.GetComponent<Rigidbody>().velocity = direction;
+                    break;
+                case AttackType.BOSS:
+                    // TODO: Boss attack
+                    return;
+            }
+        }
+        else
+        {
+            if (animatorRequired && GetComponent<Animator>().GetBool("moving")) GetComponent<Animator>().SetBool("moving", false);
+        }
+    }
+
+    private void StopAttacking()
+    {
+        if (animatorRequired) transform.GetComponent<Animator>().SetBool("attacking", false);
     }
 
     /**
      * Given two positions in the world, returns a vector2 with the position in the room
      */
     private Vector2 getRoomPosition(Vector3 worldPosition)
-    {         
-        int roomX = (int) Mathf.Floor(Mathf.Floor(worldPosition.x % 32f) / 2f);
+    {
+        int roomX = (int)Mathf.Floor(Mathf.Floor(worldPosition.x % 32f) / 2f);
         int roomZ = (int)Mathf.Floor(Mathf.Floor(worldPosition.z % 20f) / 2f);
         return new Vector2(roomX, roomZ);
     }
@@ -153,7 +267,7 @@ public class EnemyManager : MonoBehaviour
 
         int roomX = (int)Mathf.Floor(worldPosition.x / 32f);
         if (roomX == 0 || roomX == 4) return roomIndexes[roomX][0];
-        
+
         int roomZ = (int)Mathf.Floor(worldPosition.z / 20f);
         return roomIndexes[roomX][roomZ];
     }
