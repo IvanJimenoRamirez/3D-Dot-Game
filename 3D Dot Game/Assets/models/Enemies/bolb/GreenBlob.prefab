@@ -137,6 +137,8 @@ MonoBehaviour:
   explosionMat: {fileID: 0}
   coin: {fileID: 2418978634637448579, guid: 784e91ad18d00ee498f37949d409336d, type: 3}
   potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
+  time: 3
   cubeSize: 0.15
   cubesInRow: 5
   explosionForce: 50
@@ -170,11 +172,14 @@ MonoBehaviour:
   health: 5
   died: 0
   mat: {fileID: 2100000, guid: 0b815806674b59b48ba94fe52c70d225, type: 2}
-  player: {fileID: 0}
+  animatorRequired: 0
   speed: 0
-  shootingFreq: 0
+  enemyType: 3
+  attackingFreq: 0.7
   bullet: {fileID: 0}
   shotSpeed: 0
+  myPosition: {x: 0, y: 0}
+  moving: 1
 --- !u!114 &1708209291218909141
 MonoBehaviour:
   m_ObjectHideFlags: 0

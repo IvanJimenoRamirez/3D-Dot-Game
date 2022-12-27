@@ -218,12 +218,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
+  died: 0
+  mat: {fileID: 2100000, guid: 1d9041704b030ab4a88e8f8839829020, type: 2}
   animatorRequired: 0
   speed: 2
   enemyType: 1
   attackingFreq: 0.7
   bullet: {fileID: 7516190231457120420, guid: 1ed3c03e86d9f384fb16a76445c5e670, type: 3}
   shotSpeed: 15
+  myPosition: {x: 0, y: 0}
+  moving: 1
 --- !u!114 &1817907669935523165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +241,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exploded: 0
+  explosionMat: {fileID: 0}
+  coin: {fileID: 0}
+  potion: {fileID: 0}
+  getReward: 1
+  time: 3
   cubeSize: 0.2
   cubesInRow: 5
   explosionForce: 50

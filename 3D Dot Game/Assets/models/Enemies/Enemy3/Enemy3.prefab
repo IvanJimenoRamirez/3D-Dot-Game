@@ -814,6 +814,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
+  died: 0
+  mat: {fileID: 2100000, guid: c5d33f30dd88c6545bbb1a8b0109f4d8, type: 2}
   animatorRequired: 1
   speed: 2
   enemyType: 0

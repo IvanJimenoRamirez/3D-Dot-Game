@@ -17,6 +17,10 @@ public class BossBody : MonoBehaviour
     Vector2 roomPosition;
     int roomIndex;
 
+    // Lateral movement
+    int lateralMovement = 0;
+    public bool right = true;
+
     //Game manager of the game
     GameManager manager;
 
@@ -35,6 +39,7 @@ public class BossBody : MonoBehaviour
         if (parent != null)
         {
             moving = parent.moving;
+            right = !parent.right;
         }
         else
         {
