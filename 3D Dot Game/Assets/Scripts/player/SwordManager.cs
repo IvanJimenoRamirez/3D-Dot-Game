@@ -54,11 +54,11 @@ public class SwordManager : MonoBehaviour
         }
         if (state == swordState.XXL)
         {
-            transform.position = transform.parent.position + new Vector3(0.3f, 0, 0);
+            //transform.position = transform.parent.position + new Vector3(0.3f, 0, 0);
         }
         else if (state == swordState.S)
         {
-            transform.position = transform.parent.position - new Vector3(0.3f, 0, 0);
+            //transform.position = transform.parent.position - new Vector3(0.3f, 0, 0);
         }
     }
 

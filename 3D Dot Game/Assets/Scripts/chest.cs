@@ -24,7 +24,7 @@ public class chest : MonoBehaviour
             if (hasKey)
             {
                 GameObject player = GameObject.FindWithTag("PlayerP");
-                player.GetComponent<PlayerBehaviour>().hasKey = true;
+                player.GetComponent<PlayerBehaviour>().updateKeys(1);
             }
         }
     }

@@ -40,10 +40,10 @@ public class doorScript : MonoBehaviour
         if ((state == s.CLOSED) && collision.gameObject.tag == "PlayerP")
         {
             GameObject player = GameObject.FindWithTag("PlayerP");
-            //if (player.GetComponent<PlayerBehaviour>().hasKey) {
+            if (player.GetComponent<PlayerBehaviour>().keys > 0) {
                 state = s.OPENING;
-                player.GetComponent<PlayerBehaviour>().hasKey = false;
-            //}
+                player.GetComponent<PlayerBehaviour>().updateKeys(-1);
+            }
         }
     }
 }

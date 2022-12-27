@@ -10,6 +10,7 @@ public class button : MonoBehaviour
     private enum s { NOPRESSED, TRANSITION, PRESSED }
     private s state;
     public bool pressed;
+    public Material pressedMaterial;
 
     //position
     public int room;
@@ -29,6 +30,12 @@ public class button : MonoBehaviour
         {
             state = s.TRANSITION;
             pressed = true;
+
+            //Change material color
+            MeshRenderer meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+            Material[] materials = meshRenderer.materials;
+            materials[0] = pressedMaterial;
+            meshRenderer.materials = materials;
         }
     }
 

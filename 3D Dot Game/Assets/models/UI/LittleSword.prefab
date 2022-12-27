@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5641852305845043872}
   - component: {fileID: 9182374438673311284}
   - component: {fileID: 5070629459421405119}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741453683333327057}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0, y: 0.629, z: 0}
+  m_LocalScale: {x: 1, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7993037943603448498}
@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4481051860497174326}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: empunyadura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3918079854272364142}
-  m_Father: {fileID: 1515103108921225249}
+  m_Father: {fileID: 9162365759188021416}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5254011504010374485
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 3918079854272364142}
   - component: {fileID: 2200289351792232228}
   - component: {fileID: 3435478657505010608}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,25 +220,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1515103108921225249}
-  - component: {fileID: 1826946959165740032}
-  - component: {fileID: 1514525796561973101}
-  m_Layer: 0
+  - component: {fileID: 9162365759188021416}
+  m_Layer: 5
   m_Name: LittleSword
   m_TagString: LittleSwordP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1515103108921225249
-Transform:
+--- !u!224 &9162365759188021416
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6303384830875357015}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 75.109, y: 2.316, z: 3.543}
+  m_LocalPosition: {x: 0, y: 0, z: 3.543}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -247,34 +245,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!54 &1826946959165740032
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6303384830875357015}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
---- !u!114 &1514525796561973101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6303384830875357015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f060520cc4c2a044ab9f857f2bf86804, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 75.109, y: 2.316}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7324868423379554312
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7993037943603448498}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: filoHoja
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,6 +279,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7394010756494064618}
-  m_Father: {fileID: 1515103108921225249}
+  m_Father: {fileID: 9162365759188021416}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
