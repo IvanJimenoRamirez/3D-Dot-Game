@@ -15,6 +15,9 @@ TagManager:
   - bossKeyDoor
   - EnemyBullet
   - Floor
+  - bossBullet
+  - bossBody
+  - bossHead
   layers:
   - Default
   - TransparentFX

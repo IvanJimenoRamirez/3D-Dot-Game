@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb04380cadce58c45baa75d60d5efbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
 --- !u!114 &1524607743530915370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,9 +364,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bcd65a62f3201548b14991e81cbb9ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 9
+  health: 10
   maxHealth: 10
   hasKey: 0
+  hasBoomerang: 1
   rightHand: {fileID: 1524607743083593179}
   littleSword: {fileID: 3561461824865272357, guid: a20a95bdd7fa083408bdd54056ffeede, type: 3}
   bigSword: {fileID: 5152302599240967009, guid: e5a7ceb9bfc15a54a9e1475fc4759da4, type: 3}

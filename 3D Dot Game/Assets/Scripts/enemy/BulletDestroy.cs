@@ -9,8 +9,12 @@ public class BulletDestroy : MonoBehaviour
         //if (collision.gameObject.tag != "PlayerP" && collision.gameObject.tag != "Enemy")
         if (collision.gameObject.tag == "Wall")
         {
-            GetComponent<Explosion>().exploded = true;
-            //Destroy(gameObject);
+            // if the bullet have the Explosion script
+            if (GetComponent<Explosion>() != null)
+            {
+                GetComponent<Explosion>().exploded = true;
+            }
+            else Destroy(gameObject);
         }
     }
 }

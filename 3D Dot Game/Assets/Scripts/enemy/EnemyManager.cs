@@ -38,7 +38,7 @@ public class EnemyManager : MonoBehaviour
     BossBody[] body;
     public Vector2 myPosition;
     public bool moving = true;
-
+    bool performingSpecial = false;
 
     // Start is called before the first frame update
     void Start()
@@ -76,7 +76,7 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
-        if (!attacking && enemyType != AttackType.NONE)
+        if (!attacking && enemyType != AttackType.NONE && !performingSpecial)
         {
             // If the enemy is not attacking, it will move or attack
             moveAndAttack();
@@ -97,6 +97,9 @@ public class EnemyManager : MonoBehaviour
         Node nextNode;
         if (!inRangeToAttack(enemyPos, playerPos, out nextNode))
         {
+            // If the enemy is a boss, update the moving value to make the childs move
+            if (isBoss) moving = true;
+            
             // Get the position of the next node
             Vector3 nextNodePos = new Vector3(nextNode.getX(), 0, nextNode.getY());
             // get the direction to the next node
@@ -106,8 +109,6 @@ public class EnemyManager : MonoBehaviour
             // Rotate the enemy to face the direction of the next node
             transform.rotation = Quaternion.LookRotation(direction);
 
-            // If the enemy is a boss, update the moving value to make the childs move
-            if (isBoss) moving = true;
 
             // Change the animator to start the animation in case it has not started yet
             if (animatorRequired)
@@ -158,7 +159,7 @@ public class EnemyManager : MonoBehaviour
         {
             // BOSS
             moving = false;
-            return pathLength <= 2;
+            return pathLength <= 6;
         }
     }
 
@@ -205,8 +206,16 @@ public class EnemyManager : MonoBehaviour
                     newBullet.GetComponent<Rigidbody>().velocity = direction;
                     break;
                 case AttackType.BOSS:
-                    // TODO: Boss attack
-                    return;
+                    // Instantiate the new bullet in front of the enemy, with velocity defined to go in front of the enemy (not in the direction of the player)
+                    GameObject newBulletBoss = Instantiate(bullet, transform.position + transform.forward + new Vector3(0f,1f,0f), Quaternion.identity);
+                    newBulletBoss.GetComponent<Rigidbody>().velocity = transform.forward * shotSpeed;
+
+                    GameObject newBulletBossLeft = Instantiate(bullet, transform.position + (-transform.right) + new Vector3(0f, 1f, 0f), Quaternion.identity);
+                    newBulletBossLeft.GetComponent<Rigidbody>().velocity = (-transform.right + transform.forward * 4).normalized * shotSpeed;
+
+                    GameObject newBulletBossRight = Instantiate(bullet, transform.position + transform.right + new Vector3(0f, 1f, 0f), Quaternion.identity);
+                    newBulletBossRight.GetComponent<Rigidbody>().velocity = (transform.right + transform.forward * 4).normalized * shotSpeed;
+                    break;
             }
         }
         else
@@ -270,5 +279,66 @@ public class EnemyManager : MonoBehaviour
 
         int roomZ = (int)Mathf.Floor(worldPosition.z / 20f);
         return roomIndexes[roomX][roomZ];
+    }
+
+    /**
+     * When the player destroys part of the body of the boss, increase the speed of the boss && performs a special attack
+     */
+    public void bodyDestroyed(float newSpeed)
+    {
+        speed = newSpeed;
+        // Special attack
+        specialAttack();
+    }
+    /**
+     * Stops the boss from moving (and it's body) and invokes the "performSpecialAttack" function after 1 second
+     */
+    private void specialAttack()
+    {
+        moving = false;
+        performingSpecial = true;
+        Invoke("performSpecialAttack", 1f);
+        
+    }
+    /**
+     * Instantiate one bullet for each direction and set the velocity of the bullet. Also invokes the "stopSpecialAttack" function after 0.3 seconds
+     */
+    private void performSpecialAttack()
+    {
+        // Create an array of vectors representing the 8 directions
+        Vector3[] directions = {
+            new Vector3(1f, 0f, 1f), // Top right
+            new Vector3(1f, 0f, 0f), // Right
+            new Vector3(1f, 0f, -1f), // Bottom right
+            new Vector3(0f, 0f, -1f), // Bottom
+            new Vector3(-1f, 0f, -1f), // Bottom left
+            new Vector3(-1f, 0f, 0f), // Left
+            new Vector3(-1f, 0f, 1f), // Top left
+            new Vector3(0f, 0f, 1f) // Top
+        };
+
+        // Shot a bullet in each direction
+        for (int i = 0; i < directions.Length; i++)
+        {
+            // Instantiate the new bullet a little bit further in the direction it's moving
+            GameObject newBullet = Instantiate(bullet, transform.position + new Vector3(1f, 1f, 1f) + directions[i] * 1f, Quaternion.identity);
+
+            // Get the rigidbody component of the new bullet
+            Rigidbody rigidbody = newBullet.GetComponent<Rigidbody>();
+
+            // Set the velocity of the new bullet using the direction and the bullet speed
+            rigidbody.velocity = directions[i] * shotSpeed;
+        }
+        Invoke("stopSpecialAttack", 0.3f);
+    }
+
+
+    /**
+     * Allows the boss and it's body parts to move again against the player
+     */
+    private void stopSpecialAttack()
+    {
+        performingSpecial = false;
+        moving = true;
     }
 }
