@@ -137,9 +137,8 @@ public class GameManager : MonoBehaviour
         room.Add(crate, infos);
 
         //chest
-        infos = new ArrayList();
-        infos.Add(new Info(new Vector3(x + 5f + 2f * 5.5f, 1f, z + 5f + 2f * 2.5f), Quaternion.identity));
-        room.Add(chest, infos);
+        GameObject chest3 = Instantiate(chest, new Vector3(x + 5f + 2f * 5.5f, 1f, z + 5f + 2f * 2.5f), Quaternion.identity);
+        chest3.GetComponent<chest>().hasKey = true;
 
         objects.Add(3, room);
 
@@ -252,9 +251,8 @@ public class GameManager : MonoBehaviour
         room.Add(bookOpen, infos);
 
         //chest
-        infos = new ArrayList();
-        infos.Add(new Info(new Vector3(x + 16f, 1f, z + 12f), Quaternion.identity));
-        room.Add(chest, infos);
+        GameObject chest6 = Instantiate(chest, new Vector3(x + 16f, 1f, z + 12f), Quaternion.identity);
+        chest6.GetComponent<chest>().hasBoomerang = true;
 
         objects.Add(6, room);
 

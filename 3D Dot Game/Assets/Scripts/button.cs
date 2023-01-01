@@ -87,6 +87,7 @@ public class button : MonoBehaviour
             if (hasChest && !chestShown) //room 1 and 7
             {
                 chestShown = true;
+                GetComponent<AudioSource>().Play();
                 GameObject newChest = Instantiate(chest, chestPosition, chestRotation);
                 newChest.GetComponent<chest>().hasKey = hasKey;
                 state = s.PRESSED;
@@ -116,6 +117,7 @@ public class button : MonoBehaviour
                 
                 if (allPressed)
                 {
+                    GetComponent<AudioSource>().Play();
                     GameObject newChest = Instantiate(chest, chestPosition, chestRotation);
                     newChest.GetComponent<chest>().hasBossKey = true;
                 }

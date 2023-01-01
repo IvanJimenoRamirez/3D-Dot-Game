@@ -9,6 +9,8 @@ public class doorScript : MonoBehaviour
     public bool needKey = true;
     public bool needBossKey = false;
 
+    GameObject player;
+
     enum s { CLOSED, OPENING, OPENED };
     private s state;
     private float transition;
@@ -32,7 +34,11 @@ public class doorScript : MonoBehaviour
                 transition += 2f;
                 transform.Rotate(new Vector3(0f, -2f, 0f));
             }
-            else state = s.OPENED;
+            else
+            {
+                state = s.OPENED;
+                if (player != null) player.GetComponent<PlayerMovement>().stop = false;
+            }
         }
     }
 
@@ -42,13 +48,15 @@ public class doorScript : MonoBehaviour
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
         if (state == s.CLOSED && collision.gameObject.tag == "PlayerP" && needKey)
         {
-            GameObject player = GameObject.FindWithTag("PlayerP");
+            player = GameObject.FindWithTag("PlayerP");
             if (needBossKey)
             {
                 if (player.GetComponent<PlayerBehaviour>().bossKeys > 0)
                 {
                     state = s.OPENING;
                     player.GetComponent<PlayerBehaviour>().updateBossKeys(-1);
+                    player.GetComponent<PlayerMovement>().stop = true;
+                    GetComponent<AudioSource>().Play();
                 }
             }
             else
@@ -57,6 +65,8 @@ public class doorScript : MonoBehaviour
                 {
                     state = s.OPENING;
                     player.GetComponent<PlayerBehaviour>().updateKeys(-1);
+                    player.GetComponent<PlayerMovement>().stop = true;
+                    GetComponent<AudioSource>().Play();
                 }
             }
         }
