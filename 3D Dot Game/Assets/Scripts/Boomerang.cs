@@ -14,6 +14,7 @@ public class Boomerang : MonoBehaviour
         velocity = new Vector3(2f * velocityMask.x, 0f, 2f * velocityMask.z);
         transform.position = transform.position + velocity;
         velocity = new Vector3(0.25f * velocityMask.x, 0f, 0.25f * velocityMask.z);
+        GetComponent<AudioSource>().Play();
     }
 
     // Update is called once per frame
@@ -30,7 +31,7 @@ public class Boomerang : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if (collision.gameObject.tag == "Wall" && !impact)
+        else if (!impact)
         {
             velocity = new Vector3(-1f*velocity.x, 0f, -1f*velocity.z);
             impact = true;

@@ -263,6 +263,11 @@ public class EnemyManager : MonoBehaviour
                 Debug.Log("He recibido daño");
                 health--;
             }
+            if (collision.gameObject.tag == "Boomerang")
+            {
+                Debug.Log("He recibido daño");
+                health--;
+            }
             if (health <= 0)
             {
                 died = true;

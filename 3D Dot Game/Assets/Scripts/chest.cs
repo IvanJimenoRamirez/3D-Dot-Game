@@ -22,9 +22,10 @@ public class chest : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if ((state != s.UNLOCK) && collision.gameObject.tag == "PlayerP")
+        if (state == s.LOCK && collision.gameObject.tag == "PlayerP")
         {
             state = s.UNLOCK;
+            GetComponent<AudioSource>().Play();
         }
     }
 
@@ -38,7 +39,12 @@ public class chest : MonoBehaviour
             position.y += 0.12f;
             gain = Instantiate(bossKey, position, Quaternion.identity);
         }
-        else if (hasBoomerang) gain = Instantiate(boomerang, position, Quaternion.identity);
+        else if (hasBoomerang)
+        {
+            position.y -= 2f;
+            gain = Instantiate(boomerang, position, Quaternion.identity);
+            gain.GetComponent<AudioSource>().volume = 0f;
+        }
     }
 
     // Update is called once per frame

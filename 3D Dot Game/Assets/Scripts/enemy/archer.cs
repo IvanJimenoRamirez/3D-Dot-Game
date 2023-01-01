@@ -7,7 +7,7 @@ public class archer : MonoBehaviour
 {
     public GameObject arrow;
     public int position = -1; //[0]down-left  [1]down-right  [2]up-left  [3] up-right
-    public float velocity = 0.1f;
+    public float velocity = 0.05f;
     
     enum s { POS_1, TRANS_1_2, TRANS_2_1, POS_2 };
     s state;
@@ -16,7 +16,7 @@ public class archer : MonoBehaviour
 
     bool posTreated = false;
     bool archerInit = false;
-    GameObject actArrow;
+    public GameObject actArrow;
     Vector3 vel1, vel2;
 
     [SerializeField] private float _time = 2f;
