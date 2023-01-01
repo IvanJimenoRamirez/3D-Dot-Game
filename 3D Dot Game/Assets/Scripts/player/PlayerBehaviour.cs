@@ -103,7 +103,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // If the player collides with an enemy or a enemy bullet, then take damage
-        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "BossBullet") && health > 0)
+        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "bossBullet") && health > 0)
         {
             if (timeToTick <= 0f)
             {
@@ -122,6 +122,10 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 collision.gameObject.GetComponent<Explosion>().exploded = true;
                 //Destroy(collision.gameObject);
+            }
+            if (collision.gameObject.tag == "EnemyBullet")
+            {
+                Destroy(collision.gameObject);
             }
         }
         // If the player collides with a health pickup, then heal

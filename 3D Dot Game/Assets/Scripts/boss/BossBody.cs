@@ -225,6 +225,7 @@ public class BossBody : MonoBehaviour
                     parent.changeSpeed(actualSpeed);
                 } else
                 {
+                    head.GetComponent<BoxCollider>().enabled = true;
                     changeSpeed(actualSpeed);
                 }
                 // Explode

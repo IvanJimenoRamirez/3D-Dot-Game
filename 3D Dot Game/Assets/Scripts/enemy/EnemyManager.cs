@@ -39,6 +39,13 @@ public class EnemyManager : MonoBehaviour
     public Vector2 myPosition;
     public bool moving = true;
     bool performingSpecial = false;
+    public GameObject frontalShotHolder;
+    public GameObject leftShotHolder;
+    public GameObject rightShotHolder;
+    public GameObject right2ShotHolder;
+    public GameObject right3ShotHolder;
+    public GameObject left2ShotHolder;
+    public GameObject left3ShotHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +60,7 @@ public class EnemyManager : MonoBehaviour
         if (enemyType == AttackType.BOSS) {
             isBoss = true;
             myPosition = getRoomPosition(transform.position);
+            GetComponent<BoxCollider>().enabled = false;
         }
     }
 
@@ -207,13 +215,13 @@ public class EnemyManager : MonoBehaviour
                     break;
                 case AttackType.BOSS:
                     // Instantiate the new bullet in front of the enemy, with velocity defined to go in front of the enemy (not in the direction of the player)
-                    GameObject newBulletBoss = Instantiate(bullet, transform.position + transform.forward + new Vector3(0f,1f,0f), Quaternion.identity);
+                    GameObject newBulletBoss = Instantiate(bullet, frontalShotHolder.transform.position, Quaternion.identity);
                     newBulletBoss.GetComponent<Rigidbody>().velocity = transform.forward * shotSpeed;
 
-                    GameObject newBulletBossLeft = Instantiate(bullet, transform.position + (-transform.right) + new Vector3(0f, 1f, 0f), Quaternion.identity);
+                    GameObject newBulletBossLeft = Instantiate(bullet, leftShotHolder.transform.position, Quaternion.identity);
                     newBulletBossLeft.GetComponent<Rigidbody>().velocity = (-transform.right + transform.forward * 4).normalized * shotSpeed;
 
-                    GameObject newBulletBossRight = Instantiate(bullet, transform.position + transform.right + new Vector3(0f, 1f, 0f), Quaternion.identity);
+                    GameObject newBulletBossRight = Instantiate(bullet, rightShotHolder.transform.position, Quaternion.identity);
                     newBulletBossRight.GetComponent<Rigidbody>().velocity = (transform.right + transform.forward * 4).normalized * shotSpeed;
                     break;
             }
@@ -247,10 +255,12 @@ public class EnemyManager : MonoBehaviour
         {
             if (collision.gameObject.tag == "BigSwordP")
             {
+                Debug.Log("He recibido daño");
                 health -= 2;
             }
             if (collision.gameObject.tag == "LittleSwordP")
             {
+                Debug.Log("He recibido daño");
                 health--;
             }
             if (health <= 0)
@@ -287,6 +297,8 @@ public class EnemyManager : MonoBehaviour
     public void bodyDestroyed(float newSpeed)
     {
         speed = newSpeed;
+        shotSpeed += 0.25f;
+        attackingFreq += 0.05f;
         // Special attack
         specialAttack();
     }
@@ -305,30 +317,27 @@ public class EnemyManager : MonoBehaviour
      */
     private void performSpecialAttack()
     {
-        // Create an array of vectors representing the 8 directions
-        Vector3[] directions = {
-            new Vector3(1f, 0f, 1f), // Top right
-            new Vector3(1f, 0f, 0f), // Right
-            new Vector3(1f, 0f, -1f), // Bottom right
-            new Vector3(0f, 0f, -1f), // Bottom
-            new Vector3(-1f, 0f, -1f), // Bottom left
-            new Vector3(-1f, 0f, 0f), // Left
-            new Vector3(-1f, 0f, 1f), // Top left
-            new Vector3(0f, 0f, 1f) // Top
-        };
+        GameObject newBulletBoss = Instantiate(bullet, frontalShotHolder.transform.position, Quaternion.identity);
+        newBulletBoss.GetComponent<Rigidbody>().velocity = transform.forward * shotSpeed;
 
-        // Shot a bullet in each direction
-        for (int i = 0; i < directions.Length; i++)
-        {
-            // Instantiate the new bullet a little bit further in the direction it's moving
-            GameObject newBullet = Instantiate(bullet, transform.position + new Vector3(1f, 1f, 1f) + directions[i] * 1f, Quaternion.identity);
+        GameObject newBulletBossLeft = Instantiate(bullet, leftShotHolder.transform.position, Quaternion.identity);
+        newBulletBossLeft.GetComponent<Rigidbody>().velocity = (-transform.right + transform.forward * 4).normalized * shotSpeed;
+        
+        GameObject newBulletBossLeft2 = Instantiate(bullet, left2ShotHolder.transform.position, Quaternion.identity);
+        newBulletBossLeft2.GetComponent<Rigidbody>().velocity = (-transform.right + transform.forward * 2).normalized * shotSpeed;
 
-            // Get the rigidbody component of the new bullet
-            Rigidbody rigidbody = newBullet.GetComponent<Rigidbody>();
+        GameObject newBulletBossLeft3 = Instantiate(bullet, left3ShotHolder.transform.position, Quaternion.identity);
+        newBulletBossLeft3.GetComponent<Rigidbody>().velocity = (-transform.right).normalized * shotSpeed;
 
-            // Set the velocity of the new bullet using the direction and the bullet speed
-            rigidbody.velocity = directions[i] * shotSpeed;
-        }
+        GameObject newBulletBossRight = Instantiate(bullet, rightShotHolder.transform.position, Quaternion.identity);
+        newBulletBossRight.GetComponent<Rigidbody>().velocity = (transform.right + transform.forward * 4).normalized * shotSpeed;
+
+        GameObject newBulletBossRight2 = Instantiate(bullet, right2ShotHolder.transform.position, Quaternion.identity);
+        newBulletBossRight2.GetComponent<Rigidbody>().velocity = (transform.right + transform.forward * 2).normalized * shotSpeed;
+
+        GameObject newBulletBossRight3 = Instantiate(bullet, right3ShotHolder.transform.position, Quaternion.identity);
+        newBulletBossRight3.GetComponent<Rigidbody>().velocity = (transform.right).normalized * shotSpeed;
+
         Invoke("stopSpecialAttack", 0.3f);
     }
 
