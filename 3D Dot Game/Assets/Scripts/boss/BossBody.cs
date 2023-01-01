@@ -17,12 +17,23 @@ public class BossBody : MonoBehaviour
     Vector2 roomPosition;
     int roomIndex;
 
+    //Materials
+    public Material mat;
+    public Material vulnerableMat;
+
     // Lateral movement
     int lateralMovement = 0;
     public bool right = true;
+    bool lateralReached = false;
 
     //Game manager of the game
     GameManager manager;
+
+    //Taking damage properties
+    public bool lastBody = false;
+    public int health = 5;
+    bool vulnerable = false;
+    float vulnerableTime = 0.0f;
 
     private void Start()
     {
@@ -39,7 +50,6 @@ public class BossBody : MonoBehaviour
         if (parent != null)
         {
             moving = parent.moving;
-            right = !parent.right;
         }
         else
         {
@@ -50,6 +60,7 @@ public class BossBody : MonoBehaviour
     private void Update()
     {
         updateProperties();
+        lateralAnimation();
         if (moving) move();
     }
 
@@ -70,12 +81,66 @@ public class BossBody : MonoBehaviour
         {
             moving = head.GetComponent<EnemyManager>().moving;
         }
+        if (lastBody)
+        {
+            if (!vulnerable)
+            {
+                // If the boss is not vulnerable, check if it should be with a 0.5%
+                if (Random.Range(0, 200) == 28)
+                {
+                    vulnerable = true;
+                    vulnerableTime = 0.0f;
+                    // Change the material of the boss
+                    GetComponent<Renderer>().material = vulnerableMat;
+                }
+            }
+            else
+            {
+                // If the boss is vulnerable, check if it should stop being vulnerable
+                vulnerableTime += Time.deltaTime;
+                if (vulnerableTime > 2.0f)
+                {
+                    vulnerable = false;
+                    //change the material of the body
+                    GetComponent<Renderer>().material = mat;
+                }
+            }
+        }
+    }
+
+    private void lateralAnimation()
+    {
+        if (moving)
+        {
+            if (lateralReached && lateralMovement == 0)
+            {
+                right = !right;
+                lateralMovement = 0;
+                lateralReached = false;
+            }
+            else
+            {
+                if (lateralReached)
+                {
+                    transform.position +=  transform.TransformDirection(new Vector3(((right) ? -0.01f : 0.01f), 0, 0));
+                    --lateralMovement;
+                }
+                else
+                {
+                    transform.position += transform.TransformDirection(new Vector3(((right) ? 0.01f : -0.01f), 0, 0));
+                    ++lateralMovement;
+                }
+
+                if (lateralMovement == 20) lateralReached = true;
+            }
+        }
+        
     }
 
     private void move() 
     {
         float distance = calcDistanceToParent();
-        if (distance > 0.9f)
+        if (distance > 1.3f)
         {
             // Get the position of the next node
             Vector3 nextNodePos = (parent != null) ? parent.position : head.transform.position;
@@ -136,5 +201,42 @@ public class BossBody : MonoBehaviour
         {
             return Vector3.Distance(transform.position, parent.transform.position);
         }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (lastBody && vulnerable)
+        {
+            if (collision.gameObject.tag == "BigSwordP")
+            {
+                health -= 5;
+            }
+            if (collision.gameObject.tag == "LittleSwordP")
+            {
+                health -= 2;
+            }
+            if (health <= 0)
+            {
+                //Startup new properties
+                float actualSpeed = head.GetComponent<EnemyManager>().speed;
+                actualSpeed += 0.5f;
+                if (parent != null)
+                {
+                    parent.lastBody = true;
+                    parent.changeSpeed(actualSpeed);
+                } else
+                {
+                    changeSpeed(actualSpeed);
+                }
+                // Explode
+                transform.GetComponent<Explosion>().exploded = true;
+            }
+        }
+    }
+
+    public void changeSpeed (float newSpeed)
+    {
+        if (parent != null) parent.changeSpeed(newSpeed);
+        else head.GetComponent<EnemyManager>().bodyDestroyed(newSpeed);
+        speed = newSpeed;
     }
 }

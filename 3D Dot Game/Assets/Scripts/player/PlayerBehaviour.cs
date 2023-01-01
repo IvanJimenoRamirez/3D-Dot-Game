@@ -62,7 +62,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // If the player collides with an enemy or a enemy bullet, then take damage
-        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet") && health > 0)
+        if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "BossBullet") && health > 0)
         {
             if (timeToTick <= 0f)
             {

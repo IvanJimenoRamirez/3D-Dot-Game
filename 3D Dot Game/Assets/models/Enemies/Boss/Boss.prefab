@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4261753683398625338}
   - component: {fileID: 6402225861003566134}
   - component: {fileID: 2213463668344691439}
+  - component: {fileID: 2001627307}
   m_Layer: 0
   m_Name: SnakeTail
   m_TagString: Untagged
@@ -113,7 +114,34 @@ MonoBehaviour:
   speed: 2
   parent: {fileID: 0}
   moving: 1
+  mat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  vulnerableMat: {fileID: 2100000, guid: 9bd145cc8983af34b865f322ab8acb97, type: 2}
   right: 1
+  lastBody: 0
+  health: 5
+--- !u!114 &2001627307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213463668344691438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c3465fda1df734bb9e89f96117696f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploded: 0
+  explosionMat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  coin: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
+  time: 3
+  cubeSize: 0.15
+  cubesInRow: 5
+  explosionForce: 50
+  explsionRadius: 4
+  explosionUpward: 0.4
 --- !u!1 &3895706346985496721
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,10 +192,10 @@ MonoBehaviour:
   mat: {fileID: 0}
   animatorRequired: 0
   speed: 2
-  enemyType: 0
-  attackingFreq: 0.7
-  bullet: {fileID: 0}
-  shotSpeed: 15
+  enemyType: 2
+  attackingFreq: 0.5
+  bullet: {fileID: 7516190231457120420, guid: e39e1e004d84b8a4e9cbf59ec94045f8, type: 3}
+  shotSpeed: 12
   myPosition: {x: 0, y: 0}
   moving: 1
 --- !u!1 &4382783882626988848
@@ -183,6 +211,7 @@ GameObject:
   - component: {fileID: 1819948650836716004}
   - component: {fileID: 8844028718160362984}
   - component: {fileID: 1819948650836716005}
+  - component: {fileID: 1456254582}
   m_Layer: 0
   m_Name: SnakeTail (1)
   m_TagString: Untagged
@@ -283,7 +312,34 @@ MonoBehaviour:
   speed: 2
   parent: {fileID: 2213463668344691439}
   moving: 1
-  right: 1
+  mat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  vulnerableMat: {fileID: 2100000, guid: 9bd145cc8983af34b865f322ab8acb97, type: 2}
+  right: 0
+  lastBody: 0
+  health: 5
+--- !u!114 &1456254582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382783882626988848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c3465fda1df734bb9e89f96117696f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploded: 0
+  explosionMat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  coin: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
+  time: 3
+  cubeSize: 0.15
+  cubesInRow: 5
+  explosionForce: 50
+  explsionRadius: 4
+  explosionUpward: 0.4
 --- !u!1 &4577953677071990175
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,6 +479,7 @@ GameObject:
   - component: {fileID: 7631895439315286492}
   - component: {fileID: 726342407839313360}
   - component: {fileID: 1397730110703261324}
+  - component: {fileID: 880378585}
   m_Layer: 0
   m_Name: SnakeTail (2)
   m_TagString: Untagged
@@ -523,7 +580,34 @@ MonoBehaviour:
   speed: 2
   parent: {fileID: 1819948650836716005}
   moving: 1
+  mat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  vulnerableMat: {fileID: 2100000, guid: 9bd145cc8983af34b865f322ab8acb97, type: 2}
   right: 1
+  lastBody: 0
+  health: 5
+--- !u!114 &880378585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5510989123421514504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c3465fda1df734bb9e89f96117696f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploded: 0
+  explosionMat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  coin: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
+  time: 3
+  cubeSize: 0.15
+  cubesInRow: 5
+  explosionForce: 50
+  explsionRadius: 4
+  explosionUpward: 0.4
 --- !u!1 &7155820475449147367
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +621,7 @@ GameObject:
   - component: {fileID: 7155820475449147363}
   - component: {fileID: 7155820475449147362}
   - component: {fileID: 7155820475449147365}
+  - component: {fileID: 1707964507}
   m_Layer: 0
   m_Name: SnakeTail (6)
   m_TagString: Untagged
@@ -637,7 +722,34 @@ MonoBehaviour:
   speed: 2
   parent: {fileID: 7155820476282446965}
   moving: 1
+  mat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  vulnerableMat: {fileID: 2100000, guid: 9bd145cc8983af34b865f322ab8acb97, type: 2}
   right: 1
+  lastBody: 1
+  health: 5
+--- !u!114 &1707964507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155820475449147367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c3465fda1df734bb9e89f96117696f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploded: 0
+  explosionMat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  coin: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
+  time: 3
+  cubeSize: 0.15
+  cubesInRow: 5
+  explosionForce: 50
+  explsionRadius: 4
+  explosionUpward: 0.4
 --- !u!1 &7155820476012950234
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +763,7 @@ GameObject:
   - component: {fileID: 7155820476012950233}
   - component: {fileID: 7155820476012950232}
   - component: {fileID: 7155820476012950235}
+  - component: {fileID: 1047988073}
   m_Layer: 0
   m_Name: SnakeTail (4)
   m_TagString: Untagged
@@ -751,7 +864,34 @@ MonoBehaviour:
   speed: 2
   parent: {fileID: 4362255737246391012}
   moving: 1
+  mat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  vulnerableMat: {fileID: 2100000, guid: 9bd145cc8983af34b865f322ab8acb97, type: 2}
   right: 1
+  lastBody: 0
+  health: 5
+--- !u!114 &1047988073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155820476012950234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c3465fda1df734bb9e89f96117696f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploded: 0
+  explosionMat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  coin: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
+  time: 3
+  cubeSize: 0.15
+  cubesInRow: 5
+  explosionForce: 50
+  explsionRadius: 4
+  explosionUpward: 0.4
 --- !u!1 &7155820476282446964
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +905,7 @@ GameObject:
   - component: {fileID: 7155820476282446963}
   - component: {fileID: 7155820476282446962}
   - component: {fileID: 7155820476282446965}
+  - component: {fileID: 226202105}
   m_Layer: 0
   m_Name: SnakeTail (5)
   m_TagString: Untagged
@@ -865,7 +1006,34 @@ MonoBehaviour:
   speed: 2
   parent: {fileID: 7155820476012950235}
   moving: 1
-  right: 1
+  mat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  vulnerableMat: {fileID: 2100000, guid: 9bd145cc8983af34b865f322ab8acb97, type: 2}
+  right: 0
+  lastBody: 0
+  health: 5
+--- !u!114 &226202105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7155820476282446964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c3465fda1df734bb9e89f96117696f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploded: 0
+  explosionMat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  coin: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
+  time: 3
+  cubeSize: 0.15
+  cubesInRow: 5
+  explosionForce: 50
+  explsionRadius: 4
+  explosionUpward: 0.4
 --- !u!1 &7176084901487863648
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,6 +1047,7 @@ GameObject:
   - component: {fileID: 5045601879319475636}
   - component: {fileID: 2735964021256528312}
   - component: {fileID: 4362255737246391012}
+  - component: {fileID: 989354975}
   m_Layer: 0
   m_Name: SnakeTail (3)
   m_TagString: Untagged
@@ -979,4 +1148,31 @@ MonoBehaviour:
   speed: 2
   parent: {fileID: 1397730110703261324}
   moving: 1
-  right: 1
+  mat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  vulnerableMat: {fileID: 2100000, guid: 9bd145cc8983af34b865f322ab8acb97, type: 2}
+  right: 0
+  lastBody: 0
+  health: 5
+--- !u!114 &989354975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7176084901487863648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c3465fda1df734bb9e89f96117696f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploded: 0
+  explosionMat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
+  coin: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
+  time: 3
+  cubeSize: 0.15
+  cubesInRow: 5
+  explosionForce: 50
+  explsionRadius: 4
+  explosionUpward: 0.4

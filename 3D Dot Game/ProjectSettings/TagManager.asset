@@ -17,6 +17,9 @@ TagManager:
   - Floor
   - Coin
   - Boomerang
+  - bossBullet
+  - bossBody
+  - bossHead
   layers:
   - Default
   - TransparentFX

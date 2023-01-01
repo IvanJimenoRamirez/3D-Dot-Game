@@ -63,7 +63,7 @@ public class PlayerAttacking: MonoBehaviour
     private GameObject whichSword()
     {
         int health = player.GetComponent<PlayerBehaviour>().health;
-        if (health == 10)
+        if (health >= 10)
         {
             return bigSword;
         }
