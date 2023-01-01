@@ -336,6 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
+  stop: 0
 --- !u!114 &1524607743530915370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,13 +367,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 10
   maxHealth: 10
-  hasKey: 0
-  hasBoomerang: 1
+  keys: 0
+  bossKeys: 0
+  coins: 0
+  hasBoomerang: 0
   rightHand: {fileID: 1524607743083593179}
   littleSword: {fileID: 3561461824865272357, guid: a20a95bdd7fa083408bdd54056ffeede, type: 3}
   bigSword: {fileID: 5152302599240967009, guid: e5a7ceb9bfc15a54a9e1475fc4759da4, type: 3}
   boomerang: {fileID: 1043659612925195731, guid: aa02fa3733d6e7c458a17f73e494054a, type: 3}
-  heartIcons: {fileID: 0}
+  UIcanvas: {fileID: 0}
   emptyHeart: {fileID: 5879485674947409569, guid: b3191d6b123ed75429b42ba1fded64c3, type: 3}
   filledHeart: {fileID: 2836477026477313752, guid: e59d3c6f7fe23774cb84dfc2b43e4649, type: 3}
   ticksPerSecond: 1.2

@@ -10,6 +10,7 @@ public class button : MonoBehaviour
     private enum s { NOPRESSED, TRANSITION, PRESSED }
     private s state;
     public bool pressed;
+    public Material pressedMaterial;
 
     //position
     public int room;
@@ -25,10 +26,16 @@ public class button : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if (state == s.NOPRESSED && collision.gameObject.tag == "PlayerP")
+        if (state == s.NOPRESSED && (collision.gameObject.tag == "PlayerP" || collision.gameObject.tag == "Boomerang"))
         {
             state = s.TRANSITION;
             pressed = true;
+
+            //Change material color
+            MeshRenderer meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+            Material[] materials = meshRenderer.materials;
+            materials[0] = pressedMaterial;
+            meshRenderer.materials = materials;
         }
     }
 

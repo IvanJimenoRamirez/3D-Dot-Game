@@ -6,6 +6,9 @@ using UnityEngine;
 public class doorScript : MonoBehaviour
 {
     public bool opened = false;
+    public bool needKey = true;
+    public bool needBossKey = false;
+
     enum s { CLOSED, OPENING, OPENED };
     private s state;
     private float transition;
@@ -37,13 +40,25 @@ public class doorScript : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if ((state == s.CLOSED) && collision.gameObject.tag == "PlayerP")
+        if (state == s.CLOSED && collision.gameObject.tag == "PlayerP" && needKey)
         {
             GameObject player = GameObject.FindWithTag("PlayerP");
-            //if (player.GetComponent<PlayerBehaviour>().hasKey) {
-                state = s.OPENING;
-                player.GetComponent<PlayerBehaviour>().hasKey = false;
-            //}
+            if (needBossKey)
+            {
+                if (player.GetComponent<PlayerBehaviour>().bossKeys > 0)
+                {
+                    state = s.OPENING;
+                    player.GetComponent<PlayerBehaviour>().updateBossKeys(-1);
+                }
+            }
+            else
+            {
+                if (player.GetComponent<PlayerBehaviour>().keys > 0)
+                {
+                    state = s.OPENING;
+                    player.GetComponent<PlayerBehaviour>().updateKeys(-1);
+                }
+            }
         }
     }
 }

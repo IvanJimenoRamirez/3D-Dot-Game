@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class mainCamera : MonoBehaviour
 {
+    public GameObject gamePlayer;
     public int roomActual;
     int roomPrevious;
     int transition;
     enum mov { LEFT, RIGHT, UP, DOWN, NONE};
     mov movement;
+    bool upBoss, downBoss;
 
     void key()
     {
@@ -74,10 +76,13 @@ public class mainCamera : MonoBehaviour
                 break;
             case 11:
                 if (m == mov.RIGHT) roomActual = 10;
-                //else if (roomActual==13) ; //TODO boss room
+                else if (m == mov.UP) roomActual = 13;
                 break;
             case 12:
                 if (m == mov.LEFT) roomActual = 9;
+                break;
+            case 13:
+                if (m == mov.DOWN) roomActual = 11;
                 break;
         }
     }
@@ -85,14 +90,20 @@ public class mainCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Find the GameManager to instantiate mainCamera instance
+        GameObject.Find("GameManager").GetComponent<GameManager>().gameMainCamera = gameObject;
+
         roomActual = roomPrevious = 1;
         transition = 0;
+
+        upBoss = false;
+        downBoss = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        key(); //TODO erase (testing)
+        //key(); //TODO erase (testing)
         auxKey(); //TODO erase (testing)
 
 
@@ -100,11 +111,15 @@ public class mainCamera : MonoBehaviour
         {
             if (transition > 0)
             {
-                if ( (transition == 21 && (movement == mov.UP || movement == mov.DOWN)) || (transition == 33 && (movement == mov.LEFT || movement == mov.RIGHT)) )
+                if ((transition == 21 && (movement == mov.UP || movement == mov.DOWN)) || (transition == 33 && (movement == mov.LEFT || movement == mov.RIGHT)))
                 {
+                    //transition finishes
                     transition = 0;
                     roomPrevious = roomActual;
-                } 
+                    gamePlayer.GetComponent<PlayerMovement>().stop = false;
+                    upBoss = false;
+                    downBoss = false;
+                }
                 else
                 {
                     switch (movement)
@@ -116,10 +131,20 @@ public class mainCamera : MonoBehaviour
                             transform.Translate(new Vector3(1f, 0f, 0f), Space.World);
                             break;
                         case mov.UP:
-                            transform.Translate(new Vector3(0f, 0f, 1f), Space.World);
+                            if (!upBoss) transform.Translate(new Vector3(0f, 0f, 1f), Space.World);
+                            else
+                            {
+                                transform.Rotate(new Vector3(10f / 21f, 0f, 0f), Space.World);
+                                transform.Translate(new Vector3(0f, 14f / 21f, 25f / 21f), Space.World);
+                            }
                             break;
                         case mov.DOWN:
-                            transform.Translate(new Vector3(0f, 0f, -1f), Space.World);
+                            if (!downBoss) transform.Translate(new Vector3(0f, 0f, -1f), Space.World);
+                            else
+                            {
+                                transform.Rotate(new Vector3(-10f / 21f, 0f, 0f), Space.World);
+                                transform.Translate(new Vector3(0f, -14f / 21f, -25f / 21f), Space.World);
+                            }
                             break;
                     }
                     transition++;
@@ -128,8 +153,16 @@ public class mainCamera : MonoBehaviour
             else
             {
                 movement = nextMovement();
-                if (movement != mov.NONE) transition++;
-                else roomActual = roomPrevious;
+                if (movement != mov.NONE)
+                {
+                    //transition starts
+                    transition++;
+                    gamePlayer.GetComponent<PlayerMovement>().stop = true;
+                }
+                else
+                {
+                    roomActual = roomPrevious;
+                }
             }
         }
     }
@@ -180,10 +213,21 @@ public class mainCamera : MonoBehaviour
                 break;
             case 11:
                 if (roomActual == 10) return mov.RIGHT;
-                //else if (roomActual==13) ; //TODO boss room
+                else if (roomActual == 13)
+                {
+                    upBoss = true;
+                    return mov.UP;
+                }
                 break;
             case 12:
                 if (roomActual == 9) return mov.LEFT;
+                break;
+            case 13:
+                if (roomActual == 11)
+                {
+                    downBoss = true;
+                    return mov.DOWN;
+                }
                 break;
         }
         return mov.NONE;
