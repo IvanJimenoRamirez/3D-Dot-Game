@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
     public int health = 9;
     public int maxHealth = 10;
-    public bool hasKey = false;
-    public bool hasBoomerang = true;
-    private GameObject activeBoomerang;
+    public int keys = 0, bossKeys = 0, coins = 0;
+    public bool hasBoomerang = false;
+    private GameObject activeBoomerang, UIbigSword, UIlittleSword;
 
     public GameObject rightHand, littleSword, bigSword, boomerang;
 
     // Public attributes for the player's UI
-    public Canvas heartIcons;
+    public Canvas UIcanvas;
     public GameObject emptyHeart, filledHeart;
 
     //Ticks per second
@@ -23,8 +24,12 @@ public class PlayerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Find the GameManager and the mainCamera to instantiate player instance
+        GameObject.Find("GameManager").GetComponent<GameManager>().gamePlayer = gameObject;
+        GameObject.Find("Main Camera").GetComponent<mainCamera>().gamePlayer = gameObject;
+
         // Find the canvas from the scene hierarchy
-        heartIcons = GameObject.Find("HeartUI").GetComponent<Canvas>();
+        UIcanvas = GameObject.Find("HeartUI").GetComponent<Canvas>();
         // Add the bigSword to the rightHand as the first child
         //Instantiate(bigSword, rightHand.transform);
         // Instantiate the heart icons
@@ -33,73 +38,27 @@ public class PlayerBehaviour : MonoBehaviour
         timeToTick = 1f / ticksPerSecond;
     }
 
-    private void setUpSwordColliders()
-    {
-        rightHand.transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
-    }
 
     // Update is called once per frame
     void Update()
     {
 
+        // Time to tick update
         if (timeToTick > 0) timeToTick -= Time.deltaTime;
+        
+        // If the player is dead then destroy the player
+        if (health <= 0) Invoke("destroyPlayer", 1.5f);
+
+        GodModeKeys();
 
         boomerangManage();
 
-        // If the player is dead then destroy the player
-        if (health <= 0)
-        {
-            Invoke("destroyPlayer", 1.5f);
-        }
-
-        if (transform.position.y > 1f || transform.position.y < .99f)
-        {
-            transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
-        }
-        /*
-        // Change the sword to the little one
-        if (health < maxHealth && rightHand.transform.GetChild(0).gameObject.name != "littleSword(Clone)")
-        {
-            Destroy(rightHand.transform.GetChild(0).gameObject);
-            Instantiate(littleSword, rightHand.transform);
-            setUpSwordColliders();
-        }
-        // If the player has the maxHealth && the sword in the right hand is the little one, then replace it with the big one
-        if (health == maxHealth && rightHand.transform.GetChild(0).gameObject.name != "bigSword(Clone)")
-        {
-            Destroy(rightHand.transform.GetChild(0).gameObject);
-            Instantiate(bigSword, rightHand.transform);
-            setUpSwordColliders();
-        }
-        */
-    }
-    void destroyPlayer()
-    {
-        Destroy(gameObject);
+        lockY();
     }
 
-    void playerUI()
-    {
-        // Update the canva to show the player's health
-        heartIcons.GetComponent<Canvas>().enabled = true;
-        for (int i = 0; i < maxHealth; i++)
-        {
-            if (i < health)
-            {
-                filledHeart.GetComponent<RectTransform>().anchoredPosition = new Vector2(28 * (i + 1), -28);
-                Instantiate(filledHeart, heartIcons.transform);
-            }
-            else
-            {
-                emptyHeart.GetComponent<RectTransform>().anchoredPosition = new Vector2(28 * (i + 1), -28);
-                Instantiate(emptyHeart, heartIcons.transform);
-            }
-        }
-    }
+    /* COLLISIONS */
 
-    /*
-     * This method is called when the player collides with an enemy
-     */
+    // This method is called when the player collides
     private void OnCollisionEnter(Collision collision)
     {
         // If the player collides with an enemy or a enemy bullet, then take damage
@@ -108,6 +67,10 @@ public class PlayerBehaviour : MonoBehaviour
             if (timeToTick <= 0f)
             {
                 health--;
+                if (health == 9) {
+                    UIbigSword.SetActive(false);
+                    UIlittleSword.SetActive(true);
+                }
                 changeHeartSprite(true);
                 timeToTick = 1f / ticksPerSecond;
 
@@ -128,30 +91,169 @@ public class PlayerBehaviour : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
+
         // If the player collides with a health pickup, then heal
         if (collision.gameObject.tag == "HealthPickup")
         {
             health++;
+            if (health >= 10)
+            {
+                health = 10;
+                UIbigSword.SetActive(true);
+                UIlittleSword.SetActive(false);
+            }
             changeHeartSprite(false);
             // Change the heart icon in the "health" position to the filled heart
+            Destroy(collision.gameObject);
+        }
+
+        // If the player collides with a coin
+        if (collision.gameObject.tag == "Coin")
+        {
+            updateCoins(1);
             Destroy(collision.gameObject);
         }
 
         // If the player collides with a wall, then stop moving
         if (collision.gameObject.tag == "Wall")
         {
-            Debug.Log("Collided with a wall");
             //Refactor
             GetComponent<PlayerMovement>().stopMoving();
         }
 
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody rigidBody = hit.collider.attachedRigidbody;
+
+        if (rigidBody != null)
+        {
+            Vector3 forceDir = hit.gameObject.transform.position - transform.position;
+            forceDir.y = 0;
+            forceDir.Normalize();
+            rigidBody.AddForceAtPosition(forceDir * 1, transform.position, ForceMode.Impulse);
+        }
+    }
+
+    /* PLAYER */
+
+    private void setUpSwordColliders()
+    {
+        rightHand.transform.GetChild(0).gameObject.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    private void destroyPlayer()
+    {
+        Destroy(gameObject);
+    }
+
+    private void lockY()
+    {
+        if (transform.position.y > 1f || transform.position.y < .99f)
+        {
+            transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
+        }
+    }
+    
+    private void GodModeKeys()
+    {
+        // K -> get key
+        if (Input.GetKeyDown(KeyCode.K)) updateKeys(1);
+
+        // B -> get Boss key
+        if (Input.GetKeyDown(KeyCode.B)) updateBossKeys(1);
+
+        // G -> invulnerability
+    }
+
+    /* UI */
+
+    // Initialization
+    private void playerUI()
+    {
+        // Update the canva to show the player's health
+        UIcanvas.GetComponent<Canvas>().enabled = true;
+        for (int i = 0; i < maxHealth; i++)
+        {
+            if (i < health)
+            {
+                filledHeart.GetComponent<RectTransform>().anchoredPosition = new Vector2(28 * (i + 1), -28);
+                Instantiate(filledHeart, UIcanvas.transform.Find("Hearts").transform);
+            }
+            else
+            {
+                emptyHeart.GetComponent<RectTransform>().anchoredPosition = new Vector2(28 * (i + 1), -28);
+                Instantiate(emptyHeart, UIcanvas.transform.Find("Hearts").transform);
+            }
+        }
+
+        // Hide Boomerang
+        GameObject boomerangCanva = UIcanvas.transform.Find("Boomerang").gameObject;
+        GameObject boomerang = boomerangCanva.transform.Find("UIboomerang").gameObject;
+        boomerang.SetActive(false);
+
+        //Find UI Swords
+        UIbigSword = UIcanvas.transform.Find("Sword").gameObject.transform.Find("UIbigSword").gameObject;
+        UIlittleSword = UIcanvas.transform.Find("Sword").gameObject.transform.Find("UIlittleSword").gameObject;
+        UIlittleSword.SetActive(false);
+    }
+
+    // Update UI hearts
     public void changeHeartSprite(bool takeDmg)
     {
         // Change the heart icon in the "health" position to the empty heart
-        if (takeDmg) heartIcons.transform.GetChild(health + 1).GetComponent<UnityEngine.UI.Image>().sprite = emptyHeart.GetComponent<UnityEngine.UI.Image>().sprite;
-        else heartIcons.transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+        if (takeDmg) UIcanvas.transform.Find("Hearts").transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = emptyHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+        else UIcanvas.transform.Find("Hearts").transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+    }
+
+    // Update UI Keys
+    public void updateKeys(int change)
+    {
+        keys += change;
+        if (keys < 0) keys = 0;
+        GameObject keysCanva = UIcanvas.transform.Find("Keys").gameObject;
+        TextMeshProUGUI text = keysCanva.transform.Find("Keys-counter").GetComponent<TextMeshProUGUI>();
+        text.SetText("x"+keys.ToString());
+    }
+
+    // Update UI Boss Keys
+    public void updateBossKeys(int change)
+    {
+        bossKeys += change;
+        if (keys < 0) keys = 0;
+        GameObject keysCanva = UIcanvas.transform.Find("BossKey").gameObject;
+        TextMeshProUGUI text = keysCanva.transform.Find("Keys-counter").GetComponent<TextMeshProUGUI>();
+        text.SetText("x" + bossKeys.ToString());
+    }
+
+    // Update UI Coins
+    public void updateCoins(int change)
+    {
+        coins += change;
+        if (keys < 0) keys = 0;
+        GameObject coinsCanva = UIcanvas.transform.Find("Coins").gameObject;
+        TextMeshProUGUI text = coinsCanva.transform.Find("Coins-counter").GetComponent<TextMeshProUGUI>();
+        text.SetText("x" + coins.ToString());
+    }
+
+    // Update UI Boomerang
+    private void updateBoomerang()
+    {
+        // Show Boomerang
+        GameObject boomerangCanva = UIcanvas.transform.Find("Boomerang").gameObject;
+        GameObject boomerang = boomerangCanva.transform.Find("UIboomerang").gameObject;
+        boomerang.SetActive(true);
+    }
+
+    /* BOOMERANG */
+
+    public void getBoomerang()
+    {
+        hasBoomerang = true;
+
+        // Add boomerang in the UI
+        updateBoomerang();
     }
 
     private void boomerangManage()
@@ -177,18 +279,10 @@ public class PlayerBehaviour : MonoBehaviour
             activeBoomerang = Instantiate(boomerang, pos, Quaternion.identity);
             activeBoomerang.GetComponent<Boomerang>().velocityMask = velocityMask;
         }
-    }
-
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        Rigidbody rigidBody = hit.collider.attachedRigidbody;
-
-        if (rigidBody != null)
+        else if (Input.GetKeyDown("space") && !hasBoomerang)
         {
-            Vector3 forceDir = hit.gameObject.transform.position - transform.position;
-            forceDir.y = 0;
-            forceDir.Normalize();
-            rigidBody.AddForceAtPosition(forceDir * 1, transform.position, ForceMode.Impulse);
+            getBoomerang();
         }
     }
+
 }

@@ -175,9 +175,9 @@ public class BossBody : MonoBehaviour
         List<List<int>> roomIndexes = new List<List<int>>()
         {
             new List<int> { 7 },
-            new List<int> { -1, 3, 5, 6 },  // -1 just to make easier the return
-            new List<int> { 1, 2, 4, 11 },
-            new List<int> { -1, 8, 9, 10 }, // -1 just to make easier the return
+            new List<int> { -1, 3, 5, 6, 13, 13 },  // -1 just to make easier the return
+            new List<int> { 1, 2, 4, 11, 13, 13 },
+            new List<int> { -1, 8, 9, 10, 13, 13}, // -1 just to make easier the return
             new List<int> { 12 }
         };
 

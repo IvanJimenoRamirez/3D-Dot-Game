@@ -49,6 +49,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 533757882599537072, guid: 690750f83050e8f44b6e99cc2a2805d9, type: 3}
   keyCanvas: {fileID: 7079466959421387720, guid: ca55bd9e9fc54f242bd3ba065f69a300, type: 3}
+  bossKey: {fileID: 8898392807153124557, guid: 069b2d49213a9304d9e5de255e870631, type: 3}
+  boomerang: {fileID: 1043659612925195731, guid: aa02fa3733d6e7c458a17f73e494054a, type: 3}
+  hasKey: 0
+  hasBossKey: 0
+  hasBoomerang: 0
+  state: 0
 --- !u!65 &9021577398693249119
 BoxCollider:
   m_ObjectHideFlags: 0
