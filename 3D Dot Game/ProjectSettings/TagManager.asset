@@ -16,6 +16,7 @@ TagManager:
   - EnemyBullet
   - Floor
   - Coin
+  - Boomerang
   layers:
   - Default
   - TransparentFX

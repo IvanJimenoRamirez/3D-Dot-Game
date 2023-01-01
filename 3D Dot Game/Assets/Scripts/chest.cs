@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class chest : MonoBehaviour
 {
-    public GameObject key, keyCanvas;
+    public GameObject key, keyCanvas, bossKey, boomerang;
     public bool hasKey;
     public bool hasBossKey;
+    public bool hasBoomerang;
 
-    public enum s { LOCK, UNLOCK, OPEN }
+
+    public enum s { LOCK, UNLOCK, OPEN, OPEN_FINISHED }
     public s state = s.LOCK;
 
-    private int transition = 0;
+    private int transition = 0, gainTransition = 0;
+    private GameObject gain;
+
     
     //Detect collisions between the GameObjects with Colliders attached
     void OnCollisionEnter(Collision collision)
@@ -21,11 +25,6 @@ public class chest : MonoBehaviour
         if ((state != s.UNLOCK) && collision.gameObject.tag == "PlayerP")
         {
             state = s.UNLOCK;
-            if (hasKey)
-            {
-                GameObject player = GameObject.FindWithTag("PlayerP");
-                player.GetComponent<PlayerBehaviour>().updateKeys(1);
-            }
         }
     }
 
@@ -33,13 +32,19 @@ public class chest : MonoBehaviour
     void Start()
     {
         Vector3 position = transform.position + new Vector3(0f, 1f, 0f);
-        Instantiate(key, position, Quaternion.identity);
+        if (hasKey) gain = Instantiate(key, position, Quaternion.identity);
+        else if (hasBossKey)
+        {
+            position.y += 0.12f;
+            gain = Instantiate(bossKey, position, Quaternion.identity);
+        }
+        else if (hasBoomerang) gain = Instantiate(boomerang, position, Quaternion.identity);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((state == s.UNLOCK) && (state != s.OPEN))
+        if (state == s.UNLOCK)
         {
             if (transition < 90)
             {
@@ -50,13 +55,45 @@ public class chest : MonoBehaviour
             else
             {
                 state = s.OPEN;
-                if (hasKey)
-                {
-                    Canvas canvas = GameObject.Find("HeartUI").GetComponent<Canvas>();
-                    keyCanvas.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, -180);
-                    Instantiate(keyCanvas, canvas.transform);
-                }
             }
+        }
+        else if (state == s.OPEN)
+        {
+            if (gainTransition < 150) gainAnimation();
+            else
+            {
+                Destroy(gain);
+                GameObject player = GameObject.FindWithTag("PlayerP");
+                if (hasKey) player.GetComponent<PlayerBehaviour>().updateKeys(1);
+                else if (hasBossKey) player.GetComponent<PlayerBehaviour>().updateBossKeys(1);
+                else if (hasBoomerang) player.GetComponent<PlayerBehaviour>().getBoomerang();
+                state = s.OPEN_FINISHED;
+            }
+        }
+    }
+
+    void gainAnimation()
+    {
+        if (gainTransition < 50)
+        {
+            Vector3 newPos = gain.transform.position;
+            newPos.y = newPos.y + 0.02f;
+            gain.transform.position = newPos;
+            gainTransition++;
+        }
+        else if (gainTransition >= 50 && gainTransition < 100)
+        {
+            gain.transform.Rotate(new Vector3(0f, -4f, 0f));
+            gainTransition++;
+        }
+        else
+        {
+            Vector3 newPos = gain.transform.position;
+            newPos.y = newPos.y + 0.5f;
+            gain.transform.position = newPos;
+            gainTransition++;
+            gain.transform.Rotate(new Vector3(0f, -4f, 0f));
+
         }
     }
 }

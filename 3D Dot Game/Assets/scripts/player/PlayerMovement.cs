@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
+    public bool stop;
     
     public void stopMoving()
     {
@@ -14,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        stop = false;
     }
 
     // Update is called once per frame
@@ -22,8 +23,8 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isAttacking = GetComponent<Animator>().GetBool("attacking");
         bool isDead = GetComponent<Animator>().GetBool("dead");
-        // If the player is not attacking and the animation attack has ended then move
-        if (!isAttacking && GetComponent<PlayerAttacking>().getTimeToAttack() <= 0 && !isDead)
+        // If the player is not attacking and the animation attack has ended then move and the player is not stopped
+        if (!isAttacking && GetComponent<PlayerAttacking>().getTimeToAttack() <= 0 && !isDead && !stop)
         {
             bool isMoving = false;
             // Move the player in the direction of the input and rotate it to face the direction of the input. Taking into account the diagonal character rotation

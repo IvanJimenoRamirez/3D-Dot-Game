@@ -24,6 +24,10 @@ public class PlayerBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Find the GameManager and the mainCamera to instantiate player instance
+        GameObject.Find("GameManager").GetComponent<GameManager>().gamePlayer = gameObject;
+        GameObject.Find("Main Camera").GetComponent<mainCamera>().gamePlayer = gameObject;
+
         // Find the canvas from the scene hierarchy
         UIcanvas = GameObject.Find("HeartUI").GetComponent<Canvas>();
         // Add the bigSword to the rightHand as the first child
@@ -88,8 +92,9 @@ public class PlayerBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "HealthPickup")
         {
             health++;
-            if (health == 10)
+            if (health >= 10)
             {
+                health = 10;
                 UIbigSword.SetActive(true);
                 UIlittleSword.SetActive(false);
             }
@@ -108,7 +113,6 @@ public class PlayerBehaviour : MonoBehaviour
         // If the player collides with a wall, then stop moving
         if (collision.gameObject.tag == "Wall")
         {
-            Debug.Log("Collided with a wall");
             //Refactor
             GetComponent<PlayerMovement>().stopMoving();
         }

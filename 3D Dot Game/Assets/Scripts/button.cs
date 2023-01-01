@@ -26,7 +26,7 @@ public class button : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if (state == s.NOPRESSED && collision.gameObject.tag == "PlayerP")
+        if (state == s.NOPRESSED && (collision.gameObject.tag == "PlayerP" || collision.gameObject.tag == "Boomerang"))
         {
             state = s.TRANSITION;
             pressed = true;
