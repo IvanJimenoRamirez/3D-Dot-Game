@@ -50,8 +50,6 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Startup the pathfinding to find the path to the player in the room
-        pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
         // Set the time to attack
         timeToAttack = 1.0f / attackingFreq;
         // At the start, the enemy is not attacking
@@ -61,6 +59,12 @@ public class EnemyManager : MonoBehaviour
             isBoss = true;
             myPosition = getRoomPosition(transform.position);
             GetComponent<BoxCollider>().enabled = false;
+            // Startup the pathfinding to find the path to the player in the room
+            pathFinding = new PathFinding(32, 18, 13);
+        } else
+        {
+            // Startup the pathfinding to find the path to the player in the room
+            pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
         }
     }
 
@@ -242,9 +246,17 @@ public class EnemyManager : MonoBehaviour
      */
     private Vector2 getRoomPosition(Vector3 worldPosition)
     {
-        int roomX = (int)Mathf.Floor(Mathf.Floor(worldPosition.x % 32f) / 2f);
-        int roomZ = (int)Mathf.Floor(Mathf.Floor(worldPosition.z % 20f) / 2f);
-        return new Vector2(roomX, roomZ);
+        if (enemyType != AttackType.BOSS)
+        {
+            int roomX = (int)Mathf.Floor(Mathf.Floor(worldPosition.x % 32f) / 2f);
+            int roomZ = (int)Mathf.Floor(Mathf.Floor(worldPosition.z % 20f) / 2f);
+            return new Vector2(roomX, roomZ);
+        } else
+        {
+            int roomX = (int)Mathf.Floor(Mathf.Floor((worldPosition.x - 48f) % 64f) / 2f);
+            int roomZ = (int)Mathf.Floor(Mathf.Floor((worldPosition.z - 80f) % 40f) / 2f);
+            return new Vector2(roomX, roomZ);
+        }
     }
 
     // On collide

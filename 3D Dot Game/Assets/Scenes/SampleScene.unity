@@ -1590,7 +1590,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &467083953
 GameObject:
@@ -2020,7 +2020,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3639630211834796369, guid: 32dfc19fe0c2fab4da515db0fd1acb4d, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3639630211834796369, guid: 32dfc19fe0c2fab4da515db0fd1acb4d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4629,6 +4629,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
+      propertyPath: bat
+      value: 
+      objectReference: {fileID: 1625221395402176, guid: 17b67c3fe2a12204bad987a0d88f7a1f, type: 3}
+    - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
       propertyPath: mug
       value: 
       objectReference: {fileID: 8852372246849653067, guid: 60e34db47cc231340ad8b12daf475b57, type: 3}
@@ -4704,6 +4708,10 @@ PrefabInstance:
       propertyPath: scaffold
       value: 
       objectReference: {fileID: 2913028953940395231, guid: 7f4e0e9a43a7860449de6eae374cd9df, type: 3}
+    - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
+      propertyPath: skeleton
+      value: 
+      objectReference: {fileID: 7246122731983836864, guid: c9690e0a9f9a8444ebfd74f7332a7c22, type: 3}
     - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
       propertyPath: wallDoor
       value: 

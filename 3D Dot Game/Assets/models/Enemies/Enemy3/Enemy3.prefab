@@ -758,6 +758,7 @@ GameObject:
   - component: {fileID: 4117585574847190528}
   - component: {fileID: 4117585574847190529}
   - component: {fileID: 4117585574847190530}
+  - component: {fileID: 3940888972067172958}
   m_Layer: 0
   m_Name: Enemy3
   m_TagString: Enemy
@@ -824,6 +825,13 @@ MonoBehaviour:
   shotSpeed: 15
   myPosition: {x: 0, y: 0}
   moving: 1
+  frontalShotHolder: {fileID: 0}
+  leftShotHolder: {fileID: 0}
+  rightShotHolder: {fileID: 0}
+  right2ShotHolder: {fileID: 0}
+  right3ShotHolder: {fileID: 0}
+  left2ShotHolder: {fileID: 0}
+  left3ShotHolder: {fileID: 0}
 --- !u!54 &4117585574847190530
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -840,6 +848,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &3940888972067172958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7246122731983836864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c3465fda1df734bb9e89f96117696f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exploded: 0
+  explosionMat: {fileID: 2100000, guid: c5d33f30dd88c6545bbb1a8b0109f4d8, type: 2}
+  coin: {fileID: 0}
+  potion: {fileID: 0}
+  getReward: 1
+  time: 3
+  cubeSize: 0.15
+  cubesInRow: 5
+  explosionForce: 50
+  explsionRadius: 4
+  explosionUpward: 0.4
 --- !u!1 &8378790975465630323
 GameObject:
   m_ObjectHideFlags: 0
