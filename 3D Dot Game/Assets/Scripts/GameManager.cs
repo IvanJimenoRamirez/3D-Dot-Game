@@ -50,11 +50,12 @@ public class GameManager : MonoBehaviour
         new List<Vector2>(){},  // 10 - No collisions at the moment
         new List<Vector2>(){},  // 11 - No collisions at the moment
         new List<Vector2>(){},  // 12 - No collisions at the moment
+        new List<Vector2>(){},  // 13 - No collisions at the moment
     };
 
     public GameObject floor, wall, corner, split, wallEnd, wallDoor, wallDoorBoss, button, player, column, crate, crateDark, chest, table, tableMedium, tableSmall, chair, barrel, mug, bookcase, bookcaseBroken, book, bookOpen;
     public GameObject wallGate, wallGateDoor, doorGate, scaffold, scaffoldLeft, scaffoldRight, scaffoldLowLeft, scaffoldLowRight, columnBroken, bossKeyDoor;
-    public GameObject crab, bolb, archer, snake, potion, coin, cratePlatformSmall, cratePlatformMedium, cratePlatformBig;
+    public GameObject crab, bolb, archer, skeleton, bat, boss, potion, coin, cratePlatformSmall, cratePlatformMedium, cratePlatformBig;
     public GameObject torch, torchLight, torchFire;
     float q = 4.0f;
 
@@ -71,8 +72,10 @@ public class GameManager : MonoBehaviour
         }
     }
     private Dictionary<int, Dictionary<GameObject, ArrayList>> objects = new Dictionary<int, Dictionary<GameObject, ArrayList>>();
-    private Dictionary<int, Dictionary<GameObject, ArrayList>> enemies = new Dictionary<int, Dictionary<GameObject, ArrayList>>();
+    private Dictionary<int, Dictionary<GameObject, ArrayList>> enemies = new Dictionary<int, Dictionary<GameObject, ArrayList>>(); // room < enemy, info >
 
+    private ArrayList activeEnemies;
+    
     void objectPositions()
     {
         Dictionary<GameObject, ArrayList> room;
@@ -557,60 +560,14 @@ public class GameManager : MonoBehaviour
             room.Add(torch, torchInfos);
             room.Add(torchLight, torchLightInfos);
             room.Add(torchFire, torchFireInfos);
-
-            /*
-            //torch
-            infos = new ArrayList();
-            if (!(x == 8f * 4f && z == 15f * 4f))
-            {
-                infos.Add(new Info(new Vector3(x + 8f, 3f, z + 19.3f), Quaternion.Euler(0f, 180f, 0f))); //horizontal up
-                infos.Add(new Info(new Vector3(x + 24f, 3f, z + 19.3f), Quaternion.Euler(0f, 180f, 0f)));
-            }
-            infos.Add(new Info(new Vector3(x + 8f, 3f, z + 0.7f), Quaternion.identity)); //horizontal down
-            infos.Add(new Info(new Vector3(x + 24f, 3f, z + 0.7f), Quaternion.identity));
-            infos.Add(new Info(new Vector3(x + 0.7f, 3f, z + 7f), Quaternion.Euler(0f, 90f, 0f))); //side left
-            infos.Add(new Info(new Vector3(x + 0.7f, 3f, z + 13f), Quaternion.Euler(0f, 90f, 0f)));
-            infos.Add(new Info(new Vector3(x + 31.3f, 3f, z + 7f), Quaternion.Euler(0f, -90f, 0f))); //side right
-            infos.Add(new Info(new Vector3(x + 31.3f, 3f, z + 13f), Quaternion.Euler(0f, -90f, 0f)));
-            room.Add(torch, infos);
-
-            //torchLight
-            infos = new ArrayList();
-            if (!(x == 8f * 4f && z == 15f * 4f))
-            {
-                infos.Add(new Info(new Vector3(x + 8f, 4f, z + 18.3f), Quaternion.Euler(0f, 180f, 0f))); //horizontal up
-                infos.Add(new Info(new Vector3(x + 24f, 4f, z + 18.3f), Quaternion.Euler(0f, 180f, 0f)));
-            }
-            infos.Add(new Info(new Vector3(x + 8f, 4f, z + 1.7f), Quaternion.identity)); //horizontal down
-            infos.Add(new Info(new Vector3(x + 24f, 4f, z + 1.7f), Quaternion.identity));
-            infos.Add(new Info(new Vector3(x + 1.7f, 4f, z + 7f), Quaternion.Euler(0f, 90f, 0f))); //side left
-            infos.Add(new Info(new Vector3(x + 1.7f, 4f, z + 13f), Quaternion.Euler(0f, 90f, 0f)));
-            infos.Add(new Info(new Vector3(x + 30.3f, 4f, z + 7f), Quaternion.Euler(0f, -90f, 0f)));//side right
-            infos.Add(new Info(new Vector3(x + 30.3f, 4f, z + 13f), Quaternion.Euler(0f, -90f, 0f)));
-
-            room.Add(torchLight, infos);
-
-            //torchFire
-            infos = new ArrayList();
-            if (!(x == 8f * 4f && z == 15f * 4f))
-            {
-                infos.Add(new Info(new Vector3(x + 8f, 3.7f, z + 18.7f), Quaternion.Euler(0f, 180f, 0f))); //horizontal up
-                infos.Add(new Info(new Vector3(x + 24f, 3.7f, z + 18.7f), Quaternion.Euler(0f, 180f, 0f)));
-            }
-            infos.Add(new Info(new Vector3(x + 8f, 3.7f, z + 1.3f), Quaternion.identity)); //horizontal down
-            infos.Add(new Info(new Vector3(x + 24f, 3.7f, z + 1.3f), Quaternion.identity));
-            infos.Add(new Info(new Vector3(x + 1.3f, 3.7f, z + 7f), Quaternion.Euler(0f, 90f, 0f))); //side left
-            infos.Add(new Info(new Vector3(x + 1.3f, 3.7f, z + 13f), Quaternion.Euler(0f, 90f, 0f)));
-            infos.Add(new Info(new Vector3(x + 30.7f, 3.7f, z + 7f), Quaternion.Euler(0f, -90f, 0f))); //side right
-            infos.Add(new Info(new Vector3(x + 30.7f, 3.7f, z + 13f), Quaternion.Euler(0f, -90f, 0f)));
-            room.Add(torchFire, infos);
-            */
         }
 
     }
     
     void enemiesPosition()
     {
+        GameObject arch;
+
         Dictionary<GameObject, ArrayList> room;
         ArrayList infos;
         float x, z;
@@ -620,17 +577,28 @@ public class GameManager : MonoBehaviour
         room = new Dictionary<GameObject, ArrayList>();
 
         //bolb
-        infos = new ArrayList();
+        infos = new ArrayList(); // Coordenades + rotació
         infos.Add(new Info(new Vector3(x + 14f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //left
         infos.Add(new Info(new Vector3(x + 18f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //right
-        room.Add(bolb, infos);
+        room.Add(bolb, infos); // Afegeix l'objecte del enemic concret + totes les instàncies a generar (coordenades i rotacions)
 
-        enemies.Add(1, room);
-
+        enemies.Add(1, room); // Sala 1, enemics de la room
 
         //SALA 2
         x = 16f * q; z = 5f * q;
         room = new Dictionary<GameObject, ArrayList>();
+
+        //bolb
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 10f, 1f, z + 6f), Quaternion.Euler(0f, 180f, 0f))); //left
+        infos.Add(new Info(new Vector3(x + 22f, 1f, z + 6f), Quaternion.Euler(0f, 180f, 0f))); //right
+        room.Add(bolb, infos); // Afegeix l'objecte del enemic concret + totes les instàncies a generar (coordenades i rotacions)
+
+        //skeleton
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 2, 1f, z + 18), Quaternion.Euler(0f, 180f, 0f))); //left
+        infos.Add(new Info(new Vector3(x + 31f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //right
+        room.Add(skeleton, infos); // Afegeix l'objecte del enemic concret + totes les instàncies a generar (coordenades i rotacions)
 
         enemies.Add(2, room);
 
@@ -639,6 +607,12 @@ public class GameManager : MonoBehaviour
         x = 8f * q; z = 5f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
+        //skeleton
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 1f, 1f, z + 4f), Quaternion.Euler(0f, 180f, 0f))); //left
+        infos.Add(new Info(new Vector3(x + 1f, 1f, z + 14f), Quaternion.Euler(0f, 0f, 0f))); //right
+        room.Add(skeleton, infos); // Afegeix l'objecte del enemic concret + totes les instàncies a generar (coordenades i rotacions)
+
         enemies.Add(3, room);
 
 
@@ -646,43 +620,7 @@ public class GameManager : MonoBehaviour
         x = 16f * q; z = 10f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        enemies.Add(4, room);
-
-
-        //SALA 5
-        x = 8f * q; z = 10f * q;
-        room = new Dictionary<GameObject, ArrayList>();
-
-        enemies.Add(5, room);
-
-
-        //SALA 6
-        x = 8f * q; z = 15f * q;
-        room = new Dictionary<GameObject, ArrayList>();
-
-        enemies.Add(6, room);
-
-
-        //SALA 7
-        x = 0f * q; z = 10f * q;
-        room = new Dictionary<GameObject, ArrayList>();
-
-        enemies.Add(7, room);
-
-        //SALA 8
-        x = 24f * q; z = 5f * q;
-        room = new Dictionary<GameObject, ArrayList>();
-
-        enemies.Add(8, room);
-
-
-        //SALA 9
-        x = 24f * q; z = 10f * q;
-        room = new Dictionary<GameObject, ArrayList>();
-
-        //archer
-        GameObject arch;
-
+        // Archer
         arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 2f), Quaternion.identity); //down-left
         arch.GetComponent<archer>().position = 0;
 
@@ -695,7 +633,98 @@ public class GameManager : MonoBehaviour
         arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 18f), Quaternion.identity); //up-right
         arch.GetComponent<archer>().position = 3;
 
+        // Bat
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 15f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f)));
+        room.Add(bat, infos); // Afegeix l'objecte del enemic concret + totes les instàncies a generar (coordenades i rotacions)
 
+        enemies.Add(4, room);
+
+
+        //SALA 5
+        x = 8f * q; z = 10f * q;
+        room = new Dictionary<GameObject, ArrayList>();
+
+        //skeleton
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 15f, 1f, z + 1f), Quaternion.Euler(0f, 0f, 0f))); //down
+        infos.Add(new Info(new Vector3(x + 15f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //up
+        room.Add(skeleton, infos);
+
+        // Bat
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 10f, 1f, z + 10f), Quaternion.Euler(0f, 90f, 0f)));
+        room.Add(bat, infos);
+
+        enemies.Add(5, room);
+
+
+        //SALA 6
+        x = 8f * q; z = 15f * q;
+        room = new Dictionary<GameObject, ArrayList>();
+
+        //bolb
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 10f, 1f, z + 12f), Quaternion.Euler(0f, 180f, 0f)));
+        infos.Add(new Info(new Vector3(x + 20f, 1f, z + 12f), Quaternion.Euler(0f, 180f, 0f)));
+        room.Add(bolb, infos);
+
+        // Bat
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 2f, 1f, z + 10f), Quaternion.Euler(0f, 90f, 0f)));
+        infos.Add(new Info(new Vector3(x + 28f, 1f, z + 10f), Quaternion.Euler(0f, 270f, 0f)));
+        room.Add(bat, infos);
+
+        enemies.Add(6, room);
+
+
+        //SALA 7
+        x = 0f * q; z = 10f * q;
+        room = new Dictionary<GameObject, ArrayList>();
+
+        // Bat
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 10f, 1f, z + 10f), Quaternion.Euler(0f, 90f, 0f)));
+        room.Add(bat, infos);
+
+        // bolb
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 18f, 1f, z + 2f), Quaternion.Euler(0f, 90f, 0f)));
+        infos.Add(new Info(new Vector3(x + 18f, 1f, z + 18f), Quaternion.Euler(0f, 90f, 0f)));
+        room.Add(bolb, infos);
+
+        enemies.Add(7, room);
+
+        //SALA 8
+        x = 24f * q; z = 5f * q;
+        room = new Dictionary<GameObject, ArrayList>();
+
+        // skeleton
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 20f, 1f, z + 2f), Quaternion.Euler(0f, 0f, 0f)));
+        infos.Add(new Info(new Vector3(x + 20f, 1f, z + 6f), Quaternion.Euler(0f, 180f, 0f)));
+        infos.Add(new Info(new Vector3(x + 20f, 1f, z + 8f), Quaternion.Euler(0f, 180f, 0f)));
+        room.Add(skeleton, infos);
+
+        enemies.Add(8, room);
+
+
+        //SALA 9
+        x = 24f * q; z = 10f * q;
+        room = new Dictionary<GameObject, ArrayList>();
+
+        // archer
+        arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 2f), Quaternion.identity); //down-left
+        arch.GetComponent<archer>().position = 0;
+
+        arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 2f), Quaternion.identity); //down-right
+        arch.GetComponent<archer>().position = 1;
+
+        arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 18f), Quaternion.identity); //up-left
+        arch.GetComponent<archer>().position = 2;
+
+        arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 18f), Quaternion.identity); //up-right
+        arch.GetComponent<archer>().position = 3;
 
         enemies.Add(9, room);
 
@@ -704,22 +733,62 @@ public class GameManager : MonoBehaviour
         x = 24f * q; z = 15f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        enemies.Add(10, room);
+        //bolb
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 2f, 1f, z + 2f), Quaternion.Euler(0f, 90f, 0f)));
+        infos.Add(new Info(new Vector3(x + 30f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f)));
+        room.Add(bolb, infos);
 
+        // skeleton
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 6f, 1f, z + 16f), Quaternion.Euler(0f, 0f, 0f)));
+        infos.Add(new Info(new Vector3(x + 28f, 1f, z + 16f), Quaternion.Euler(0f, 180f, 0f)));
+
+        room.Add(skeleton, infos);
+        enemies.Add(10, room);
 
         //SALA 11
         x = 16f * q; z = 15f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        enemies.Add(11, room);
+        // skeleton
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 16f, 1f, z + 6f), Quaternion.Euler(0f, 90f, 0f)));
+        infos.Add(new Info(new Vector3(x + 16f, 1f, z + 18f), Quaternion.Euler(0f, 90f, 0f)));
 
+        // Bat
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 6f, 1f, z + 12f), Quaternion.Euler(0f, 90f, 0f)));
+        room.Add(bat, infos);
+
+        enemies.Add(11, room);
 
         //SALA 12
         x = 32f * q; z = 10f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
+        // skeleton
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 8f, 1f, z + 8f), Quaternion.Euler(0f, 180f, 0f)));
+        infos.Add(new Info(new Vector3(x + 8f, 1f, z + 12f), Quaternion.Euler(0f, 0f, 0f)));
+        infos.Add(new Info(new Vector3(x + 22f, 1f, z + 8f), Quaternion.Euler(0f, 180f, 0f)));
+        infos.Add(new Info(new Vector3(x + 22f, 1f, z + 12f), Quaternion.Euler(0f, 0f, 0f)));
+        room.Add(skeleton, infos);
 
         enemies.Add(12, room);
+
+        //SALA 13
+        x = 12f * q; z = 20f * q;
+        room = new Dictionary<GameObject, ArrayList>();
+
+        // boss
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 32f, 1f, z + 18f), Quaternion.Euler(0f, 0f, 0f)));
+        room.Add(boss, infos);
+
+        enemies.Add(13, room);
+
+
     }
 
     bool wallInScopeX(float x, float z)
@@ -944,18 +1013,28 @@ public class GameManager : MonoBehaviour
         btn = Instantiate(button, new Vector3(x + 23f, 1f, z + 16f), Quaternion.Euler(0f, 180f, 0f));
         btn.GetComponent<button>().room = 12;
         btn.tag = "btn";
+
+        //SALA 13
+        x = 32f * q; z = 10f * q;
     }
 
-    void initEnemies()
+    void removeEnemies()
     {
-        foreach (Dictionary<GameObject, ArrayList> room in enemies.Values)
+        foreach (GameObject enemy in activeEnemies)
         {
-            foreach (KeyValuePair<GameObject, ArrayList> obj in room)
+            if (enemy != null) Destroy(enemy);
+        }
+    }
+
+    void initEnemies(int roomKey)
+    {
+        activeEnemies = new ArrayList();
+        foreach (System.Collections.Generic.KeyValuePair<UnityEngine.GameObject, System.Collections.ArrayList> obj in enemies[roomKey])
+        {
+            foreach (Info info in obj.Value)
             {
-                foreach (Info info in obj.Value)
-                {
-                    Instantiate(obj.Key, info.position, info.rotation);
-                }
+                GameObject newEnemy = Instantiate(obj.Key, info.position, info.rotation);
+                activeEnemies.Add(newEnemy);
             }
         }
     }
@@ -980,7 +1059,7 @@ public class GameManager : MonoBehaviour
         //Instantiate objects, buttons, enemies and player
         initObjects();
         initButtons();
-        initEnemies();
+        initEnemies(1);
         spawnPlayer();
     }
 
@@ -997,6 +1076,8 @@ public class GameManager : MonoBehaviour
 
         if (actualRoom != room)
         {
+            removeEnemies();
+            initEnemies(actualRoom);
             room = actualRoom;
             gameMainCamera.GetComponent<mainCamera>().roomActual = room;
         }
@@ -1026,6 +1107,8 @@ public class GameManager : MonoBehaviour
      */
     public void setCollision(int room, Vector2 coords)
     {
+        // if the coords are already in the list, return
+        if (collisions[room].Contains(coords)) return;
         collisions[room].Add(coords);
     }
 

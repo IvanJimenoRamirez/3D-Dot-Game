@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.ComponentModel.Design;
+using UnityEngine.UIElements;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -50,8 +52,6 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Startup the pathfinding to find the path to the player in the room
-        pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
         // Set the time to attack
         timeToAttack = 1.0f / attackingFreq;
         // At the start, the enemy is not attacking
@@ -61,6 +61,12 @@ public class EnemyManager : MonoBehaviour
             isBoss = true;
             myPosition = getRoomPosition(transform.position);
             GetComponent<BoxCollider>().enabled = false;
+            // Startup the pathfinding to find the path to the player in the room
+            pathFinding = new PathFinding(32, 18, 13);
+        } else
+        {
+            // Startup the pathfinding to find the path to the player in the room
+            pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
         }
     }
 
@@ -105,11 +111,41 @@ public class EnemyManager : MonoBehaviour
         Node nextNode;
         if (!inRangeToAttack(enemyPos, playerPos, out nextNode))
         {
+            float nextX, nextY;
+
+            if (nextNode == null)
+            {
+                // Move to a random direction, taking into account the obstacles in the room
+                List<Vector2> roomCollisions = GameObject.Find("GameManager").GetComponent<GameManager>().collisions[getRoomIndex(transform.position)];
+                List<Vector2> directions = new List<Vector2>() {
+                    new Vector2(0, 1),
+                    new Vector2(0, -1),
+                    new Vector2(1, 0),
+                    new Vector2(-1, 0),
+                    new Vector2(1, 1),
+                    new Vector2(1, -1),
+                    new Vector2(-1, 1),
+                    new Vector2(-1, -1)
+                };
+                List<Vector2> randomMovement = new List<Vector2>();
+                foreach (Vector2 move in directions)
+                {
+                    if (!roomCollisions.Contains((enemyPos + move))) randomMovement.Add((enemyPos + move));
+                }
+                Vector2 position = randomMovement[UnityEngine.Random.Range(0, randomMovement.Count)];
+                nextX = position.x;
+                nextY = position.y;
+            } else
+            {
+                nextX = nextNode.getX();
+                nextY = nextNode.getY();
+            }
+
             // If the enemy is a boss, update the moving value to make the childs move
             if (isBoss) moving = true;
-            
+
             // Get the position of the next node
-            Vector3 nextNodePos = new Vector3(nextNode.getX(), 0, nextNode.getY());
+            Vector3 nextNodePos = new Vector3(nextX, 0, nextY);
             // get the direction to the next node
             Vector3 direction = nextNodePos - new Vector3(enemyPos.x, 0, enemyPos.y);
             // Move to the direction represented by the direction vector
@@ -146,7 +182,7 @@ public class EnemyManager : MonoBehaviour
         path = pathFinding.getPath(enemyPos, playerPos);
         pathFinding.restartRoom();
         // In case the enemy is at the same position as the player return
-        if (path == null)
+        if (path == null || path.Count == 1)
         {
             nextNode = default;
             return false;
@@ -242,9 +278,17 @@ public class EnemyManager : MonoBehaviour
      */
     private Vector2 getRoomPosition(Vector3 worldPosition)
     {
-        int roomX = (int)Mathf.Floor(Mathf.Floor(worldPosition.x % 32f) / 2f);
-        int roomZ = (int)Mathf.Floor(Mathf.Floor(worldPosition.z % 20f) / 2f);
-        return new Vector2(roomX, roomZ);
+        if (enemyType != AttackType.BOSS)
+        {
+            int roomX = (int)Mathf.Floor(Mathf.Floor(worldPosition.x % 32f) / 2f);
+            int roomZ = (int)Mathf.Floor(Mathf.Floor(worldPosition.z % 20f) / 2f);
+            return new Vector2(roomX, roomZ);
+        } else
+        {
+            int roomX = (int)Mathf.Floor(Mathf.Floor((worldPosition.x - 48f) % 64f) / 2f);
+            int roomZ = (int)Mathf.Floor(Mathf.Floor((worldPosition.z - 80f) % 40f) / 2f);
+            return new Vector2(roomX, roomZ);
+        }
     }
 
     // On collide
@@ -283,9 +327,9 @@ public class EnemyManager : MonoBehaviour
         List<List<int>> roomIndexes = new List<List<int>>()
         {
             new List<int> { 7 },
-            new List<int> { -1, 3, 5, 6 },  // -1 just to make easier the return
-            new List<int> { 1, 2, 4, 11 },
-            new List<int> { -1, 8, 9, 10 }, // -1 just to make easier the return
+            new List<int> { -1, 3, 5, 6, 13, 13 },  // -1 just to make easier the return
+            new List<int> { 1, 2, 4, 11, 13, 13 },
+            new List<int> { -1, 8, 9, 10, 13, 13 }, // -1 just to make easier the return
             new List<int> { 12 }
         };
 

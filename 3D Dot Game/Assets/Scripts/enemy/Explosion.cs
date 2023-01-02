@@ -7,9 +7,9 @@ public class Explosion : MonoBehaviour
     public bool exploded = false;
     public Material explosionMat;
     public GameObject coin, potion;
-    public bool getReward = true;
+    public bool getReward = false;
     public float time = 3;
-    
+
     public float cubeSize = 0.15f;
     public int cubesInRow = 5;
     public float explosionForce = 50f;

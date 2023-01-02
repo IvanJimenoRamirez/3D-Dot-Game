@@ -5758,6 +5758,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
+      propertyPath: bat
+      value: 
+      objectReference: {fileID: 1625221395402176, guid: 17b67c3fe2a12204bad987a0d88f7a1f, type: 3}
+    - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
       propertyPath: mug
       value: 
       objectReference: {fileID: 8852372246849653067, guid: 60e34db47cc231340ad8b12daf475b57, type: 3}
@@ -5769,6 +5773,10 @@ PrefabInstance:
       propertyPath: book
       value: 
       objectReference: {fileID: 2717440966837797682, guid: 9591d1ff652a9f1409b52decd6ddc47a, type: 3}
+    - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 4577953677071990175, guid: ade37e22c25c4cc46a595505c1c81d97, type: 3}
     - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
       propertyPath: coin
       value: 
@@ -5833,6 +5841,10 @@ PrefabInstance:
       propertyPath: scaffold
       value: 
       objectReference: {fileID: 2913028953940395231, guid: 7f4e0e9a43a7860449de6eae374cd9df, type: 3}
+    - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
+      propertyPath: skeleton
+      value: 
+      objectReference: {fileID: 7246122731983836864, guid: c9690e0a9f9a8444ebfd74f7332a7c22, type: 3}
     - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
       propertyPath: wallDoor
       value: 

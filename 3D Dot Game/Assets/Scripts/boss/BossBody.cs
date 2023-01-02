@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class BossBody : MonoBehaviour
 {
-
-
-    // Movement speed
+   // Movement speed
     public float speed = 2f;
 
     // Basic properties
@@ -42,7 +40,7 @@ public class BossBody : MonoBehaviour
         
         //Set up basic properties
         position = transform.position;
-        head = GameObject.Find("Boss").transform.GetChild(0).gameObject;
+        head = GameObject.Find("Boss(Clone)").transform.GetChild(0).gameObject;
         roomPosition = getRoomPosition(transform.position);
         roomIndex = getRoomIndex(transform.position);
 
@@ -68,9 +66,15 @@ public class BossBody : MonoBehaviour
     {
         Vector2 newRoomPosition = getRoomPosition(transform.position);
         if (newRoomPosition != roomPosition)
-        { 
-            manager.setCollision(roomIndex, newRoomPosition);
+        {
+            ArrayList directions = new ArrayList()
+            {
+                new Vector2(0, 1), new Vector2(0, -1), new Vector2(1, 0), new Vector2(-1, 0)
+            };
             manager.removeCollision(roomIndex, roomPosition);
+            foreach (Vector2 dir in directions) manager.removeCollision(roomIndex, roomPosition + dir);
+            manager.setCollision(roomIndex, newRoomPosition);
+            foreach (Vector2 dir in directions) manager.setCollision(roomIndex, newRoomPosition + dir);
             roomPosition = newRoomPosition;
         }
         if (parent != null)
@@ -130,7 +134,6 @@ public class BossBody : MonoBehaviour
                     transform.position += transform.TransformDirection(new Vector3(((right) ? 0.01f : -0.01f), 0, 0));
                     ++lateralMovement;
                 }
-
                 if (lateralMovement == 20) lateralReached = true;
             }
         }
