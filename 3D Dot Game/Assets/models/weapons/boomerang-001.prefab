@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -2930474683723458709}
   - component: {fileID: 4239626757215103715}
   - component: {fileID: 8211826916606258557}
-  - component: {fileID: 1203722367006178819}
+  - component: {fileID: 8854480829510072642}
   m_Layer: 0
   m_Name: boomerang-001
   m_TagString: Boomerang
@@ -79,7 +79,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!82 &1203722367006178819
+--- !u!82 &8854480829510072642
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,7 +89,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f5b4db5f02f3eae45a994e658cc21582, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ed50ba59d5f8d49499f5119b71dcd85e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

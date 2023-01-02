@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8399995138221815176}
   - component: {fileID: 680684075245504783}
   - component: {fileID: 7807442063722113122}
-  - component: {fileID: 4220089683107508757}
+  - component: {fileID: 7051084608076904018}
   m_Layer: 0
   m_Name: buttonRed1
   m_TagString: Boomerang
@@ -125,7 +125,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.65
   m_Center: {x: -0.00003501773, y: 0.166133, z: -0.00000047683716}
---- !u!82 &4220089683107508757
+--- !u!82 &7051084608076904018
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -73,12 +73,12 @@ public class SwordManager : MonoBehaviour
             switch (comboDirection)
             {
                 case specialDirection.LEFT:
-                    transform.Rotate(0, 0, 3);
-                    player.Rotate(0, -3, 0);
+                    transform.Rotate(0, 0, 8);
+                    player.Rotate(0, -8, 0);
                     break;
                 case specialDirection.RIGHT:
-                    transform.Rotate(0, 0, -3);
-                    player.Rotate(0, 3, 0);
+                    transform.Rotate(0, 0, -8);
+                    player.Rotate(0, 8, 0);
                     break;
             }
         }
