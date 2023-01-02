@@ -1109,6 +1109,8 @@ public class GameManager : MonoBehaviour
      */
     public void setCollision(int room, Vector2 coords)
     {
+        // if the coords are already in the list, return
+        if (collisions[room].Contains(coords)) return;
         collisions[room].Add(coords);
     }
 
