@@ -864,7 +864,7 @@ MonoBehaviour:
   explosionMat: {fileID: 2100000, guid: c5d33f30dd88c6545bbb1a8b0109f4d8, type: 2}
   coin: {fileID: 0}
   potion: {fileID: 0}
-  getReward: 1
+  getReward: 0
   time: 3
   cubeSize: 0.15
   cubesInRow: 5

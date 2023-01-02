@@ -42,7 +42,7 @@ public class BossBody : MonoBehaviour
         
         //Set up basic properties
         position = transform.position;
-        head = GameObject.Find("Boss").transform.GetChild(0).gameObject;
+        head = GameObject.Find("Boss(Clone)").transform.GetChild(0).gameObject;
         roomPosition = getRoomPosition(transform.position);
         roomIndex = getRoomIndex(transform.position);
 

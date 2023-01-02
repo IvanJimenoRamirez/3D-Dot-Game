@@ -50,11 +50,12 @@ public class GameManager : MonoBehaviour
         new List<Vector2>(){},  // 10 - No collisions at the moment
         new List<Vector2>(){},  // 11 - No collisions at the moment
         new List<Vector2>(){},  // 12 - No collisions at the moment
+        new List<Vector2>(){},  // 13 - No collisions at the moment
     };
 
     public GameObject floor, wall, corner, split, wallEnd, wallDoor, wallDoorBoss, button, player, column, crate, crateDark, chest, table, tableMedium, tableSmall, chair, barrel, mug, bookcase, bookcaseBroken, book, bookOpen;
     public GameObject wallGate, wallGateDoor, doorGate, scaffold, scaffoldLeft, scaffoldRight, scaffoldLowLeft, scaffoldLowRight, columnBroken, bossKeyDoor;
-    public GameObject crab, bolb, archer, skeleton, bat, snake, potion, coin, cratePlatformSmall, cratePlatformMedium, cratePlatformBig;
+    public GameObject crab, bolb, archer, skeleton, bat, boss, potion, coin, cratePlatformSmall, cratePlatformMedium, cratePlatformBig;
     public GameObject torch, torchLight, torchFire;
     float q = 4.0f;
 
@@ -73,7 +74,7 @@ public class GameManager : MonoBehaviour
     private Dictionary<int, Dictionary<GameObject, ArrayList>> objects = new Dictionary<int, Dictionary<GameObject, ArrayList>>();
     private Dictionary<int, Dictionary<GameObject, ArrayList>> enemies = new Dictionary<int, Dictionary<GameObject, ArrayList>>(); // room < enemy, info >
 
-    private List<GameObject> activeEnemies;
+    private ArrayList activeEnemies;
     
     void objectPositions()
     {
@@ -561,54 +562,6 @@ public class GameManager : MonoBehaviour
             room.Add(torch, torchInfos);
             room.Add(torchLight, torchLightInfos);
             room.Add(torchFire, torchFireInfos);
-
-            /*
-            //torch
-            infos = new ArrayList();
-            if (!(x == 8f * 4f && z == 15f * 4f))
-            {
-                infos.Add(new Info(new Vector3(x + 8f, 3f, z + 19.3f), Quaternion.Euler(0f, 180f, 0f))); //horizontal up
-                infos.Add(new Info(new Vector3(x + 24f, 3f, z + 19.3f), Quaternion.Euler(0f, 180f, 0f)));
-            }
-            infos.Add(new Info(new Vector3(x + 8f, 3f, z + 0.7f), Quaternion.identity)); //horizontal down
-            infos.Add(new Info(new Vector3(x + 24f, 3f, z + 0.7f), Quaternion.identity));
-            infos.Add(new Info(new Vector3(x + 0.7f, 3f, z + 7f), Quaternion.Euler(0f, 90f, 0f))); //side left
-            infos.Add(new Info(new Vector3(x + 0.7f, 3f, z + 13f), Quaternion.Euler(0f, 90f, 0f)));
-            infos.Add(new Info(new Vector3(x + 31.3f, 3f, z + 7f), Quaternion.Euler(0f, -90f, 0f))); //side right
-            infos.Add(new Info(new Vector3(x + 31.3f, 3f, z + 13f), Quaternion.Euler(0f, -90f, 0f)));
-            room.Add(torch, infos);
-
-            //torchLight
-            infos = new ArrayList();
-            if (!(x == 8f * 4f && z == 15f * 4f))
-            {
-                infos.Add(new Info(new Vector3(x + 8f, 4f, z + 18.3f), Quaternion.Euler(0f, 180f, 0f))); //horizontal up
-                infos.Add(new Info(new Vector3(x + 24f, 4f, z + 18.3f), Quaternion.Euler(0f, 180f, 0f)));
-            }
-            infos.Add(new Info(new Vector3(x + 8f, 4f, z + 1.7f), Quaternion.identity)); //horizontal down
-            infos.Add(new Info(new Vector3(x + 24f, 4f, z + 1.7f), Quaternion.identity));
-            infos.Add(new Info(new Vector3(x + 1.7f, 4f, z + 7f), Quaternion.Euler(0f, 90f, 0f))); //side left
-            infos.Add(new Info(new Vector3(x + 1.7f, 4f, z + 13f), Quaternion.Euler(0f, 90f, 0f)));
-            infos.Add(new Info(new Vector3(x + 30.3f, 4f, z + 7f), Quaternion.Euler(0f, -90f, 0f)));//side right
-            infos.Add(new Info(new Vector3(x + 30.3f, 4f, z + 13f), Quaternion.Euler(0f, -90f, 0f)));
-
-            room.Add(torchLight, infos);
-
-            //torchFire
-            infos = new ArrayList();
-            if (!(x == 8f * 4f && z == 15f * 4f))
-            {
-                infos.Add(new Info(new Vector3(x + 8f, 3.7f, z + 18.7f), Quaternion.Euler(0f, 180f, 0f))); //horizontal up
-                infos.Add(new Info(new Vector3(x + 24f, 3.7f, z + 18.7f), Quaternion.Euler(0f, 180f, 0f)));
-            }
-            infos.Add(new Info(new Vector3(x + 8f, 3.7f, z + 1.3f), Quaternion.identity)); //horizontal down
-            infos.Add(new Info(new Vector3(x + 24f, 3.7f, z + 1.3f), Quaternion.identity));
-            infos.Add(new Info(new Vector3(x + 1.3f, 3.7f, z + 7f), Quaternion.Euler(0f, 90f, 0f))); //side left
-            infos.Add(new Info(new Vector3(x + 1.3f, 3.7f, z + 13f), Quaternion.Euler(0f, 90f, 0f)));
-            infos.Add(new Info(new Vector3(x + 30.7f, 3.7f, z + 7f), Quaternion.Euler(0f, -90f, 0f))); //side right
-            infos.Add(new Info(new Vector3(x + 30.7f, 3.7f, z + 13f), Quaternion.Euler(0f, -90f, 0f)));
-            room.Add(torchFire, infos);
-            */
         }
 
     }
@@ -822,13 +775,22 @@ public class GameManager : MonoBehaviour
         infos.Add(new Info(new Vector3(x + 8f, 1f, z + 12f), Quaternion.Euler(0f, 0f, 0f)));
         infos.Add(new Info(new Vector3(x + 22f, 1f, z + 8f), Quaternion.Euler(0f, 180f, 0f)));
         infos.Add(new Info(new Vector3(x + 22f, 1f, z + 12f), Quaternion.Euler(0f, 0f, 0f)));
+        room.Add(skeleton, infos);
 
         enemies.Add(12, room);
 
         //SALA 13
-        x = 32f * q; z = 10f * q;
+        x = 12f * q; z = 20f * q;
         room = new Dictionary<GameObject, ArrayList>();
-        
+
+        // boss
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 32f, 1f, z + 18f), Quaternion.Euler(0f, 0f, 0f)));
+        room.Add(boss, infos);
+
+        enemies.Add(13, room);
+
+
     }
 
     bool wallInScopeX(float x, float z)
@@ -1053,18 +1015,22 @@ public class GameManager : MonoBehaviour
         btn = Instantiate(button, new Vector3(x + 23f, 1f, z + 16f), Quaternion.Euler(0f, 180f, 0f));
         btn.GetComponent<button>().room = 12;
         btn.tag = "btn";
+
+        //SALA 13
+        x = 32f * q; z = 10f * q;
     }
 
     void removeEnemies()
     {
         foreach (GameObject enemy in activeEnemies)
         {
-            Destroy(enemy);
+            if (enemy != null) Destroy(enemy);
         }
     }
 
     void initEnemies(int roomKey)
     {
+        activeEnemies = new ArrayList();
         foreach (System.Collections.Generic.KeyValuePair<UnityEngine.GameObject, System.Collections.ArrayList> obj in enemies[roomKey])
         {
             foreach (Info info in obj.Value)

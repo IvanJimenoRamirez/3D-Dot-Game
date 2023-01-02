@@ -228,6 +228,13 @@ MonoBehaviour:
   shotSpeed: 15
   myPosition: {x: 0, y: 0}
   moving: 1
+  frontalShotHolder: {fileID: 0}
+  leftShotHolder: {fileID: 0}
+  rightShotHolder: {fileID: 0}
+  right2ShotHolder: {fileID: 0}
+  right3ShotHolder: {fileID: 0}
+  left2ShotHolder: {fileID: 0}
+  left3ShotHolder: {fileID: 0}
 --- !u!114 &1817907669935523165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +251,7 @@ MonoBehaviour:
   explosionMat: {fileID: 0}
   coin: {fileID: 0}
   potion: {fileID: 0}
-  getReward: 1
+  getReward: 0
   time: 3
   cubeSize: 0.2
   cubesInRow: 5

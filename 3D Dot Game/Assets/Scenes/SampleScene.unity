@@ -4645,6 +4645,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2717440966837797682, guid: 9591d1ff652a9f1409b52decd6ddc47a, type: 3}
     - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 4577953677071990175, guid: ade37e22c25c4cc46a595505c1c81d97, type: 3}
+    - target: {fileID: 2896356300661492263, guid: 1181bcb731b437b4b98f14965b0b747f, type: 3}
       propertyPath: coin
       value: 
       objectReference: {fileID: 2418978634637448579, guid: 784e91ad18d00ee498f37949d409336d, type: 3}
