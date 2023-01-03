@@ -221,6 +221,11 @@ MonoBehaviour:
   died: 0
   mat: {fileID: 2100000, guid: 1d9041704b030ab4a88e8f8839829020, type: 2}
   animatorRequired: 0
+  defaultObject0: {fileID: 1374267811619562}
+  defaultObject1: {fileID: 0}
+  defaultObject2: {fileID: 0}
+  defaultObject3: {fileID: 0}
+  defaultMaterial: {fileID: 2100000, guid: 2a2dd99db626fe4409bb0fa0e72ce8bd, type: 2}
   speed: 2
   enemyType: 1
   attackingFreq: 0.7

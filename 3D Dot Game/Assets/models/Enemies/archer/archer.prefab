@@ -209,6 +209,11 @@ MonoBehaviour:
   died: 0
   mat: {fileID: 2100000, guid: 8e800b1a17d0a1849b86380c07228cbe, type: 2}
   animatorRequired: 0
+  defaultObject0: {fileID: 3014383972010929903}
+  defaultObject1: {fileID: 2985680364805406869}
+  defaultObject2: {fileID: 6993654784795531885}
+  defaultObject3: {fileID: 511757503614478663}
+  defaultMaterial: {fileID: 2100000, guid: 85b79628231f5c64796c586240ecd71b, type: 2}
   speed: 2
   enemyType: 3
   attackingFreq: 0.7
@@ -782,6 +787,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3699c52c28e8d0944b395fcff828ae58, type: 3}
+--- !u!1 &3014383972010929903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 3699c52c28e8d0944b395fcff828ae58, type: 3}
+  m_PrefabInstance: {fileID: 6384305959169813351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6850860194835238028 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3699c52c28e8d0944b395fcff828ae58, type: 3}

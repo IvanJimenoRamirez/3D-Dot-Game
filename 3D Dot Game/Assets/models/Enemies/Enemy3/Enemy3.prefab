@@ -818,6 +818,11 @@ MonoBehaviour:
   died: 0
   mat: {fileID: 2100000, guid: c5d33f30dd88c6545bbb1a8b0109f4d8, type: 2}
   animatorRequired: 1
+  defaultObject0: {fileID: 6061416711860387619}
+  defaultObject1: {fileID: 4742308248027971656}
+  defaultObject2: {fileID: 6091048135153767900}
+  defaultObject3: {fileID: 489476331087932622}
+  defaultMaterial: {fileID: 2100000, guid: 2a2dd99db626fe4409bb0fa0e72ce8bd, type: 2}
   speed: 2
   enemyType: 0
   attackingFreq: 0.7

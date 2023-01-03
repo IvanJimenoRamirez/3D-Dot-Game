@@ -14,34 +14,101 @@ public class GameManager : MonoBehaviour
     public List<List<Vector2>> collisions = new List<List<Vector2>>()
     {
         new List<Vector2>(){},  // 0 - No collisions at the moment
-        new List<Vector2>(){    // 1 - Room 1 collisions
+        new List<Vector2>(){},  // 1 - Room 1 collisions       
+        new List<Vector2>(){
+            
+            new Vector2(0, 3),
+            new Vector2(1, 3),
+            new Vector2(2, 3),
+            new Vector2(3, 2),
             new Vector2(3, 3),
             new Vector2(4, 3),
-            new Vector2(5, 3),
-            new Vector2(6, 3),
-            new Vector2(7, 3),
-            new Vector2(8, 3),
-            new Vector2(9, 3),
-            new Vector2(10, 3),
-            new Vector2(11, 3),
-            new Vector2(12, 3),
-
-            new Vector2(3, 4),
             new Vector2(4, 4),
-            new Vector2(5, 4),
-            new Vector2(6, 4),
-            new Vector2(7, 4),
-            new Vector2(8, 4),
-            new Vector2(9, 4),
-            new Vector2(10, 4),
-            new Vector2(11, 4),
-            new Vector2(12, 4),
+            new Vector2(4, 5),
+            new Vector2(4, 6),
 
-            new Vector2(5, 5),
-        },
-        new List<Vector2>(){},  // 2 - No collisions at the moment
-        new List<Vector2>(){},  // 3 - No collisions at the moment
-        new List<Vector2>(){},  // 4 - No collisions at the moment
+            
+            new Vector2(11, 3),
+            new Vector2(12, 2),
+            new Vector2(13, 6),
+            new Vector2(13, 5),
+            new Vector2(13, 4),
+            new Vector2(13, 3),
+            new Vector2(14, 3),
+            new Vector2(15, 3),
+            new Vector2(16, 3),
+
+        },  // 2 - No collisions at the moment
+        new List<Vector2>() {
+            new Vector2(2,2),
+            new Vector2(2,3),
+            new Vector2(2,4),
+            new Vector2(2,5),
+            new Vector2(2,6),
+            new Vector2(2,7),
+
+            new Vector2(3,2),
+            new Vector2(4,2),
+            new Vector2(5,2),
+            new Vector2(6,2),
+            new Vector2(9,2),
+            new Vector2(10,2),
+            new Vector2(11,2),
+            new Vector2(12,2),
+            new Vector2(13,2),
+            
+            new Vector2(13,3),
+            new Vector2(13,4),
+            new Vector2(13,5),
+            new Vector2(13,6),
+            new Vector2(13,7),
+
+            new Vector2(3,7),
+            new Vector2(4,7),
+            new Vector2(5,7),
+            new Vector2(6,7),
+            new Vector2(9,7),
+            new Vector2(10,7),
+            new Vector2(11,7),
+            new Vector2(12,7),
+        },  // 3 - No collisions at the moment
+        new List<Vector2>(){
+            new Vector2(3, 2),
+            new Vector2(3, 3),
+            new Vector2(3, 4),
+            new Vector2(3, 6),
+            new Vector2(3, 7),
+            
+            new Vector2(4, 2),
+            new Vector2(4, 3),
+            new Vector2(4, 4),
+            new Vector2(4, 6),
+            new Vector2(4, 7),
+            
+            new Vector2(5, 2),
+            new Vector2(5, 3),
+            new Vector2(5, 4),
+            new Vector2(5, 6),
+            new Vector2(5, 7),
+
+            new Vector2(10, 2),
+            new Vector2(10, 3),
+            new Vector2(10, 4),
+            new Vector2(10, 6),
+            new Vector2(10, 7),
+
+            new Vector2(11, 2),
+            new Vector2(11, 3),
+            new Vector2(11, 4),
+            new Vector2(11, 6),
+            new Vector2(11, 7),
+
+            new Vector2(12, 2),
+            new Vector2(12, 3),
+            new Vector2(12, 4),
+            new Vector2(12, 6),
+            new Vector2(12, 7),
+        },  // 4 - No collisions at the moment
         new List<Vector2>(){},  // 5 - No collisions at the moment
         new List<Vector2>(){},  // 6 - No collisions at the moment
         new List<Vector2>(){},  // 7 - No collisions at the moment

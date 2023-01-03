@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.ComponentModel.Design;
 using UnityEngine.UIElements;
+using System.Linq;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -20,6 +21,12 @@ public class EnemyManager : MonoBehaviour
     Transform player;
     PathFinding pathFinding;
     List<Node> path;
+
+    // Recive dmg
+    public GameObject defaultObject0, defaultObject1, defaultObject2, defaultObject3;
+    private List<GameObject> defaultObjects;
+    public Material defaultMaterial;
+    private List<List<Material>> realMaterials;
 
     // Movement speed
     public float speed = 2f;
@@ -41,13 +48,7 @@ public class EnemyManager : MonoBehaviour
     public Vector2 myPosition;
     public bool moving = true;
     bool performingSpecial = false;
-    public GameObject frontalShotHolder;
-    public GameObject leftShotHolder;
-    public GameObject rightShotHolder;
-    public GameObject right2ShotHolder;
-    public GameObject right3ShotHolder;
-    public GameObject left2ShotHolder;
-    public GameObject left3ShotHolder;
+    public GameObject frontalShotHolder, leftShotHolder, rightShotHolder, right2ShotHolder, right3ShotHolder, left2ShotHolder, left3ShotHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +68,29 @@ public class EnemyManager : MonoBehaviour
         {
             // Startup the pathfinding to find the path to the player in the room
             pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
+
+            defaultObjects = new List<GameObject>();
+            realMaterials = new List<List<Material>>();
+            if (defaultObject0 != null)
+            {
+                defaultObjects.Add(defaultObject0);
+                realMaterials.Add((defaultObject0.GetComponent<MeshRenderer>().materials).ToList());
+            }
+            if (defaultObject1 != null)
+            {
+                defaultObjects.Add(defaultObject1);
+                realMaterials.Add((defaultObject1.GetComponent<MeshRenderer>().materials).ToList());
+            }
+            if (defaultObject2 != null)
+            {
+                defaultObjects.Add(defaultObject2);
+                realMaterials.Add((defaultObject2.GetComponent<MeshRenderer>().materials).ToList());
+            }
+            if (defaultObject3 != null)
+            {
+                defaultObjects.Add(defaultObject3);
+                realMaterials.Add((defaultObject3.GetComponent<MeshRenderer>().materials).ToList());
+            }
         }
     }
 
@@ -294,6 +318,7 @@ public class EnemyManager : MonoBehaviour
     // On collide
     private void OnCollisionEnter(Collision collision)
     {
+        bool ireciveddmg = false;
         // If the enemy collides with the sword, then destroy the enemy
         if (health > 0)
         {
@@ -301,21 +326,40 @@ public class EnemyManager : MonoBehaviour
             {
                 Debug.Log("He recibido daño");
                 health -= 2;
+                ireciveddmg = true;
             }
             if (collision.gameObject.tag == "LittleSwordP")
             {
                 Debug.Log("He recibido daño");
                 health--;
+                ireciveddmg = true;
             }
             if (collision.gameObject.tag == "Boomerang")
             {
                 Debug.Log("He recibido daño");
                 health--;
+                ireciveddmg = true;
             }
             if (health <= 0)
             {
                 died = true;
             }
+        }
+
+        if (ireciveddmg)
+        {
+            foreach (GameObject dO in defaultObjects) dO.GetComponent<MeshRenderer>().materials = new Material[] { defaultMaterial };
+            Invoke("returnToOldMaterials", 0.1f);
+        }
+    }
+
+    private void returnToOldMaterials()
+    {
+        int index = 0;
+        foreach (GameObject dO in defaultObjects)
+        {
+            dO.GetComponent<MeshRenderer>().materials = realMaterials[index].ToArray();
+            ++index;
         }
     }
 

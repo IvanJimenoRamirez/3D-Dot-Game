@@ -11,8 +11,10 @@ public class PlayerBehaviour : MonoBehaviour
     public bool hasBoomerang = false;
     private GameObject activeBoomerang, UIbigSword, UIlittleSword;
 
-    public GameObject rightHand, littleSword, bigSword, boomerang;
+    public GameObject rightHand, littleSword, bigSword, boomerang, dmgReciver;
 
+    private GameObject dmgReciverInstantiated;
+    
     // Public attributes for the player's UI
     public Canvas UIcanvas;
     public GameObject emptyHeart, filledHeart;
@@ -74,7 +76,9 @@ public class PlayerBehaviour : MonoBehaviour
                 changeHeartSprite(true);
                 timeToTick = 1f / ticksPerSecond;
 
-                // TODO: start the "TakeDamage" animation
+                // "TakeDamage" model
+                dmgReciverInstantiated = Instantiate(dmgReciver, transform.position, Quaternion.identity);
+                Invoke("destroyDmgReciver", 0.08f);
             }
 
             if (health == 0)
@@ -283,6 +287,11 @@ public class PlayerBehaviour : MonoBehaviour
         {
             getBoomerang();
         }
+    }
+
+    private void destroyDmgReciver()
+    {
+        if (dmgReciverInstantiated != null) Destroy(dmgReciverInstantiated);
     }
 
 }
