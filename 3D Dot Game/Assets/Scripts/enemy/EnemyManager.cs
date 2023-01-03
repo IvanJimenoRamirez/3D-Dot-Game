@@ -311,19 +311,16 @@ public class EnemyManager : MonoBehaviour
         {
             if (collision.gameObject.tag == "BigSwordP")
             {
-                Debug.Log("He recibido daño");
                 health -= 2;
                 ireciveddmg = true;
             }
             if (collision.gameObject.tag == "LittleSwordP")
             {
-                Debug.Log("He recibido daño");
                 health--;
                 ireciveddmg = true;
             }
             if (collision.gameObject.tag == "Boomerang")
             {
-                Debug.Log("He recibido daño");
                 health--;
                 ireciveddmg = true;
             }

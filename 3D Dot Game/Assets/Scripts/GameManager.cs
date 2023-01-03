@@ -153,16 +153,30 @@ public class GameManager : MonoBehaviour
             new Vector2(13,8),
         },  // 5
         new List<Vector2>(){
+            new Vector2(2,5),
+            new Vector2(2,6),
             new Vector2(3,5),
             new Vector2(3,6),
 
+            new Vector2(4,2),
+            new Vector2(4,3),
+            new Vector2(5,2),
             new Vector2(5,3),
+            new Vector2(6,2),
             new Vector2(6,3),
 
+            new Vector2(9,2),
+            new Vector2(9,3),
+            new Vector2(10,2),
             new Vector2(10,3),
+            new Vector2(11,2),
             new Vector2(11,3),
 
+            new Vector2(11,5),
+            new Vector2(11,6),
+            new Vector2(12,5),
             new Vector2(12,6),
+            new Vector2(13,5),
             new Vector2(13,6),
         },  // 6
         new List<Vector2>(){
@@ -333,6 +347,9 @@ public class GameManager : MonoBehaviour
     public GameObject wallGate, wallGateDoor, doorGate, scaffold, scaffoldLeft, scaffoldRight, scaffoldLowLeft, scaffoldLowRight, columnBroken, bossKeyDoor;
     public GameObject crab, bolb, archer, skeleton, bat, boss, potion, coin, cratePlatformSmall, cratePlatformMedium, cratePlatformBig;
     public GameObject torch, torchLight, torchFire;
+
+    private List<GameObject> room4archers = new List<GameObject>(), room9archers = new List<GameObject>();
+    
     float q = 4.0f;
 
     struct Info
@@ -849,8 +866,6 @@ public class GameManager : MonoBehaviour
     
     void enemiesPosition()
     {
-        GameObject arch;
-
         Dictionary<GameObject, ArrayList> room;
         ArrayList infos;
         float x, z;
@@ -907,19 +922,6 @@ public class GameManager : MonoBehaviour
         x = 16f * q; z = 10f * q;
         room = new Dictionary<GameObject, ArrayList>();
 
-        // Archer
-        arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 2f), Quaternion.identity); //down-left
-        arch.GetComponent<archer>().position = 0;
-
-        arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 2f), Quaternion.identity); //down-right
-        arch.GetComponent<archer>().position = 1;
-
-        arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 18f), Quaternion.identity); //up-left
-        arch.GetComponent<archer>().position = 2;
-
-        arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 18f), Quaternion.identity); //up-right
-        arch.GetComponent<archer>().position = 3;
-
         // Bat
         infos = new ArrayList(); // Coordenades + rotació
         infos.Add(new Info(new Vector3(x + 15f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f)));
@@ -958,8 +960,8 @@ public class GameManager : MonoBehaviour
 
         // Bat
         infos = new ArrayList(); // Coordenades + rotació
-        infos.Add(new Info(new Vector3(x + 2f, 1f, z + 10f), Quaternion.Euler(0f, 90f, 0f)));
-        infos.Add(new Info(new Vector3(x + 28f, 1f, z + 10f), Quaternion.Euler(0f, 270f, 0f)));
+        infos.Add(new Info(new Vector3(x + 2f, 1f, z + 12f), Quaternion.Euler(0f, 90f, 0f)));
+        infos.Add(new Info(new Vector3(x + 28f, 1f, z + 12f), Quaternion.Euler(0f, 270f, 0f)));
         room.Add(bat, infos);
 
         enemies.Add(6, room);
@@ -999,19 +1001,6 @@ public class GameManager : MonoBehaviour
         //SALA 9
         x = 24f * q; z = 10f * q;
         room = new Dictionary<GameObject, ArrayList>();
-
-        // archer
-        arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 2f), Quaternion.identity); //down-left
-        arch.GetComponent<archer>().position = 0;
-
-        arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 2f), Quaternion.identity); //down-right
-        arch.GetComponent<archer>().position = 1;
-
-        arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 18f), Quaternion.identity); //up-left
-        arch.GetComponent<archer>().position = 2;
-
-        arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 18f), Quaternion.identity); //up-right
-        arch.GetComponent<archer>().position = 3;
 
         enemies.Add(9, room);
 
@@ -1324,7 +1313,49 @@ public class GameManager : MonoBehaviour
                 activeEnemies.Add(newEnemy);
             }
         }
+        
+        if (roomKey == 4)
+        {
+            float x = 16f * q; float z = 10f * q;
 
+            // Archer
+            GameObject arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 2f), Quaternion.identity); //down-left
+            room4archers.Add(arch);
+            arch.GetComponent<archer>().position = 0;
+
+            arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 2f), Quaternion.identity); //down-right
+            room4archers.Add(arch);
+            arch.GetComponent<archer>().position = 1;
+
+            arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 18f), Quaternion.identity); //up-left
+            room4archers.Add(arch);
+            arch.GetComponent<archer>().position = 2;
+
+            arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 18f), Quaternion.identity); //up-right
+            room4archers.Add(arch);
+            arch.GetComponent<archer>().position = 3;
+        }
+
+        if (roomKey == 9)
+        {
+            float x = 24f * q; float z = 10f * q;
+            // archer
+            GameObject arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 2f), Quaternion.identity); //down-left
+            room9archers.Add(arch);
+            arch.GetComponent<archer>().position = 0;
+
+            arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 2f), Quaternion.identity); //down-right
+            room9archers.Add(arch);
+            arch.GetComponent<archer>().position = 1;
+
+            arch = Instantiate(archer, new Vector3(x + 2f, 1.5f, z + 18f), Quaternion.identity); //up-left
+            room9archers.Add(arch);
+            arch.GetComponent<archer>().position = 2;
+
+            arch = Instantiate(archer, new Vector3(x + 30f, 1.5f, z + 18f), Quaternion.identity); //up-right
+            room9archers.Add(arch);
+            arch.GetComponent<archer>().position = 3;
+        }
         if (roomKey == 6) checkRoom6 = true;
     }
 
@@ -1367,6 +1398,7 @@ public class GameManager : MonoBehaviour
 
             if (actualRoom != room)
             {
+                if (actualRoom == 4 || actualRoom == 9) deleteArchers(actualRoom);
                 removeEnemies();
                 initEnemies(actualRoom);
                 room = actualRoom;
@@ -1375,6 +1407,16 @@ public class GameManager : MonoBehaviour
             }
             else if (actualRoom == 6) room6();
         }
+    }
+
+    private void deleteArchers(int roomkey)
+    {
+        if (roomkey == 4)
+            foreach (GameObject archer in room4archers) if (archer != null) Destroy(archer);
+        if (roomkey == 9)
+            foreach (GameObject archer in room9archers) if (archer != null) Destroy(archer);
+        room4archers = new List<GameObject>();
+        room9archers = new List<GameObject>();
     }
 
     private void room6()

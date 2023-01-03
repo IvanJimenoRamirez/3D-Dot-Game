@@ -24,6 +24,9 @@ public class PlayerBehaviour : MonoBehaviour
     public float ticksPerSecond = 1f;
     float timeToTick;
 
+    //Godmode
+    bool invulnerable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,9 @@ public class PlayerBehaviour : MonoBehaviour
         //Instantiate(bigSword, rightHand.transform);
         // Instantiate the heart icons
         playerUI();
+        
+        // Set the invulnerable variable to false
+        invulnerable = false;
         
         timeToTick = 1f / ticksPerSecond;
     }
@@ -65,6 +71,7 @@ public class PlayerBehaviour : MonoBehaviour
     // This method is called when the player collides
     private void OnCollisionEnter(Collision collision)
     {
+        if (invulnerable) return;
         // If the player collides with an enemy or a enemy bullet, then take damage
         if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "bossBullet") && health > 0)
         {
@@ -158,10 +165,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void lockY()
     {
-        if (transform.position.y > 1f || transform.position.y < .99f)
-        {
-            transform.position = new Vector3(transform.position.x, 1f, transform.position.z);
-        }
+        transform.position = new Vector3(transform.position.x, 1, transform.position.z);
     }
     
     private void GodModeKeys()
@@ -173,6 +177,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B)) updateBossKeys(1);
 
         // G -> invulnerability
+        if (Input.GetKeyDown(KeyCode.G)) invulnerable = !invulnerable;
     }
 
     /* UI */
@@ -212,7 +217,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         // Change the heart icon in the "health" position to the empty heart
         if (takeDmg) UIcanvas.transform.Find("Hearts").transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = emptyHeart.GetComponent<UnityEngine.UI.Image>().sprite;
-        else UIcanvas.transform.Find("Hearts").transform.GetChild(health).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
+        else UIcanvas.transform.Find("Hearts").transform.GetChild(health-1).GetComponent<UnityEngine.UI.Image>().sprite = filledHeart.GetComponent<UnityEngine.UI.Image>().sprite;
     }
 
     // Update UI Keys
