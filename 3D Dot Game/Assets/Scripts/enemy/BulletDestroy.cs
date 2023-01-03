@@ -4,6 +4,23 @@ using UnityEngine;
 
 public class BulletDestroy : MonoBehaviour
 {
+    float timeReamining = 2f, timeElapsed;
+    public bool destroyByTime = true;
+
+    private void Start()
+    {
+        timeElapsed = 0f;
+    }
+
+    private void Update()
+    {
+        timeElapsed += Time.deltaTime;
+        if (timeElapsed >= timeReamining && destroyByTime)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         //if (collision.gameObject.tag != "PlayerP" && collision.gameObject.tag != "Enemy")
