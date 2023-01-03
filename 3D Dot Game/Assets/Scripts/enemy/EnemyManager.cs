@@ -130,6 +130,7 @@ public class EnemyManager : MonoBehaviour
      */
     private void moveAndAttack()
     {
+        if (player == null) return;
         // Get my position in the room
         Vector2 enemyPos = getRoomPosition(transform.position);
         // Get the player position in the room
