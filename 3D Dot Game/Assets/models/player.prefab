@@ -371,6 +371,7 @@ MonoBehaviour:
   bossKeys: 0
   coins: 0
   hasBoomerang: 0
+  playerDamage: {fileID: 8300000, guid: 1e9e14b35bd554d4ab9d442ad7699454, type: 3}
   rightHand: {fileID: 1524607743083593179}
   littleSword: {fileID: 3561461824865272357, guid: a20a95bdd7fa083408bdd54056ffeede, type: 3}
   bigSword: {fileID: 5152302599240967009, guid: e5a7ceb9bfc15a54a9e1475fc4759da4, type: 3}
@@ -391,7 +392,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: dc005618130692f46ad682662f1a1163, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.632
+  m_Volume: 0.521
   m_Pitch: 1
   Loop: 0
   Mute: 0

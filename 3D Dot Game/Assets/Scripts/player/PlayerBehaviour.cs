@@ -9,12 +9,13 @@ public class PlayerBehaviour : MonoBehaviour
     public int maxHealth = 10;
     public int keys = 0, bossKeys = 0, coins = 0;
     public bool hasBoomerang = false;
+    public AudioClip playerDamage;
     private GameObject activeBoomerang, UIbigSword, UIlittleSword;
 
     public GameObject rightHand, littleSword, bigSword, boomerang;
 
     // Public attributes for the player's UI
-    public Canvas UIcanvas;
+    public Canvas UIcanvas, endCanvas;
     public GameObject emptyHeart, filledHeart;
 
     //Ticks per second
@@ -30,6 +31,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         // Find the canvas from the scene hierarchy
         UIcanvas = GameObject.Find("HeartUI").GetComponent<Canvas>();
+        endCanvas = GameObject.Find("MenuCanvas").GetComponent<Canvas>();
         // Add the bigSword to the rightHand as the first child
         //Instantiate(bigSword, rightHand.transform);
         // Instantiate the heart icons
@@ -67,6 +69,7 @@ public class PlayerBehaviour : MonoBehaviour
             if (timeToTick <= 0f)
             {
                 health--;
+                gameObject.GetComponent<AudioSource>().PlayOneShot(playerDamage);
                 if (health == 9) {
                     UIbigSword.SetActive(false);
                     UIlittleSword.SetActive(true);
@@ -80,11 +83,12 @@ public class PlayerBehaviour : MonoBehaviour
             if (health == 0)
             {
                 GetComponent<Animator>().SetBool("dead", true);
+                endCanvas.transform.GetChild(2).gameObject.SetActive(true);
             }
             if (collision.gameObject.tag == "EnemyBullet")
             {
-                collision.gameObject.GetComponent<Explosion>().exploded = true;
-                //Destroy(collision.gameObject);
+                if (collision.gameObject.GetComponent<Explosion>() != null) collision.gameObject.GetComponent<Explosion>().exploded = true;
+                else Destroy(collision.gameObject);
             }
             if (collision.gameObject.tag == "EnemyBullet")
             {

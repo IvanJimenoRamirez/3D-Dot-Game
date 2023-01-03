@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour
     public GameObject torch, torchLight, torchFire;
     float q = 4.0f;
 
-
     struct Info
     {
         public Vector3 position;
@@ -75,6 +74,9 @@ public class GameManager : MonoBehaviour
     private Dictionary<int, Dictionary<GameObject, ArrayList>> enemies = new Dictionary<int, Dictionary<GameObject, ArrayList>>(); // room < enemy, info >
 
     private ArrayList activeEnemies;
+
+    private bool room6Chest = false;
+    public bool checkRoom6 = false;
     
     void objectPositions()
     {
@@ -142,6 +144,7 @@ public class GameManager : MonoBehaviour
         //chest
         GameObject chest3 = Instantiate(chest, new Vector3(x + 5f + 2f * 5.5f, 1f, z + 5f + 2f * 2.5f), Quaternion.identity);
         chest3.GetComponent<chest>().hasKey = true;
+        chest3.GetComponent<chest>().appearSound = false;
 
         objects.Add(3, room);
 
@@ -176,7 +179,7 @@ public class GameManager : MonoBehaviour
         infos.Add(new Info(new Vector3(x + 7f, 2f, z + 15f), Quaternion.Euler(-90f, 0f, 0f))); //left - up
         infos.Add(new Info(new Vector3(x + 9f, 2f, z + 15f), Quaternion.Euler(-90f, 0f, 0f)));
         infos.Add(new Info(new Vector3(x + 8f, 3.6f, z + 15f), Quaternion.Euler(-90f, 0f, 0f)));
-        infos.Add(new Info(new Vector3(x + 8f, 2f, z + 10f), Quaternion.Euler(0f, 0f, 0f))); //left - mid
+        infos.Add(new Info(new Vector3(x + 8.3f, 2f, z + 10.3f), Quaternion.Euler(0f, 0f, 0f))); //left - mid
         infos.Add(new Info(new Vector3(x + 23f, 2f, z + 10f), Quaternion.Euler(-90f, -20f, 0f))); //right - mid
         infos.Add(new Info(new Vector3(x + 25f, 2f, z + 10f), Quaternion.Euler(0f, 0f, 0f)));
         room.Add(barrel, infos);
@@ -253,9 +256,13 @@ public class GameManager : MonoBehaviour
         infos.Add(new Info(new Vector3(x + 20f, 2.4f, z + 6f), Quaternion.Euler(0f, 30f, 0f))); //right - down
         room.Add(bookOpen, infos);
 
-        //chest
-        GameObject chest6 = Instantiate(chest, new Vector3(x + 16f, 1f, z + 12f), Quaternion.identity);
-        chest6.GetComponent<chest>().hasBoomerang = true;
+        //door
+        GameObject roomDoor6 = Instantiate(bossKeyDoor, new Vector3(x + 16f, 1f, z + 0.2f), Quaternion.identity);
+        roomDoor6.gameObject.tag = "roomDoor";
+        roomDoor6.transform.localScale += new Vector3(1f, 0.3f, 0f);
+        roomDoor6.GetComponent<bossKeyDoor>().horizontal = true;
+        roomDoor6.GetComponent<bossKeyDoor>().open = true;
+        roomDoor6.GetComponent<bossKeyDoor>().sound = false;
 
         objects.Add(6, room);
 
@@ -449,18 +456,18 @@ public class GameManager : MonoBehaviour
 
         //columnBroken
         infos = new ArrayList();
-        infos.Add(new Info(new Vector3(x + 5f, 1f, z + 3f), Quaternion.identity)); //left
-        infos.Add(new Info(new Vector3(x + 5f, 1f, z + 17f), Quaternion.Euler(0f, 90f, 0f)));
-        infos.Add(new Info(new Vector3(x + 27f, 1f, z + 3f), Quaternion.Euler(0f, -90f, 0f))); //right
-        infos.Add(new Info(new Vector3(x + 27f, 1f, z + 17f), Quaternion.Euler(0f, 180f, 0f)));
+        infos.Add(new Info(new Vector3(x + 4.4f, 1f, z + 2.4f), Quaternion.identity)); //left-down
+        infos.Add(new Info(new Vector3(x + 4.4f, 1f, z + 16.3f), Quaternion.Euler(0f, 90f, 0f))); //left-up
+        infos.Add(new Info(new Vector3(x + 26.4f, 1f, z + 2.4f), Quaternion.Euler(0f, -90f, 0f))); //right-down
+        infos.Add(new Info(new Vector3(x + 26.4f, 1f, z + 16.3f), Quaternion.Euler(0f, 180f, 0f))); //right-up
         room.Add(columnBroken, infos);
 
         //tables
         infos = new ArrayList();
-        infos.Add(new Info(new Vector3(x + 5f, 1f, z + 10f), Quaternion.Euler(0f, 90f, 0f))); //left
-        infos.Add(new Info(new Vector3(x + 27f, 1f, z + 10f), Quaternion.Euler(0f, 90f, 0f))); //right
-        infos.Add(new Info(new Vector3(x + 16f, 1f, z + 15f), Quaternion.identity)); //up
-        infos.Add(new Info(new Vector3(x + 16f, 1f, z + 5f), Quaternion.identity)); //down
+        infos.Add(new Info(new Vector3(x + 5.2f, 1f, z + 9.7f), Quaternion.Euler(0f, 90f, 0f))); //left
+        infos.Add(new Info(new Vector3(x + 27.2f, 1f, z + 9.7f), Quaternion.Euler(0f, 90f, 0f))); //right
+        infos.Add(new Info(new Vector3(x + 15.7f, 1f, z + 15.4f), Quaternion.identity)); //up
+        infos.Add(new Info(new Vector3(x + 15.7f, 1f, z + 5.4f), Quaternion.identity)); //down
         room.Add(table, infos);
 
         objects.Add(12, room);
@@ -998,19 +1005,19 @@ public class GameManager : MonoBehaviour
 
         //SALA 12
         x = 32f * q; z = 10f * q;
-        btn = Instantiate(button, new Vector3(x + 9f, 1f, z + 4f), Quaternion.identity); //left
+        btn = Instantiate(button, new Vector3(x + 8.4f, 1f, z + 4.4f), Quaternion.identity); //left
         btn.GetComponent<button>().room = 12;
         btn.tag = "btn";
 
-        btn = Instantiate(button, new Vector3(x + 9f, 1f, z + 16f), Quaternion.Euler(0f, 90f, 0f));
+        btn = Instantiate(button, new Vector3(x + 8.4f, 1f, z + 16.4f), Quaternion.Euler(0f, 90f, 0f));
         btn.GetComponent<button>().room = 12;
         btn.tag = "btn";
 
-        btn = Instantiate(button, new Vector3(x + 23f, 1f, z + 4f), Quaternion.Euler(0f, -90f, 0f)); //right
+        btn = Instantiate(button, new Vector3(x + 22.4f, 1f, z + 4.4f), Quaternion.Euler(0f, -90f, 0f)); //right
         btn.GetComponent<button>().room = 12;
         btn.tag = "btn";
 
-        btn = Instantiate(button, new Vector3(x + 23f, 1f, z + 16f), Quaternion.Euler(0f, 180f, 0f));
+        btn = Instantiate(button, new Vector3(x + 22.4f, 1f, z + 16.4f), Quaternion.Euler(0f, 180f, 0f));
         btn.GetComponent<button>().room = 12;
         btn.tag = "btn";
 
@@ -1037,6 +1044,8 @@ public class GameManager : MonoBehaviour
                 activeEnemies.Add(newEnemy);
             }
         }
+
+        if (roomKey == 6) checkRoom6 = true;
     }
 
     private void spawnPlayer()
@@ -1072,15 +1081,43 @@ public class GameManager : MonoBehaviour
     //Identifies if player has changed of room
     private void roomUbication()
     {
-        int actualRoom = getRoomIndex(gamePlayer.transform.position);
-
-        if (actualRoom != room)
+        if (gamePlayer != null)
         {
-            removeEnemies();
-            initEnemies(actualRoom);
-            room = actualRoom;
-            gameMainCamera.GetComponent<mainCamera>().roomActual = room;
+            int actualRoom = getRoomIndex(gamePlayer.transform.position);
+
+            if (actualRoom != room)
+            {
+                removeEnemies();
+                initEnemies(actualRoom);
+                room = actualRoom;
+                gameMainCamera.GetComponent<mainCamera>().roomActual = room;
+            }
+            else if (actualRoom == 6) room6();
         }
+    }
+
+    private void room6()
+    {
+        if (activeEnemies.Count == 0 && checkRoom6)
+        {
+            checkRoom6 = false;
+            GameObject roomDoor = GameObject.FindGameObjectWithTag("roomDoor");
+            roomDoor.GetComponent<bossKeyDoor>().open = true;
+            if (!room6Chest)
+            {
+                //chest
+                room6Chest = true;
+                float x = 8f * q;
+                float z = 15f * q;
+                GameObject chest6 = Instantiate(chest, new Vector3(x + 16f, 1f, z + 12f), Quaternion.identity);
+                chest6.GetComponent<chest>().hasBoomerang = true;
+            }
+        }
+    }
+
+    public void enemyDie(GameObject enemy)
+    {
+        activeEnemies.Remove(enemy);
     }
 
     //Given a position in the world, returns the index of the room
