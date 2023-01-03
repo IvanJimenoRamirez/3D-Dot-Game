@@ -287,10 +287,6 @@ public class PlayerBehaviour : MonoBehaviour
             activeBoomerang = Instantiate(boomerang, pos, Quaternion.identity);
             activeBoomerang.GetComponent<Boomerang>().velocityMask = velocityMask;
         }
-        else if (Input.GetKeyDown("space") && !hasBoomerang)
-        {
-            getBoomerang();
-        }
     }
 
     private void destroyDmgReciver()
@@ -298,4 +294,12 @@ public class PlayerBehaviour : MonoBehaviour
         if (dmgReciverInstantiated != null) Destroy(dmgReciverInstantiated);
     }
 
+    public void removeBoomerang()
+    {
+        if (hasBoomerang)
+        {
+            hasBoomerang = false;
+            if (activeBoomerang != null) Destroy(activeBoomerang);
+        }
+    }
 }
