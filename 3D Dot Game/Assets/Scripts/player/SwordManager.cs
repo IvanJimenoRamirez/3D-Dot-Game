@@ -46,7 +46,7 @@ public class SwordManager : MonoBehaviour
     private void swordAnimation()
     {
         timeReamining += Time.deltaTime;
-        if (timeReamining >= 0.09f)
+        if (timeReamining >= 0.06f)
         {
             timeReamining = 0f;
             // Get the first child of the object

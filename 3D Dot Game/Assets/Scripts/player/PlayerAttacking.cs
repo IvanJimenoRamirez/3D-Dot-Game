@@ -11,7 +11,7 @@ public class PlayerAttacking: MonoBehaviour
 
     Transform player;
 
-    public float attackSpeed = 1.3f;
+    public float attackSpeed = 1f;
     float timeToAttack;
 
     // Start is called before the first frame update
@@ -40,7 +40,7 @@ public class PlayerAttacking: MonoBehaviour
             activeBigSword = Instantiate(whichSword(), rightHandPlayer.position + new Vector3(0, 0.3f, 0), Quaternion.identity);
             activeBigSword.transform.rotation = Quaternion.Euler(90, player.rotation.eulerAngles.y, 0);
             // invoke the "StopAttacking" function after 0.3 seconds            
-            Invoke("StopAttacking", 0.3f);
+            Invoke("StopAttacking", 0.24f);
         }
     }
 

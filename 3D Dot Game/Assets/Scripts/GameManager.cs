@@ -13,44 +13,320 @@ public class GameManager : MonoBehaviour
     public GameObject gamePlayer, gameMainCamera;
     public List<List<Vector2>> collisions = new List<List<Vector2>>()
     {
-        new List<Vector2>(){},  // 0 - No collisions at the moment
-        new List<Vector2>(){    // 1 - Room 1 collisions
+        new List<Vector2>(){},   // 0 - No collisions at the moment
+        new List<Vector2>(){},   // 1 - No collisions at the moment       
+        new List<Vector2>(){
+            
+            new Vector2(0, 3),
+            new Vector2(1, 3),
+            new Vector2(2, 3),
+            new Vector2(2, 4),
             new Vector2(3, 3),
-            new Vector2(4, 3),
-            new Vector2(5, 3),
-            new Vector2(6, 3),
-            new Vector2(7, 3),
-            new Vector2(8, 3),
-            new Vector2(9, 3),
-            new Vector2(10, 3),
-            new Vector2(11, 3),
-            new Vector2(12, 3),
-
             new Vector2(3, 4),
-            new Vector2(4, 4),
-            new Vector2(5, 4),
-            new Vector2(6, 4),
-            new Vector2(7, 4),
-            new Vector2(8, 4),
-            new Vector2(9, 4),
-            new Vector2(10, 4),
-            new Vector2(11, 4),
-            new Vector2(12, 4),
+            new Vector2(3, 5),
+            new Vector2(3, 6),
 
-            new Vector2(5, 5),
-        },
-        new List<Vector2>(){},  // 2 - No collisions at the moment
-        new List<Vector2>(){},  // 3 - No collisions at the moment
-        new List<Vector2>(){},  // 4 - No collisions at the moment
-        new List<Vector2>(){},  // 5 - No collisions at the moment
-        new List<Vector2>(){},  // 6 - No collisions at the moment
-        new List<Vector2>(){},  // 7 - No collisions at the moment
-        new List<Vector2>(){},  // 8 - No collisions at the moment
-        new List<Vector2>(){},  // 9 - No collisions at the moment
-        new List<Vector2>(){},  // 10 - No collisions at the moment
-        new List<Vector2>(){},  // 11 - No collisions at the moment
-        new List<Vector2>(){},  // 12 - No collisions at the moment
-        new List<Vector2>(){},  // 13 - No collisions at the moment
+
+            new Vector2(13, 6),
+            new Vector2(13, 5),
+            new Vector2(13, 4),
+            new Vector2(13, 4),
+            new Vector2(13, 3),
+            new Vector2(14, 3),
+            new Vector2(15, 3),
+            new Vector2(16, 3),
+
+        },  // 2
+        new List<Vector2>() {
+            new Vector2(2,2),
+            new Vector2(2,3),
+            new Vector2(2,4),
+            new Vector2(2,5),
+            new Vector2(2,6),
+            new Vector2(2,7),
+
+            new Vector2(3,2),
+            new Vector2(4,2),
+            new Vector2(5,2),
+            new Vector2(6,2),
+            new Vector2(9,2),
+            new Vector2(10,2),
+            new Vector2(11,2),
+            new Vector2(12,2),
+            new Vector2(13,2),
+            
+            new Vector2(13,3),
+            new Vector2(13,4),
+            new Vector2(13,5),
+            new Vector2(13,6),
+            new Vector2(13,7),
+
+            new Vector2(3,7),
+            new Vector2(4,7),
+            new Vector2(5,7),
+            new Vector2(6,7),
+            new Vector2(9,7),
+            new Vector2(10,7),
+            new Vector2(11,7),
+            new Vector2(12,7),
+        },  // 3
+        new List<Vector2>(){
+            new Vector2(3, 2),
+            new Vector2(3, 3),
+            new Vector2(3, 4),
+            new Vector2(3, 6),
+            new Vector2(3, 7),
+            
+            new Vector2(4, 2),
+            new Vector2(4, 3),
+            new Vector2(4, 4),
+            new Vector2(4, 6),
+            new Vector2(4, 7),
+            
+            new Vector2(5, 2),
+            new Vector2(5, 3),
+            new Vector2(5, 4),
+            new Vector2(5, 6),
+            new Vector2(5, 7),
+
+            new Vector2(10, 2),
+            new Vector2(10, 3),
+            new Vector2(10, 4),
+            new Vector2(10, 6),
+            new Vector2(10, 7),
+
+            new Vector2(11, 2),
+            new Vector2(11, 3),
+            new Vector2(11, 4),
+            new Vector2(11, 6),
+            new Vector2(11, 7),
+
+            new Vector2(12, 2),
+            new Vector2(12, 3),
+            new Vector2(12, 4),
+            new Vector2(12, 6),
+            new Vector2(12, 7),
+        },  // 4
+        new List<Vector2>(){
+        
+            //Left table
+            new Vector2(3,2),
+            new Vector2(3,3),
+            new Vector2(4,2),
+            new Vector2(4,3),
+            new Vector2(5,2),
+            new Vector2(5,3),
+
+            //Right table
+            new Vector2(11,2),
+            new Vector2(11,3),
+            new Vector2(12,2),
+            new Vector2(12,3),
+            new Vector2(13,2),
+            new Vector2(13,3),
+
+            // Middle left
+            new Vector2(4,5),
+
+            // Middle right
+            new Vector2(11,4),
+            new Vector2(12,4),
+            new Vector2(13,4),
+            new Vector2(11,5),
+            new Vector2(12,5),
+            new Vector2(13,5),
+
+            // Top left
+            new Vector2(3,7),
+            new Vector2(4,7),
+            new Vector2(5,7),
+            new Vector2(3,8),
+            new Vector2(4,8),
+            new Vector2(5,8),
+
+            // Top right
+            new Vector2(11,7),
+            new Vector2(11,8),
+            new Vector2(12,7),
+            new Vector2(12,8),
+            new Vector2(13,7),
+            new Vector2(13,8),
+        },  // 5
+        new List<Vector2>(){
+            new Vector2(3,5),
+            new Vector2(3,6),
+
+            new Vector2(5,3),
+            new Vector2(6,3),
+
+            new Vector2(10,3),
+            new Vector2(11,3),
+
+            new Vector2(12,6),
+            new Vector2(13,6),
+        },  // 6
+        new List<Vector2>(){
+            new Vector2(4,0),
+            new Vector2(4,1),
+            new Vector2(4,2),
+            new Vector2(4,3),
+            new Vector2(4,4),
+            new Vector2(4,5),
+            new Vector2(4,6),
+            new Vector2(4,7),
+            new Vector2(4,8),
+            new Vector2(4,9),
+        },  // 7
+        new List<Vector2>(){
+            new Vector2(0,6),
+            new Vector2(1,6),
+            new Vector2(2,6),
+            new Vector2(3,6),
+            new Vector2(4,6),
+            new Vector2(5,6),
+            new Vector2(6,6),
+            new Vector2(7,6),
+            new Vector2(8,6),
+            new Vector2(9,6),
+            new Vector2(10,6),
+            new Vector2(11,6),
+            new Vector2(12,6),
+            new Vector2(13,6),
+            new Vector2(14,6),
+            new Vector2(15,6),
+
+            new Vector2(13,4),
+            new Vector2(14,4),
+            new Vector2(15,4),
+            new Vector2(13,3),
+            new Vector2(14,3),
+            new Vector2(15,3),
+            new Vector2(13,2),
+            new Vector2(14,2),
+            new Vector2(15,2),
+            new Vector2(13,1),
+            new Vector2(14,1),
+            new Vector2(15,1),
+            new Vector2(13,0),
+            new Vector2(14,0),
+            new Vector2(15,0),
+        },  // 8 
+        new List<Vector2>(){},   // 9 - No collisions at the moment
+        new List<Vector2>(){
+            new Vector2(2,3),
+            new Vector2(2,4),
+            new Vector2(2,5),
+            new Vector2(2,6),
+            new Vector2(2,7),
+
+            new Vector2(3,3),
+            new Vector2(3,4),
+            new Vector2(3,5),
+            new Vector2(3,6),
+            new Vector2(3,7),
+
+            new Vector2(4,3),
+            new Vector2(4,4),
+            new Vector2(4,5),
+            new Vector2(4,6),
+            new Vector2(4,7),
+
+            new Vector2(5,3),
+            new Vector2(5,4),
+            new Vector2(5,5),
+            new Vector2(5,6),
+            new Vector2(5,7),
+
+            new Vector2(6,3),
+            new Vector2(6,4),
+            new Vector2(6,5),
+            new Vector2(6,6),
+            new Vector2(6,7),
+
+            new Vector2(9,3),
+            new Vector2(9,4),
+            new Vector2(9,5),
+            new Vector2(9,6),
+            new Vector2(9,7),
+
+            new Vector2(10,3),
+            new Vector2(10,4),
+            new Vector2(10,5),
+            new Vector2(10,6),
+            new Vector2(10,7),
+
+            new Vector2(11,3),
+            new Vector2(11,4),
+            new Vector2(11,5),
+            new Vector2(11,6),
+            new Vector2(11,7),
+
+            new Vector2(12,3),
+            new Vector2(12,4),
+            new Vector2(12,5),
+            new Vector2(12,6),
+            new Vector2(12,7),
+
+            new Vector2(13,3),
+            new Vector2(13,4),
+            new Vector2(13,5),
+            new Vector2(13,6),
+            new Vector2(13,7),
+        },  // 10
+        new List<Vector2>(){
+            new Vector2(7,5),
+            new Vector2(8,5),
+            new Vector2(8,4),
+        },  // 11
+        new List<Vector2>(){
+            new Vector2(2,1),
+            
+            new Vector2(2,3),
+            new Vector2(2,4),
+            new Vector2(2,5),
+            new Vector2(2,6),
+            new Vector2(3,3),
+            new Vector2(3,4),
+            new Vector2(3,5),
+            new Vector2(3,6),
+
+            new Vector2(2,8),
+            
+            new Vector2(4,2),
+            new Vector2(4,8),
+
+            new Vector2(7,2),
+            new Vector2(7,3),
+            new Vector2(8,2),
+            new Vector2(8,3),
+            new Vector2(9,2),
+            new Vector2(9,3),
+
+            new Vector2(7,7),
+            new Vector2(7,8),
+            new Vector2(8,7),
+            new Vector2(8,8),
+            new Vector2(9,7),
+            new Vector2(9,8),
+
+            new Vector2(11,2),
+            new Vector2(11,8),
+
+            new Vector2(13,1),
+            
+            new Vector2(13,3),
+            new Vector2(13,4),
+            new Vector2(13,5),
+            new Vector2(13,6),
+            new Vector2(14,3),
+            new Vector2(14,4),
+            new Vector2(14,5),
+            new Vector2(14,6),
+
+            new Vector2(13,8),
+
+        },  // 12 
+        new List<Vector2>(){},   // 13 - No collisions at the moment
     };
 
     public GameObject floor, wall, corner, split, wallEnd, wallDoor, wallDoorBoss, button, player, column, crate, crateDark, chest, table, tableMedium, tableSmall, chair, barrel, mug, bookcase, bookcaseBroken, book, bookOpen;
@@ -585,8 +861,8 @@ public class GameManager : MonoBehaviour
 
         //bolb
         infos = new ArrayList(); // Coordenades + rotació
-        infos.Add(new Info(new Vector3(x + 14f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //left
-        infos.Add(new Info(new Vector3(x + 18f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //right
+        infos.Add(new Info(new Vector3(x + 15f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //left
+        infos.Add(new Info(new Vector3(x + 17f, 1f, z + 18f), Quaternion.Euler(0f, 180f, 0f))); //right
         room.Add(bolb, infos); // Afegeix l'objecte del enemic concret + totes les instàncies a generar (coordenades i rotacions)
 
         enemies.Add(1, room); // Sala 1, enemics de la room
@@ -616,12 +892,16 @@ public class GameManager : MonoBehaviour
 
         //skeleton
         infos = new ArrayList(); // Coordenades + rotació
-        infos.Add(new Info(new Vector3(x + 1f, 1f, z + 4f), Quaternion.Euler(0f, 180f, 0f))); //left
-        infos.Add(new Info(new Vector3(x + 1f, 1f, z + 14f), Quaternion.Euler(0f, 0f, 0f))); //right
+        infos.Add(new Info(new Vector3(x + 2f, 1f, z + 2f), Quaternion.Euler(0f, 90f, 0f)));
         room.Add(skeleton, infos); // Afegeix l'objecte del enemic concret + totes les instàncies a generar (coordenades i rotacions)
 
-        enemies.Add(3, room);
+        //bolb
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 30f, 1f, z + 2f), Quaternion.Euler(0f, 180f, 0f))); //bottom
+        infos.Add(new Info(new Vector3(x + 30f, 1f, z + 16f), Quaternion.Euler(0f, 180f, 0f))); //top
+        room.Add(bolb, infos); // Afegeix l'objecte del enemic concret + totes les instàncies a generar (coordenades i rotacions)
 
+        enemies.Add(3, room);
 
         //SALA 4
         x = 16f * q; z = 10f * q;

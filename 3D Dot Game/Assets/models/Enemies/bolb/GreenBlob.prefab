@@ -173,6 +173,11 @@ MonoBehaviour:
   died: 0
   mat: {fileID: 2100000, guid: 0b815806674b59b48ba94fe52c70d225, type: 2}
   animatorRequired: 0
+  defaultObject0: {fileID: 3310739676996896189}
+  defaultObject1: {fileID: 0}
+  defaultObject2: {fileID: 0}
+  defaultObject3: {fileID: 0}
+  defaultMaterial: {fileID: 2100000, guid: 60c18f25c47eea94fb41aab50b709135, type: 2}
   speed: 0
   enemyType: 3
   attackingFreq: 0.7
@@ -180,6 +185,13 @@ MonoBehaviour:
   shotSpeed: 0
   myPosition: {x: 0, y: 0}
   moving: 1
+  frontalShotHolder: {fileID: 0}
+  leftShotHolder: {fileID: 0}
+  rightShotHolder: {fileID: 0}
+  right2ShotHolder: {fileID: 0}
+  right3ShotHolder: {fileID: 0}
+  left2ShotHolder: {fileID: 0}
+  left3ShotHolder: {fileID: 0}
 --- !u!114 &1708209291218909141
 MonoBehaviour:
   m_ObjectHideFlags: 0
