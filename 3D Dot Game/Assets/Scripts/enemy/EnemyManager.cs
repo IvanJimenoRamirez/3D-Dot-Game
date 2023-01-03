@@ -139,26 +139,7 @@ public class EnemyManager : MonoBehaviour
 
             if (nextNode == null)
             {
-                // Move to a random direction, taking into account the obstacles in the room
-                List<Vector2> roomCollisions = GameObject.Find("GameManager").GetComponent<GameManager>().collisions[getRoomIndex(transform.position)];
-                List<Vector2> directions = new List<Vector2>() {
-                    new Vector2(0, 1),
-                    new Vector2(0, -1),
-                    new Vector2(1, 0),
-                    new Vector2(-1, 0),
-                    new Vector2(1, 1),
-                    new Vector2(1, -1),
-                    new Vector2(-1, 1),
-                    new Vector2(-1, -1)
-                };
-                List<Vector2> randomMovement = new List<Vector2>();
-                foreach (Vector2 move in directions)
-                {
-                    if (!roomCollisions.Contains((enemyPos + move))) randomMovement.Add((enemyPos + move));
-                }
-                Vector2 position = randomMovement[UnityEngine.Random.Range(0, randomMovement.Count)];
-                nextX = position.x;
-                nextY = position.y;
+                return;
             } else
             {
                 nextX = nextNode.getX();

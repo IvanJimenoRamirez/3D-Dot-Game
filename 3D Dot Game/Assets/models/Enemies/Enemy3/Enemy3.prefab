@@ -814,7 +814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00433307ba8c49c409f8a639ff24cbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 25
   died: 0
   mat: {fileID: 2100000, guid: c5d33f30dd88c6545bbb1a8b0109f4d8, type: 2}
   animatorRequired: 1
@@ -823,9 +823,9 @@ MonoBehaviour:
   defaultObject2: {fileID: 6091048135153767900}
   defaultObject3: {fileID: 489476331087932622}
   defaultMaterial: {fileID: 2100000, guid: 2a2dd99db626fe4409bb0fa0e72ce8bd, type: 2}
-  speed: 2
+  speed: 3
   enemyType: 0
-  attackingFreq: 0.7
+  attackingFreq: 0.9
   bullet: {fileID: 0}
   shotSpeed: 15
   myPosition: {x: 0, y: 0}
