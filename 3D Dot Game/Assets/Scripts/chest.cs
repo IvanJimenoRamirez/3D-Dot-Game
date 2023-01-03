@@ -10,6 +10,8 @@ public class chest : MonoBehaviour
     public bool hasBossKey;
     public bool hasBoomerang;
 
+    public AudioClip appear;
+    public bool appearSound = true;
 
     public enum s { LOCK, UNLOCK, OPEN, OPEN_FINISHED }
     public s state = s.LOCK;
@@ -32,6 +34,8 @@ public class chest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (appearSound) GetComponent<AudioSource>().PlayOneShot(appear);
+
         Vector3 position = transform.position + new Vector3(0f, 1f, 0f);
         if (hasKey) gain = Instantiate(key, position, Quaternion.identity);
         else if (hasBossKey)

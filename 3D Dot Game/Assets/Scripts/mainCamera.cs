@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class mainCamera : MonoBehaviour
 {
-    public GameObject gamePlayer;
+    public GameObject gamePlayer, gameManager;
     public int roomActual;
     int roomPrevious;
     int transition;
@@ -91,7 +91,8 @@ public class mainCamera : MonoBehaviour
     void Start()
     {
         //Find the GameManager to instantiate mainCamera instance
-        GameObject.Find("GameManager").GetComponent<GameManager>().gameMainCamera = gameObject;
+        gameManager = GameObject.Find("GameManager");
+        gameManager.GetComponent<GameManager>().gameMainCamera = gameObject;
 
         roomActual = roomPrevious = 1;
         transition = 0;
@@ -116,6 +117,11 @@ public class mainCamera : MonoBehaviour
                     //transition finishes
                     transition = 0;
                     roomPrevious = roomActual;
+                    if (roomActual == 6)
+                    {
+                        GameObject roomDoor = GameObject.FindGameObjectWithTag("roomDoor");
+                        roomDoor.GetComponent<bossKeyDoor>().close = true;
+                    }
                     gamePlayer.GetComponent<PlayerMovement>().stop = false;
                     upBoss = false;
                     downBoss = false;
@@ -131,7 +137,11 @@ public class mainCamera : MonoBehaviour
                             transform.Translate(new Vector3(1f, 0f, 0f), Space.World);
                             break;
                         case mov.UP:
-                            if (!upBoss) transform.Translate(new Vector3(0f, 0f, 1f), Space.World);
+                            if (!upBoss)
+                            {
+                                transform.Translate(new Vector3(0f, 0f, 1f), Space.World);
+                                if (roomActual == 6) gamePlayer.transform.Translate(new Vector3(0f, 0f, 0.05f), Space.World);
+                            }
                             else
                             {
                                 transform.Rotate(new Vector3(10f / 21f, 0f, 0f), Space.World);

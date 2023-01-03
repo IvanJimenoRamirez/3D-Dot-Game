@@ -55,6 +55,8 @@ MonoBehaviour:
   hasKey: 0
   hasBossKey: 0
   hasBoomerang: 0
+  appear: {fileID: 8300000, guid: 6c2427731625ff5468b08923979bc1ed, type: 3}
+  appearSound: 1
   state: 0
 --- !u!65 &9021577398693249119
 BoxCollider:

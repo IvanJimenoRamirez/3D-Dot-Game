@@ -50,6 +50,8 @@ public class EnemyManager : MonoBehaviour
     bool performingSpecial = false;
     public GameObject frontalShotHolder, leftShotHolder, rightShotHolder, right2ShotHolder, right3ShotHolder, left2ShotHolder, left3ShotHolder;
 
+    private Canvas endCanvas;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,6 +94,8 @@ public class EnemyManager : MonoBehaviour
                 realMaterials.Add(((defaultObject3.GetComponent<MeshRenderer>() != null) ? defaultObject3.GetComponent<MeshRenderer>().materials : defaultObject3.GetComponent<Renderer>().materials).ToList());
             }
         }
+
+        if (isBoss) endCanvas = GameObject.Find("MenuCanvas").GetComponent<Canvas>();
     }
 
     // Update is called once per frame
@@ -255,6 +259,7 @@ public class EnemyManager : MonoBehaviour
                     newBullet.GetComponent<Rigidbody>().velocity = direction;
                     break;
                 case AttackType.BOSS:
+                    gameObject.GetComponent<AudioSource>().Play();
                     // Instantiate the new bullet in front of the enemy, with velocity defined to go in front of the enemy (not in the direction of the player)
                     GameObject newBulletBoss = Instantiate(bullet, frontalShotHolder.transform.position, Quaternion.identity);
                     newBulletBoss.GetComponent<Rigidbody>().velocity = transform.forward * shotSpeed;
@@ -323,7 +328,10 @@ public class EnemyManager : MonoBehaviour
             }
             if (health <= 0)
             {
+                GameObject gameManager = GameObject.Find("GameManager");
+                gameManager.GetComponent<GameManager>().enemyDie(gameObject);
                 died = true;
+                if (isBoss) endCanvas.transform.GetChild(1).gameObject.SetActive(true);
             }
         }
 
@@ -407,6 +415,8 @@ public class EnemyManager : MonoBehaviour
      */
     private void performSpecialAttack()
     {
+        gameObject.GetComponent<AudioSource>().Play();
+
         GameObject newBulletBoss = Instantiate(bullet, frontalShotHolder.transform.position, Quaternion.identity);
         newBulletBoss.GetComponent<Rigidbody>().velocity = transform.forward * shotSpeed;
 
