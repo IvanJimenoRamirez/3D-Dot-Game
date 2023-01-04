@@ -7,7 +7,7 @@ public class archer : MonoBehaviour
 {
     public GameObject arrow;
     public int position = -1; //[0]down-left  [1]down-right  [2]up-left  [3] up-right
-    public float velocity = 0.05f;
+    public float velocity = 50f;
     
     enum s { POS_1, TRANS_1_2, TRANS_2_1, POS_2 };
     s state;
@@ -26,7 +26,7 @@ public class archer : MonoBehaviour
     void Start()
     {
         state = s.TRANS_1_2;
-        rotate = 0.3f; //0.1f; // rotation velocity
+        rotate = 0.8f; //0.1f; // rotation velocity
         rotation = 0f;
     }
 
@@ -117,7 +117,6 @@ public class archer : MonoBehaviour
         {
             actArrow.GetComponent<Arrow>().velocity = vel1;
             actArrow.GetComponent<Arrow>().move = true;
-            actArrow.GetComponent<Arrow>().destroy();
         }
     }
 
@@ -127,7 +126,6 @@ public class archer : MonoBehaviour
         {
             actArrow.GetComponent<Arrow>().velocity = vel2;
             actArrow.GetComponent<Arrow>().move = true;
-            actArrow.GetComponent<Arrow>().destroy();
         }
     }
 

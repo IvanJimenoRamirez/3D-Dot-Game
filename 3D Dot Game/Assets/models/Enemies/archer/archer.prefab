@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 3768149816156170926, guid: 71d8798c323c81b4f88882a19de2e0ed, type: 3}
   position: -1
-  velocity: 0.3
+  velocity: 0.7
   actArrow: {fileID: 0}
   _time: 2
 --- !u!65 &491211339722392153

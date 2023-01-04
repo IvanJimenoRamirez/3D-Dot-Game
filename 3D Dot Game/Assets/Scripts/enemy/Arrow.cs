@@ -31,6 +31,6 @@ public class Arrow : MonoBehaviour
 
     public void destroy()
     {
-        //Destroy(gameObject, 3);
+        
     }
 }

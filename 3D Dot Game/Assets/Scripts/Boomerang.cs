@@ -13,7 +13,7 @@ public class Boomerang : MonoBehaviour
     {
         velocity = new Vector3(2f * velocityMask.x, 0f, 2f * velocityMask.z);
         transform.position = transform.position + velocity;
-        velocity = new Vector3(0.25f * velocityMask.x, 0f, 0.25f * velocityMask.z);
+        velocity = new Vector3(0.7f * velocityMask.x, 0f, 0.7f * velocityMask.z);
         GetComponent<AudioSource>().Play();
     }
 
@@ -22,7 +22,7 @@ public class Boomerang : MonoBehaviour
     {
         impact = false;
         transform.position = transform.position + velocity;
-        transform.Rotate(new Vector3(0f, 20f, 0f));
+        transform.Rotate(new Vector3(0f, 40f, 0f));
     }
 
     private void OnCollisionEnter(Collision collision)
