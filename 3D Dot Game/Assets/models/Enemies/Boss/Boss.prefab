@@ -12,7 +12,7 @@ GameObject:
   m_Layer: 0
   m_Name: leftShotHolder
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -43,7 +43,7 @@ GameObject:
   m_Layer: 0
   m_Name: rightShotHolder
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -74,7 +74,7 @@ GameObject:
   m_Layer: 0
   m_Name: frontalAShotHolder
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -105,7 +105,7 @@ GameObject:
   m_Layer: 0
   m_Name: left2ShotHolder
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -136,7 +136,7 @@ GameObject:
   m_Layer: 0
   m_Name: left3ShotHolder
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -167,7 +167,7 @@ GameObject:
   m_Layer: 0
   m_Name: right3ShotHolder
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -198,7 +198,7 @@ GameObject:
   m_Layer: 0
   m_Name: right2ShotHolder
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 4421273577672571432}
   - component: {fileID: 1931663717}
   - component: {fileID: 1931663718}
-  - component: {fileID: 7625483229557569456}
+  - component: {fileID: 2060061468}
   m_Layer: 0
   m_Name: SnakeHead
   m_TagString: Untagged
@@ -419,7 +419,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: 9d39fd9986df77c4788a11d2f6c2ab7f, type: 2}
   animatorRequired: 0
   defaultObject0: {fileID: 5448686668237068360}
-  defaultObject1: {fileID: 0}
+  defaultObject1: {fileID: 5448686668237068360}
   defaultObject2: {fileID: 0}
   defaultObject3: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: 2a2dd99db626fe4409bb0fa0e72ce8bd, type: 2}
@@ -473,7 +473,7 @@ MonoBehaviour:
   explosionForce: 50
   explsionRadius: 4
   explosionUpward: 0.4
---- !u!82 &7625483229557569456
+--- !u!82 &2060061468
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -485,7 +485,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 96435c3d47361054781c404dcac05f37, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.87
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -59,6 +59,30 @@ public class EnemyManager : MonoBehaviour
         timeToAttack = 1.0f / attackingFreq;
         // At the start, the enemy is not attacking
         attacking = false;
+        
+        defaultObjects = new List<GameObject>();
+        realMaterials = new List<List<Material>>();
+        if (defaultObject0 != null)
+        {
+            defaultObjects.Add(defaultObject0);
+            realMaterials.Add(((defaultObject0.GetComponent<MeshRenderer>() != null) ? defaultObject0.GetComponent<MeshRenderer>().materials : defaultObject0.GetComponent<Renderer>().materials).ToList());
+        }
+        if (defaultObject1 != null)
+        {
+            defaultObjects.Add(defaultObject1);
+            realMaterials.Add(((defaultObject1.GetComponent<MeshRenderer>() != null) ? defaultObject1.GetComponent<MeshRenderer>().materials : defaultObject1.GetComponent<Renderer>().materials).ToList());
+        }
+        if (defaultObject2 != null)
+        {
+            defaultObjects.Add(defaultObject2);
+            realMaterials.Add(((defaultObject2.GetComponent<MeshRenderer>() != null) ? defaultObject2.GetComponent<MeshRenderer>().materials : defaultObject2.GetComponent<Renderer>().materials).ToList());
+        }
+        if (defaultObject3 != null)
+        {
+            defaultObjects.Add(defaultObject3);
+            realMaterials.Add(((defaultObject3.GetComponent<MeshRenderer>() != null) ? defaultObject3.GetComponent<MeshRenderer>().materials : defaultObject3.GetComponent<Renderer>().materials).ToList());
+        }
+
         // Boss properties
         if (enemyType == AttackType.BOSS) {
             isBoss = true;
@@ -70,29 +94,6 @@ public class EnemyManager : MonoBehaviour
         {
             // Startup the pathfinding to find the path to the player in the room
             pathFinding = new PathFinding(16, 10, getRoomIndex(transform.position));
-
-            defaultObjects = new List<GameObject>();
-            realMaterials = new List<List<Material>>();
-            if (defaultObject0 != null)
-            {
-                defaultObjects.Add(defaultObject0);
-                realMaterials.Add(((defaultObject0.GetComponent<MeshRenderer>() != null) ? defaultObject0.GetComponent<MeshRenderer>().materials : defaultObject0.GetComponent<Renderer>().materials).ToList());
-            }
-            if (defaultObject1 != null)
-            {
-                defaultObjects.Add(defaultObject1);
-                realMaterials.Add(((defaultObject1.GetComponent<MeshRenderer>() != null) ? defaultObject1.GetComponent<MeshRenderer>().materials : defaultObject1.GetComponent<Renderer>().materials).ToList());
-            }
-            if (defaultObject2 != null)
-            {
-                defaultObjects.Add(defaultObject2);
-                realMaterials.Add(((defaultObject2.GetComponent<MeshRenderer>() != null) ? defaultObject2.GetComponent<MeshRenderer>().materials : defaultObject2.GetComponent<Renderer>().materials).ToList());
-            }
-            if (defaultObject3 != null)
-            {
-                defaultObjects.Add(defaultObject3);
-                realMaterials.Add(((defaultObject3.GetComponent<MeshRenderer>() != null) ? defaultObject3.GetComponent<MeshRenderer>().materials : defaultObject3.GetComponent<Renderer>().materials).ToList());
-            }
         }
 
         if (isBoss) endCanvas = GameObject.Find("MenuCanvas").GetComponent<Canvas>();
