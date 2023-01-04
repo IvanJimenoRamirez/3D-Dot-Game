@@ -254,9 +254,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exploded: 0
   explosionMat: {fileID: 0}
-  coin: {fileID: 0}
-  potion: {fileID: 0}
-  getReward: 0
+  coin: {fileID: 2418978634637448579, guid: 784e91ad18d00ee498f37949d409336d, type: 3}
+  potion: {fileID: 5052180536240167931, guid: 523847891bbde7848a29b82e690c97fb, type: 3}
+  getReward: 1
   time: 3
   cubeSize: 0.2
   cubesInRow: 5
