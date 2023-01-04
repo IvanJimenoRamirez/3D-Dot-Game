@@ -99,6 +99,7 @@ public class button : MonoBehaviour
             }
             else if (room == 11)
             {
+                GetComponent<AudioSource>().Play();
                 GameObject bossKeyDoor = GameObject.FindWithTag("bossKeyDoor");
                 bossKeyDoor.GetComponent<bossKeyDoor>().open = true;
                 state = s.PRESSED;
@@ -116,7 +117,6 @@ public class button : MonoBehaviour
                 
                 if (allPressed)
                 {
-                    GetComponent<AudioSource>().Play();
                     GameObject newChest = Instantiate(chest, chestPosition, chestRotation);
                     newChest.GetComponent<chest>().hasBossKey = true;
                 }

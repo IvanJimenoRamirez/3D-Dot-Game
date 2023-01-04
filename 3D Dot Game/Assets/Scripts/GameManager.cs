@@ -1403,6 +1403,7 @@ public class GameManager : MonoBehaviour
                 initEnemies(actualRoom);
                 room = actualRoom;
                 gameMainCamera.GetComponent<mainCamera>().roomActual = room;
+                gamePlayer.GetComponent<PlayerBehaviour>().removeBoomerang();
             }
             else if (actualRoom == 6) room6();
         }

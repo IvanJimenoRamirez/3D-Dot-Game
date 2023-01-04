@@ -178,7 +178,13 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B)) updateBossKeys(1);
 
         // G -> invulnerability
-        if (Input.GetKeyDown(KeyCode.G)) invulnerable = !invulnerable;
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            invulnerable = !invulnerable;
+            if (invulnerable) GameObject.Find("HeartUI").transform.GetChild(8).gameObject.SetActive(true);
+            else GameObject.Find("HeartUI").transform.GetChild(8).gameObject.SetActive(false);
+
+        }
     }
 
     /* UI */
@@ -293,10 +299,6 @@ public class PlayerBehaviour : MonoBehaviour
             activeBoomerang = Instantiate(boomerang, pos, Quaternion.identity);
             activeBoomerang.GetComponent<Boomerang>().velocityMask = velocityMask;
         }
-        else if (Input.GetKeyDown("space") && !hasBoomerang)
-        {
-            getBoomerang();
-        }
     }
 
     private void destroyDmgReciver()
@@ -304,4 +306,8 @@ public class PlayerBehaviour : MonoBehaviour
         if (dmgReciverInstantiated != null) Destroy(dmgReciverInstantiated);
     }
 
+    public void removeBoomerang()
+    {
+        if (hasBoomerang && activeBoomerang != null) Destroy(activeBoomerang);
+    }
 }
