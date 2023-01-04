@@ -991,7 +991,7 @@ public class GameManager : MonoBehaviour
         infos = new ArrayList(); // Coordenades + rotació
         infos.Add(new Info(new Vector3(x + 20f, 1f, z + 2f), Quaternion.Euler(0f, 0f, 0f)));
         infos.Add(new Info(new Vector3(x + 20f, 1f, z + 6f), Quaternion.Euler(0f, 180f, 0f)));
-        infos.Add(new Info(new Vector3(x + 20f, 1f, z + 8f), Quaternion.Euler(0f, 180f, 0f)));
+        infos.Add(new Info(new Vector3(x + 20f, 1f, z + 10f), Quaternion.Euler(0f, 180f, 0f)));
         room.Add(skeleton, infos);
 
         enemies.Add(8, room);
@@ -1044,11 +1044,14 @@ public class GameManager : MonoBehaviour
 
         // skeleton
         infos = new ArrayList(); // Coordenades + rotació
-        infos.Add(new Info(new Vector3(x + 8f, 1f, z + 8f), Quaternion.Euler(0f, 180f, 0f)));
-        infos.Add(new Info(new Vector3(x + 8f, 1f, z + 12f), Quaternion.Euler(0f, 0f, 0f)));
         infos.Add(new Info(new Vector3(x + 22f, 1f, z + 8f), Quaternion.Euler(0f, 180f, 0f)));
         infos.Add(new Info(new Vector3(x + 22f, 1f, z + 12f), Quaternion.Euler(0f, 0f, 0f)));
         room.Add(skeleton, infos);
+
+        // Bat
+        infos = new ArrayList(); // Coordenades + rotació
+        infos.Add(new Info(new Vector3(x + 16f, 1f, z + 14f), Quaternion.Euler(0f, 90f, 0f)));
+        room.Add(bat, infos);
 
         enemies.Add(12, room);
 

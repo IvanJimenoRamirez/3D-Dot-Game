@@ -217,6 +217,10 @@ public class BossBody : MonoBehaviour
             {
                 health -= 2;
             }
+            if (collision.gameObject.tag == "Boomerang")
+            {
+                health -= 5;
+            }
             if (health <= 0)
             {
                 //Startup new properties
