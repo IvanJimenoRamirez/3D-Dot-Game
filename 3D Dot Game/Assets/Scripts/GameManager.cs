@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Xml;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviour
 {

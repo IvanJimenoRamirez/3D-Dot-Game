@@ -221,7 +221,7 @@ public class BossBody : MonoBehaviour
             {
                 //Startup new properties
                 float actualSpeed = head.GetComponent<EnemyManager>().speed;
-                actualSpeed += 0.5f;
+                actualSpeed += 0.25f;
                 if (parent != null)
                 {
                     parent.lastBody = true;

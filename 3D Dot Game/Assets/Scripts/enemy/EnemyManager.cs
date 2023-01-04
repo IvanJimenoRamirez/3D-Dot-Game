@@ -322,7 +322,7 @@ public class EnemyManager : MonoBehaviour
             }
             if (collision.gameObject.tag == "Boomerang")
             {
-                health--;
+                health -= 5;
                 ireciveddmg = true;
             }
             if (health <= 0)
@@ -394,8 +394,8 @@ public class EnemyManager : MonoBehaviour
     public void bodyDestroyed(float newSpeed)
     {
         speed = newSpeed;
-        shotSpeed += 0.25f;
-        attackingFreq += 0.05f;
+        shotSpeed += 0.1f;
+        attackingFreq += 0.01f;
         // Special attack
         specialAttack();
     }
