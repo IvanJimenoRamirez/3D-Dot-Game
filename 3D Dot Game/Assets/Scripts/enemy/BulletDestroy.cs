@@ -27,9 +27,9 @@ public class BulletDestroy : MonoBehaviour
         if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "bossBody" || collision.gameObject.tag == "PlayerP")
         {
             // if the bullet have the Explosion script
-            if (GetComponent<Explosion>() != null)
+            if (gameObject.GetComponent<Explosion>() != null)
             {
-                GetComponent<Explosion>().exploded = true;
+                gameObject.GetComponent<Explosion>().exploded = true;
             }
             else Destroy(gameObject);
         }

@@ -330,7 +330,10 @@ public class EnemyManager : MonoBehaviour
                 GameObject gameManager = GameObject.Find("GameManager");
                 gameManager.GetComponent<GameManager>().enemyDie(gameObject);
                 died = true;
-                if (isBoss) endCanvas.transform.GetChild(1).gameObject.SetActive(true);
+                if (isBoss) {
+                    GameObject.FindGameObjectWithTag("PlayerP").GetComponent<PlayerAttacking>().enabled = true;
+                    endCanvas.transform.GetChild(1).gameObject.SetActive(true);
+                }
             }
         }
 
