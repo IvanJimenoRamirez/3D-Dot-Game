@@ -23,12 +23,14 @@ public class GameMenu : MonoBehaviour
     public void continueGame()
     {
         gameMenu.SetActive(false);
+        GameObject.FindGameObjectWithTag("PlayerP").GetComponent<PlayerAttacking>().enabled = true;
         Time.timeScale = 1f;
         shown = false;
     }
 
     private void show()
     {
+        GameObject.FindGameObjectWithTag("PlayerP").GetComponent<PlayerAttacking>().enabled = false;
         gameMenu.SetActive(true);
         Time.timeScale = 0f;
         shown = true;

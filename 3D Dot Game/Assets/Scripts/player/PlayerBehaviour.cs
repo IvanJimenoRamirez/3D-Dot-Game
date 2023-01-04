@@ -177,7 +177,13 @@ public class PlayerBehaviour : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B)) updateBossKeys(1);
 
         // G -> invulnerability
-        if (Input.GetKeyDown(KeyCode.G)) invulnerable = !invulnerable;
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            invulnerable = !invulnerable;
+            if (invulnerable) GameObject.Find("HeartUI").transform.GetChild(8).gameObject.SetActive(true);
+            else GameObject.Find("HeartUI").transform.GetChild(8).gameObject.SetActive(false);
+
+        }
     }
 
     /* UI */
@@ -301,10 +307,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void removeBoomerang()
     {
-        if (hasBoomerang)
-        {
-            hasBoomerang = false;
-            if (activeBoomerang != null) Destroy(activeBoomerang);
-        }
+        if (hasBoomerang && activeBoomerang != null) Destroy(activeBoomerang);
     }
 }
