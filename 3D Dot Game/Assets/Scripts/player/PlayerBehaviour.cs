@@ -71,10 +71,11 @@ public class PlayerBehaviour : MonoBehaviour
     // This method is called when the player collides
     private void OnCollisionEnter(Collision collision)
     {
-        if (invulnerable) return;
+        
         // If the player collides with an enemy or a enemy bullet, then take damage
         if ((collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "bossBullet") && health > 0)
         {
+            if (invulnerable) return;
             if (timeToTick <= 0f)
             {
                 health--;
