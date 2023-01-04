@@ -105,7 +105,7 @@ public class mainCamera : MonoBehaviour
     void Update()
     {
         //key(); //TODO erase (testing)
-        auxKey(); //TODO erase (testing)
+        //auxKey(); //TODO erase (testing)
 
 
         if (roomActual != roomPrevious)
