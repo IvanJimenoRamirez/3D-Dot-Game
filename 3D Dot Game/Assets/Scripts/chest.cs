@@ -15,7 +15,7 @@ public class chest : MonoBehaviour
     public enum s { LOCK, UNLOCK, OPEN, OPEN_FINISHED }
     public s state = s.LOCK;
 
-    private int transition = 0, gainTransition = 0;
+    private float transition = 0f, gainTransition = 0f;
     private GameObject gain;
 
     
@@ -55,11 +55,11 @@ public class chest : MonoBehaviour
     {
         if (state == s.UNLOCK)
         {
-            if (transition < 90)
+            if (transition < 90f)
             {
                 GameObject child = gameObject.transform.GetChild(0).gameObject;
-                child.transform.Rotate(new Vector3(-5f, 0f, 0f));
-                transition += 5;
+                child.transform.Rotate(new Vector3(-100f * Time.deltaTime, 0f, 0f));
+                transition += 100f * Time.deltaTime;
             }
             else
             {
@@ -68,7 +68,7 @@ public class chest : MonoBehaviour
         }
         else if (state == s.OPEN)
         {
-            if (gainTransition < 150) gainAnimation();
+            if (gainTransition < 420f) gainAnimation();
             else
             {
                 Destroy(gain);
@@ -83,26 +83,27 @@ public class chest : MonoBehaviour
 
     void gainAnimation()
     {
-        if (gainTransition < 50)
+        // Pujada
+        if (gainTransition < 0.1f)
         {
             Vector3 newPos = gain.transform.position;
-            newPos.y = newPos.y + 0.02f;
+            newPos.y = newPos.y + 0.5f * Time.deltaTime;
             gain.transform.position = newPos;
-            gainTransition++;
+            gainTransition += 0.5f * Time.deltaTime;
         }
-        else if (gainTransition >= 50 && gainTransition < 100)
+        //Gir
+        else if (gainTransition >= 0.1f && gainTransition < 400f)
         {
-            gain.transform.Rotate(new Vector3(0f, -4f, 0f));
-            gainTransition++;
+            gain.transform.Rotate(new Vector3(0f, 360f * Time.deltaTime, 0f));
+            gainTransition += Time.deltaTime * 360f;
         }
-        else
-        {
+        //Pujada + gir
+        else { 
             Vector3 newPos = gain.transform.position;
-            newPos.y = newPos.y + 0.5f;
+            newPos.y = newPos.y + 10f * Time.deltaTime;
             gain.transform.position = newPos;
-            gainTransition++;
-            gain.transform.Rotate(new Vector3(0f, -4f, 0f));
-
+            gain.transform.Rotate(new Vector3(0f, 360f * Time.deltaTime, 0f));
+            gainTransition += Time.deltaTime * 10;
         }
     }
 }

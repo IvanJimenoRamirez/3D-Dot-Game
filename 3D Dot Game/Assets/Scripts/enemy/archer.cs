@@ -10,7 +10,7 @@ public class archer : MonoBehaviour
     
     enum s { POS_1, TRANS_1_2, TRANS_2_1, POS_2 };
     s state;
-    float rotate;
+    public float rotate = 3f;
     float rotation;
 
     bool posTreated = false;
@@ -25,7 +25,6 @@ public class archer : MonoBehaviour
     void Start()
     {
         state = s.TRANS_1_2;
-        rotate = 0.8f; //0.1f; // rotation velocity
         rotation = 0f;
     }
 
@@ -95,8 +94,8 @@ public class archer : MonoBehaviour
             if (rotation >= 90f) state = s.POS_2;
             else
             {
-                rotation += rotate;
-                transform.Rotate(new Vector3(0f, rotate, 0f));
+                rotation += rotate * Time.deltaTime;
+                transform.Rotate(new Vector3(0f, rotate * Time.deltaTime, 0f));
             }
         }
         else if (state == s.TRANS_2_1)
@@ -104,8 +103,8 @@ public class archer : MonoBehaviour
             if (rotation <= 0f) state = s.POS_1;
             else
             {
-                rotation -= rotate;
-                transform.Rotate(new Vector3(0f, -rotate, 0f));
+                rotation -= rotate * Time.deltaTime;
+                transform.Rotate(new Vector3(0f, -rotate * Time.deltaTime, 0f));
             }
         }
     }
