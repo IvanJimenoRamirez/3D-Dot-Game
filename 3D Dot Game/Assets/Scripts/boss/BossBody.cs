@@ -217,11 +217,15 @@ public class BossBody : MonoBehaviour
             {
                 health -= 2;
             }
+            if (collision.gameObject.tag == "Boomerang")
+            {
+                health -= 5;
+            }
             if (health <= 0)
             {
                 //Startup new properties
                 float actualSpeed = head.GetComponent<EnemyManager>().speed;
-                actualSpeed += 0.5f;
+                actualSpeed += 0.25f;
                 if (parent != null)
                 {
                     parent.lastBody = true;
