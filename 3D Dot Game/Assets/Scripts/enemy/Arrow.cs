@@ -20,7 +20,7 @@ public class Arrow : MonoBehaviour
     {
         if (move)
         {
-            transform.position = transform.position + velocity;
+            transform.position = transform.position + velocity * Time.deltaTime;
             if (!audio)
             {
                 audio = true;
