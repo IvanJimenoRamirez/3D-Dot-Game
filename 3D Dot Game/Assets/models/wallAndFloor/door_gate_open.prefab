@@ -146,3 +146,4 @@ MonoBehaviour:
   opened: 0
   needKey: 0
   needBossKey: 0
+  rotationSpeed: 30

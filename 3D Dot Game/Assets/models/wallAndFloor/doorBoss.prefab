@@ -134,6 +134,7 @@ MonoBehaviour:
   opened: 0
   needKey: 1
   needBossKey: 0
+  rotationSpeed: 30
 --- !u!65 &309377426317470905
 BoxCollider:
   m_ObjectHideFlags: 0

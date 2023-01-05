@@ -7,6 +7,7 @@ public class Boomerang : MonoBehaviour
     public Vector3 velocityMask = new Vector3(0f, 0f, 0f);
     public Vector3 velocity = new Vector3(0f, 0f, 0f);
     bool impact;
+    public float speed = 15f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +22,8 @@ public class Boomerang : MonoBehaviour
     void Update()
     {
         impact = false;
-        transform.position = transform.position + velocity;
-        transform.Rotate(new Vector3(0f, 40f, 0f));
+        transform.position = transform.position + velocity * Time.deltaTime * speed;
+        transform.Rotate(new Vector3(0f, 40f, 0f) * Time.deltaTime * speed);
     }
 
     private void OnCollisionEnter(Collision collision)

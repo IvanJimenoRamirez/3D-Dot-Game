@@ -13,6 +13,7 @@ public class doorScript : MonoBehaviour
     enum s { CLOSED, OPENING, OPENED };
     private s state;
     private float transition;
+    public float rotationSpeed = 30f;
     
     // Start is called before the first frame update
     void Start()
@@ -30,8 +31,8 @@ public class doorScript : MonoBehaviour
         {
             if (transition < 90f)
             {
-                transition += 2f;
-                transform.Rotate(new Vector3(0f, -2f, 0f));
+                transition += rotationSpeed * Time.deltaTime;
+                transform.Rotate(new Vector3(0f, -rotationSpeed * Time.deltaTime, 0f));
             }
             else
             {

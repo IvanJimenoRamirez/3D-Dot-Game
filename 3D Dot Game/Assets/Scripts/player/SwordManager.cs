@@ -18,6 +18,9 @@ public class SwordManager : MonoBehaviour
     enum specialDirection { LEFT, RIGHT };
     specialDirection comboDirection;
 
+    public float rotationFreq = 0.2f;
+    public float rotationSpeed = 260f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,12 +76,12 @@ public class SwordManager : MonoBehaviour
             switch (comboDirection)
             {
                 case specialDirection.LEFT:
-                    transform.Rotate(0, 0, 8);
-                    player.Rotate(0, -8, 0);
+                    transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+                    player.Rotate(0, -rotationSpeed * Time.deltaTime, 0);
                     break;
                 case specialDirection.RIGHT:
-                    transform.Rotate(0, 0, -8);
-                    player.Rotate(0, 8, 0);
+                    transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
+                    player.Rotate(0, rotationSpeed * Time.deltaTime, 0);
                     break;
             }
         }
@@ -123,7 +126,7 @@ public class SwordManager : MonoBehaviour
             x /= 2f;
             z /= 2f;
         }
-        transform.position = transform.position + new Vector3(x, 0, z);
+        transform.position = transform.position + new Vector3(x, 0, z).normalized * Time.deltaTime;
     }
 
     /*

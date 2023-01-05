@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocityMask: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  speed: 25
 --- !u!65 &4239626757215103715
 BoxCollider:
   m_ObjectHideFlags: 0
