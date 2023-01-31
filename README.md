@@ -3,6 +3,8 @@
 FIB - VJ (Videojocs)\
 2022-2023
 
+![GameImg](https://github.com/IvanJimenoRamirez/3D-Dot-Game/blob/main/img/dungeon.png)
+
 Project grade: 10
 
 ## Description
