@@ -1,7 +1,9 @@
 # Barrel Dungeon 2
 
-FIB - VJ (Videojocs)
+FIB - VJ (Videojocs)\
 2022-2023
+
+Project grade: 10
 
 ## Description
 University project where we developed a great 3D game based in 3D Dot Game Heroes with Unity.
